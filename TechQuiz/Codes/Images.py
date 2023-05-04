@@ -48,3 +48,9 @@ def ImageLogoNEscrita(resize=None):
         return loadImage("TechQuiz\Imagens\LOGO_N_Escrita.png", resize)
     else:
         return loadImage("TechQuiz\Imagens\LOGO_N_Escrita.png")
+
+def ImageCardQuiz(resize=None):
+    if resize != None:
+        return loadImage("TechQuiz\Imagens\CardQuiz.png", resize)
+    else:
+        return loadImage("TechQuiz\Imagens\CardQuiz.png")

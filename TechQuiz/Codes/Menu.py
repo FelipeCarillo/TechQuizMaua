@@ -5,6 +5,7 @@ from Images import (
     ImageRnkgLogo,
     ImageEdit,
     ImageLogoNEscrita,
+    ImageCardQuiz
 )
 
 
@@ -23,6 +24,7 @@ def Menu(Account):
     confInfosPng = ImageEdit([54, 54])
     checkInfosPng = ImageCheckEdit()
     imageLogo = ImageLogoNEscrita([300, 280])
+    CardQuiz = ImageCardQuiz([300, 360])
 
     Menu.columnconfigure(0, weight=1)
     Menu.columnconfigure(1, weight=3)
@@ -104,11 +106,11 @@ def Menu(Account):
         inputNome.configure(state=ctk.NORMAL)
         inputCurso.configure(state=ctk.NORMAL)
         inputAno.configure(state=ctk.NORMAL)
-        # comando pra salvar informações no banco de dados
+        #comando pra salvar informações no banco de dados
         buttonEditar.configure(image=checkInfosPng, command=botao_Confirmar)
 
     def botao_Confirmar():
-        # Botão de Confirmar
+        #Botão de Confirmar
         inputNome.configure(state=ctk.DISABLED)
         inputCurso.configure(state=ctk.DISABLED)
         inputAno.configure(state=ctk.DISABLED)
@@ -161,5 +163,60 @@ def Menu(Account):
         hover=False,
     )
     buttonRank.place(x=100, y=850)
+
+    def QuizBox(master, text, width, height, x, y):
+        QuizBox = ctk.CTkEntry(
+            master,
+            placeholder_text=text,
+            placeholder_text_color=black,
+            font=("Roboto", 35, "bold"),
+            width=width,
+            height=height,
+            bg_color=lightGray,
+            fg_color=lightGray,
+            border_color=lightGray,
+            text_color=black,
+            border_width=1,
+            justify="left",
+        )
+
+        QuizBox.configure(state=ctk.DISABLED)  # Impede de mudar o valor
+        QuizBox.place(x=x, y=y)
+        return QuizBox
+
+    def QuizButton(text, x, y, command):
+        Button = ctk.CTkButton(
+            master=gridOpcoes,
+            text=text,
+            font=("Roboto", 28, "bold"),
+            width=200,
+            height=32,
+            command=command,
+            fg_color=mainBlue,
+            bg_color=lightGray,
+            hover_color=mainBlue,
+            corner_radius=360
+        )
+        Button.place(x=x, y=y)
+
+    #Quiz Python
+    gridOpcoes.create_image(250, 620, image=CardQuiz)
+    NomeQuiz = QuizBox(gridOpcoes, "Python", 200, 37, 113, 468)
+    ButtonJogar = QuizButton("Jogar", 140, 740, rank)
+
+    #Quiz Java
+    gridOpcoes.create_image(590, 620, image=CardQuiz)
+    NomeQuiz = QuizBox(gridOpcoes, "Java", 200, 37, 453, 468)
+    ButtonJogar = QuizButton("Jogar", 480, 740, rank)
+
+    #Quiz MySQL
+    gridOpcoes.create_image(930, 620, image=CardQuiz)
+    NomeQuiz = QuizBox(gridOpcoes, "MySQL", 200, 37, 793, 468)
+    ButtonJogar = QuizButton("Jogar", 820, 740, rank)
+
+    #Quiz MOO
+    gridOpcoes.create_image(1270, 620, image=CardQuiz)
+    NomeQuiz = QuizBox(gridOpcoes, "MOO", 200, 37, 1133, 468)
+    ButtonJogar = QuizButton("Jogar", 1160, 740, rank)
 
     Menu.mainloop()
