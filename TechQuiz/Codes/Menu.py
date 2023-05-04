@@ -163,4 +163,3 @@ def Menu(Account):
     buttonRank.place(x=100, y=850)
 
     Menu.mainloop()
-
