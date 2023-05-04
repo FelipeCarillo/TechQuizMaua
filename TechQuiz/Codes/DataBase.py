@@ -155,13 +155,6 @@ def getSigma(table, atribute, data):
     connection.commit()
 
     return group
-    
-
-# Mostrar dados
-
-def showDatas(nameTable):
-    shoTable = "SELECT * FROM {};".format(nameTable)
-
 
 # Localizar se item já possui na tabela
 
