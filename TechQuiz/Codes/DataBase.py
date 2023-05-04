@@ -160,7 +160,7 @@ def getSigma(table, atribute, data):
 # Mostrar dados
 
 def showDatas(nameTable):
-    showTable = "SELECT * FROM {};".format(nameTable)
+    shoTable = "SELECT * FROM {};".format(nameTable)
 
 
 # Localizar se item já possui na tabela
