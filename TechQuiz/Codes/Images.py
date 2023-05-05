@@ -14,7 +14,6 @@ def ImageLogo(resize=None):
     else:
         return loadImage("TechQuiz\Imagens\LOGO.png")
 
-
 def ImageInformation(resize=None):
     if resize != None:
         return loadImage("TechQuiz\Imagens\Information.png", resize)
