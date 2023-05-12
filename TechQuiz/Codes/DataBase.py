@@ -16,6 +16,7 @@ def getConnection():
         user=user,
         passwd=password
     )
+    
     return connection
 
 # Retorna o Cursor, variável que executa comandos com o Banco de Dados.

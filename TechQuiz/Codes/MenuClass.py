@@ -220,5 +220,5 @@ class Ranking(ctk.CTkFrame):
             
         buttonGoBack=ctk.CTkButton(parent,text='M\nE\nN\nU',font=("Roboto", 32, "bold"), text_color=black,fg_color=mainBlue,hover_color=white,bg_color=mainBlue,width=50.7,height=Height,corner_radius=0,command=GoMenu)
         buttonGoBack.place(x=0,y=0)
-Usuario = Account(4,'11133', 'Felipe','Felpim123-','felipe@gamil.com','CIC', '02',3,0,"1")
-MainScreen(Menu,Usuario).mainloop()
+# Usuario = Account(4,'11133', 'Felipe','Felpim123-','felipe@gamil.com','CIC', '02',3,0,"1")
+# MainScreen(Menu,Usuario).mainloop()
