@@ -71,6 +71,7 @@ def startGame():
             loginButton = ctk.CTkButton(master, width=width, height=height, text=text, font=(
                 "Roboto Mono Regular", 18, "bold"), corner_radius=6, text_color="#FFFFFF", fg_color="#5271FF", bg_color="#FFFFFF", hover_color="#004AAD", command=command)
             loginButton.place(x=x, y=y)
+            return loginButton
 
 
         def createLabel(master, text, x, y, tmhFont):
@@ -109,6 +110,7 @@ def startGame():
 
             def registrarLogin():
                 global Usuario, Process
+                buttonLogin.configure(state='disable')
                 def msgError():
                     textError = ctk.CTkLabel(winRegisters, text="⚠️\nUsername / RA / Matrícula ou a Senha está inválido.", font=(
                         "Roboto Mono Regular", 16, "bold"), text_color="#E10E0E", bg_color="white")
@@ -117,22 +119,25 @@ def startGame():
                 userLogin = inputUser.get()
                 idCargo = check.indentificador(userLogin)
                 try:
-                    if idCargo == 1:
-                                atribute = 'nomeUser'
-                    else:
-                                atribute = 'registroUser'
+                    try:
+                        if idCargo == 1:
+                                    atribute = 'nomeUser'
+                        else:
+                                    atribute = 'registroUser'
 
-                    Dados = con.getLogin(atribute, userLogin)
-                    senha = Dados[0]
-                    passwdLogin = inputPasswd.get()
+                        Dados = con.getLogin(atribute, userLogin)
+                        senha = Dados[0]
+                        passwdLogin = inputPasswd.get()
 
-                    if senha == passwdLogin:
-                        data = con.getSigma('usuario', atribute, userLogin)
-                        Usuario=Account(data[0],data[1],data[2],data[3],data[4],data[5],data[6],data[7],data[9],data[8])
-                        Process=True
-                        Window.destroy()
+                        if senha == passwdLogin:
+                            data = con.getSigma('usuario', atribute, userLogin)
+                            Usuario=Account(data[0],data[1],data[2],data[3],data[4],data[5],data[6],data[7],data[9],data[8])
+                            Process=True
+                            Window.destroy()
+                    except:
+                        msgError()
                 except:
-                    msgError()
+                    buttonLogin.configure(state='enable')
 
             buttonLogin = ctk.CTkButton(winRegisters, width=180, height=52, text="LOGIN", font=(
                 "Roboto Mono Regular", 18, "bold"), corner_radius=6, text_color="#FFFFFF", fg_color="#5271FF", bg_color="#FFFFFF", hover_color="#004AAD", command=registrarLogin)
@@ -185,6 +190,7 @@ def startGame():
             inputConfirmPasswd.configure(show="*")
 
             def registrarLogin():
+                buttonSignup.configure(state='disable')
                 nome = inputUser.get()
                 registro = inputRegistro.get()
                 email = inputEmail.get()
@@ -203,61 +209,63 @@ def startGame():
                         return dado, True
 
                 isDadosCorretos = []
-
-                nome, continues = operacao(
-                    check.check_user_operation(nome), nome, inputUser, "Usuário Inválido.")
-                isDadosCorretos.append(continues)
-                continues = con.hasDuplicated('nomeUser', nome)
-                isDadosCorretos.append(continues)
-                if continues == False:
-                    operacao(False, 0, inputUser, "Usuário Inválido.")
-
-                item = check.indentificador(registro)
-
-                if item == 3:
-                    registro, continues = operacao(check.check_RA_operation(
-                        registro), registro, inputRegistro, "RA Inválido.")
+                try:
+                    nome, continues = operacao(
+                        check.check_user_operation(nome), nome, inputUser, "Usuário Inválido.")
                     isDadosCorretos.append(continues)
-                    continues = con.hasDuplicated('registroUser', registro)
+                    continues = con.hasDuplicated('nomeUser', nome)
                     isDadosCorretos.append(continues)
                     if continues == False:
-                        operacao(False, 0, inputRegistro, "RA Inválido.")
-                    cargo = 3
+                        operacao(False, 0, inputUser, "Usuário Inválido.")
 
-                elif item == 2:
-                    registro, continues = operacao(check.check_Matricula_operation(
-                        registro), registro, inputRegistro, "Matrícula Inválida.")
+                    item = check.indentificador(registro)
+
+                    if item == 3:
+                        registro, continues = operacao(check.check_RA_operation(
+                            registro), registro, inputRegistro, "RA Inválido.")
+                        isDadosCorretos.append(continues)
+                        continues = con.hasDuplicated('registroUser', registro)
+                        isDadosCorretos.append(continues)
+                        if continues == False:
+                            operacao(False, 0, inputRegistro, "RA Inválido.")
+                        cargo = 3
+
+                    elif item == 2:
+                        registro, continues = operacao(check.check_Matricula_operation(
+                            registro), registro, inputRegistro, "Matrícula Inválida.")
+                        isDadosCorretos.append(continues)
+                        continues = con.hasDuplicated('registroUser', registro)
+                        isDadosCorretos.append(continues)
+                        if continues == False:
+                            operacao(False, 0, inputRegistro, "Matrícula Inválida.")
+                        cargo = 2
+
+                    email, continues = operacao(check.check_email_operation(
+                        email), email, inputEmail, "Email Inválido.")
                     isDadosCorretos.append(continues)
-                    continues = con.hasDuplicated('registroUser', registro)
+                    continues = con.hasDuplicated('emailUser', email)
                     isDadosCorretos.append(continues)
                     if continues == False:
-                        operacao(False, 0, inputRegistro, "Matrícula Inválida.")
-                    cargo = 2
+                        operacao(False, 0, inputEmail, "Email Inválido.")
 
-                email, continues = operacao(check.check_email_operation(
-                    email), email, inputEmail, "Email Inválido.")
-                isDadosCorretos.append(continues)
-                continues = con.hasDuplicated('emailUser', email)
-                isDadosCorretos.append(continues)
-                if continues == False:
-                    operacao(False, 0, inputEmail, "Email Inválido.")
+                    senha, continues = operacao(check.check_password_operation(
+                        senha), senha, inputPasswd, "Senha Inválida.")
+                    isDadosCorretos.append(continues)
 
-                senha, continues = operacao(check.check_password_operation(
-                    senha), senha, inputPasswd, "Senha Inválida.")
-                isDadosCorretos.append(continues)
+                    if confirmacaoSenha == senha:
+                        continues = True
+                    else:
+                        continues = False
+                        inputConfirmPasswd.delete(0, 100)
+                        inputConfirmPasswd.configure(
+                            placeholder_text="⚠️ Senha não é a mesma.")
+                    isDadosCorretos.append(continues)
 
-                if confirmacaoSenha == senha:
-                    continues = True
-                else:
-                    continues = False
-                    inputConfirmPasswd.delete(0, 100)
-                    inputConfirmPasswd.configure(
-                        placeholder_text="⚠️ Senha não é a mesma.")
-                isDadosCorretos.append(continues)
-
-                if False not in isDadosCorretos:
-                    con.cadastrarDados(registro, nome, senha, email, str(cargo))
-                    Login()
+                    if False not in isDadosCorretos:
+                        con.cadastrarDados(registro, nome, senha, email, str(cargo))
+                        Login()
+                except:
+                    buttonSignup.configure(state='enable')
 
             buttonSignup = createButtonInput(
                 winRegisters, 180, 52, 23.7, 646.8, registrarLogin, "CADASTRAR")

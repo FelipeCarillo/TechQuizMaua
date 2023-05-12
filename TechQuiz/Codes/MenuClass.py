@@ -84,35 +84,39 @@ class Menu(ctk.CTkFrame):
 
         def botao_Confirmar():
             #Botão de Confirmar
+            buttonEditar.configure(state="disable")
             idUser = Account.getIdUsuario()
             Nome = inputNome.get()
-            if Cargo == 3:
-                Curso = inputCurso.get()
-                Ano = inputAno.get()
-            else:
-                Curso=1
-                Ano = 1
-            if Nome != Account.getNome():
-                checkName = check_user_operation(Nome)
-                continues=hasDuplicated('nomeUser', Nome)
-            else:
-                checkName=True
-                continues=True
-
-            if len(Curso) <= 100 and Ano.isnumeric() and int(Ano)<6 and checkName != False and continues !=False:
-                if Nome != Account.getNome():
-                    Account.setNome(Nome)
-                    setOneData('usuario','nomeUser',Nome,'idUser',idUser)
-                inputNome.configure(state=ctk.DISABLED)
+            try:
                 if Cargo == 3:
-                    Account.setCurso(Curso)
-                    setOneData('usuario','cursoUser',Curso,'idUser',idUser)
-                    Account.setAno(Ano)
-                    setOneData('usuario','anoUser',Ano,'idUser',idUser)
-                    inputCurso.configure(state=ctk.DISABLED)
-                    inputAno.configure(state=ctk.DISABLED)
-                buttonEditar.configure(image=confInfosPng, command=botao_Alterar)
+                    Curso = inputCurso.get()
+                    Ano = inputAno.get()
+                else:
+                    Curso=1
+                    Ano = 1
+                if Nome != Account.getNome():
+                    checkName = check_user_operation(Nome)
+                    continues=hasDuplicated('nomeUser', Nome)
+                else:
+                    checkName=True
+                    continues=True
 
+                if len(Curso) <= 100 and Ano.isnumeric() and int(Ano)<6 and checkName != False and continues !=False:
+                    if Nome != Account.getNome():
+                        Account.setNome(Nome)
+                        setOneData('usuario','nomeUser',Nome,'idUser',idUser)
+                    inputNome.configure(state=ctk.DISABLED)
+                    if Cargo == 3:
+                        Account.setCurso(Curso)
+                        setOneData('usuario','cursoUser',Curso,'idUser',idUser)
+                        Account.setAno(Ano)
+                        setOneData('usuario','anoUser',Ano,'idUser',idUser)
+                        inputCurso.configure(state=ctk.DISABLED)
+                        inputAno.configure(state=ctk.DISABLED)
+                    buttonEditar.configure(image=confInfosPng, command=botao_Alterar)
+            except:
+                buttonEditar.configure(state="enable")
+                
         buttonEditar = ctk.CTkButton(
             master=gridInfo,
             image=confInfosPng,

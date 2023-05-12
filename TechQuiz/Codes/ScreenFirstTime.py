@@ -28,20 +28,23 @@ def ScreenFrstTime(registro):
 
         def check_Entry():
             global data_list
+            buttonSave.configure(state='disable')
             curso = inputCurso.get()
             ano = inputAno.get()
             var_list = [inputCurso, inputAno]
-            if all(var.get() for var in var_list):
-                buttonSave.configure(hover=True)
-                if (len(ano) == 2 or len(ano) == 1)and ano.isnumeric() and len(curso) <= 100:
-                    data_list = 0, curso, ano
-                    setOneData(table='usuario',chgAtribute='FirstLogin',chgValue=0, findAtribute="idUser",findValue=registro)
-                    setOneData(table='usuario',chgAtribute='cursoUser',chgValue=curso, findAtribute="idUser",findValue=registro)
-                    setOneData(table='usuario',chgAtribute='anoUser',chgValue=ano, findAtribute="idUser",findValue=registro)
-                    Window.destroy()
-                else:
-                    buttonSave.configure(hover=False)
-
+            try:
+                if all(var.get() for var in var_list):
+                    buttonSave.configure(hover=True)
+                    if (len(ano) == 2 or len(ano) == 1)and ano.isnumeric() and len(curso) <= 100:
+                        data_list = 0, curso, ano
+                        setOneData(table='usuario',chgAtribute='FirstLogin',chgValue=0, findAtribute="idUser",findValue=registro)
+                        setOneData(table='usuario',chgAtribute='cursoUser',chgValue=curso, findAtribute="idUser",findValue=registro)
+                        setOneData(table='usuario',chgAtribute='anoUser',chgValue=ano, findAtribute="idUser",findValue=registro)
+                        Window.destroy()
+                    else:
+                        buttonSave.configure(hover=False)
+            except:
+                buttonSave.configure(state='enable')
         def Entry(x, values):
             
             entry = ctk.CTkComboBox(
