@@ -14,6 +14,7 @@ def ImageLogo(resize=None):
     else:
         return loadImage("TechQuiz\Imagens\LOGO.png")
 
+
 def ImageInformation(resize=None):
     if resize != None:
         return loadImage("TechQuiz\Imagens\Information.png", resize)
@@ -53,3 +54,15 @@ def ImageCardQuiz(resize=None):
         return loadImage("TechQuiz\Imagens\CardQuiz.png", resize)
     else:
         return loadImage("TechQuiz\Imagens\CardQuiz.png")
+
+def ImageBack(resize=None):
+    if resize != None:
+        return loadImage("TechQuiz\Imagens\Back.png", resize)
+    else:
+        return loadImage("TechQuiz\Imagens\Back.png")
+    
+def ImageQuestao(resize=None):
+    if resize != None:
+        return loadImage("TechQuiz\Imagens\questao.png", resize)
+    else:
+        return loadImage("TechQuiz\Imagens\questao.png")

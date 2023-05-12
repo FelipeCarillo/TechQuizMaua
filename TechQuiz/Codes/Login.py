@@ -35,6 +35,7 @@ def startGame():
 
         Window.geometry(resoluçãoLogin)
         Window.config(bg='white')
+        # Window.resizable(False, False)
         Window.maxsize(width, height)
 
         winLogo = ctk.CTkCanvas(
@@ -46,18 +47,16 @@ def startGame():
             Window, background="#FFFFFF", width=width-955, height=height, highlightthickness=0)
         winRegisters.grid(row=0, column=1)
 
-        # Apaga todos os widgets da tela.
         def apagarRegisters(master):
             for items in master.place_slaves():
                 items.place_forget()
             for items in master.find_all():
                 master.delete(items)
 
-        # Cria caixa de texto com um título encima. 
         def createTextInput(master, message, msgX, msgY, inpX, inpY):
-            title = ctk.CTkLabel(master, text=message, font=(
+            Title = ctk.CTkLabel(master, text=message, font=(
                 "Roboto Mono Regular", 18, "bold"), bg_color="#FFFFFF", text_color="#5271FF")
-            title.place(x=msgX, y=msgY)
+            Title.place(x=msgX, y=msgY)
 
             entry = ctk.CTkEntry(winRegisters, font=("Roboto Mono Regular", 18), width=397.5,
                                     height=42, bg_color="#FFFFFF", fg_color="#FFFFFF", border_color="#D9D9D9", text_color="#000000", border_width=3)
@@ -205,7 +204,7 @@ def startGame():
                 nome, continues = operacao(
                     check.check_user_operation(nome), nome, inputUser, "Usuário Inválido.")
                 isDadosCorretos.append(continues)
-                continues = con.hasDuplicated('nomeUser', nome)
+                continues = con.duplicated('nomeUser', nome)
                 isDadosCorretos.append(continues)
                 if continues == False:
                     operacao(False, 0, inputUser, "Usuário Inválido.")
@@ -216,7 +215,7 @@ def startGame():
                     registro, continues = operacao(check.check_RA_operation(
                         registro), registro, inputRegistro, "RA Inválido.")
                     isDadosCorretos.append(continues)
-                    continues = con.hasDuplicated('registroUser', registro)
+                    continues = con.duplicated('registroUser', registro)
                     isDadosCorretos.append(continues)
                     if continues == False:
                         operacao(False, 0, inputRegistro, "RA Inválido.")
@@ -226,7 +225,7 @@ def startGame():
                     registro, continues = operacao(check.check_Matricula_operation(
                         registro), registro, inputRegistro, "Matrícula Inválida.")
                     isDadosCorretos.append(continues)
-                    continues = con.hasDuplicated('registroUser', registro)
+                    continues = con.duplicated('registroUser', registro)
                     isDadosCorretos.append(continues)
                     if continues == False:
                         operacao(False, 0, inputRegistro, "Matrícula Inválida.")
@@ -235,7 +234,7 @@ def startGame():
                 email, continues = operacao(check.check_email_operation(
                     email), email, inputEmail, "Email Inválido.")
                 isDadosCorretos.append(continues)
-                continues = con.hasDuplicated('emailUser', email)
+                continues = con.duplicated('emailUser', email)
                 isDadosCorretos.append(continues)
                 if continues == False:
                     operacao(False, 0, inputEmail, "Email Inválido.")

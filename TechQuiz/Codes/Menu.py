@@ -12,9 +12,9 @@ from Images import (
 def Menu(Account):
 
     Width = 1920
-    Height = 1040
+    Height = 1020
     Menu = ctk.CTk()
-    Menu.geometry("1920x1040")
+    Menu.geometry("1920x1020")
     Menu.maxsize(Width, Height)
     Menu.config(bg="white")
 
@@ -76,9 +76,9 @@ def Menu(Account):
         return inputBox
 
     gridInfo.create_image(205, 320, image=imageLogo)
-    inputNome = inputBox(gridInfo, Account.getNome(), 324, 85, 38, 500)
-    inputCurso = inputBox(gridInfo, Account.getCurso(), 324, 85, 38, 620)
-    inputAno = inputBox(gridInfo, Account.getAno(), 324, 85, 38, 740)
+    # inputNome = inputBox(gridInfo, Account.getNome(), 324, 85, 38, 500)
+    # inputCurso = inputBox(gridInfo, Account.getCurso(), 324, 85, 38, 620)
+    # inputAno = inputBox(gridInfo, Account.getAno(), 324, 85, 38, 740)
 
     # Pontuações
     def inputBoxPoint(master, text, width, height, x, y):
@@ -103,17 +103,17 @@ def Menu(Account):
     varteste = 0
 
     def botao_Alterar():
-        inputNome.configure(state=ctk.NORMAL)
-        inputCurso.configure(state=ctk.NORMAL)
-        inputAno.configure(state=ctk.NORMAL)
+        # inputNome.configure(state=ctk.NORMAL)
+        # inputCurso.configure(state=ctk.NORMAL)
+        # inputAno.configure(state=ctk.NORMAL)
         #comando pra salvar informações no banco de dados
         buttonEditar.configure(image=checkInfosPng, command=botao_Confirmar)
 
     def botao_Confirmar():
         #Botão de Confirmar
-        inputNome.configure(state=ctk.DISABLED)
-        inputCurso.configure(state=ctk.DISABLED)
-        inputAno.configure(state=ctk.DISABLED)
+        # inputNome.configure(state=ctk.DISABLED)
+        # inputCurso.configure(state=ctk.DISABLED)
+        # inputAno.configure(state=ctk.DISABLED)
 
         buttonEditar.configure(image=confInfosPng, command=botao_Alterar)
 
@@ -162,7 +162,7 @@ def Menu(Account):
         fg_color=mainBlue,
         hover=False,
     )
-    buttonRank.place(x=100, y=850)
+    buttonRank.place(x=100, y=820)
 
     def QuizBox(master, text, width, height, x, y):
         QuizBox = ctk.CTkEntry(
@@ -183,12 +183,32 @@ def Menu(Account):
         QuizBox.configure(state=ctk.DISABLED)  # Impede de mudar o valor
         QuizBox.place(x=x, y=y)
         return QuizBox
+    
+    def QuizDescribe(text, width, x, y):
+        descQuiz = ctk.CTkEntry(
+            master=gridOpcoes,
+            placeholder_text=text,
+            placeholder_text_color=black,
+            font=("Roboto", 20, "bold"),
+            width=width,
+            height=20,
+            bg_color=lightGray,
+            fg_color=lightGray,
+            border_color=lightGray,
+            text_color=black,
+            border_width=1,
+            justify="left",
+        )
+        descQuiz.configure(state=ctk.DISABLED)  # Impede de mudar o valor
+        descQuiz.place(x=x, y=y)
+        return descQuiz
 
     def QuizButton(text, x, y, command):
         Button = ctk.CTkButton(
             master=gridOpcoes,
             text=text,
             font=("Roboto", 28, "bold"),
+            text_color=white,
             width=200,
             height=32,
             command=command,
@@ -200,23 +220,57 @@ def Menu(Account):
         Button.place(x=x, y=y)
 
     #Quiz Python
-    gridOpcoes.create_image(250, 620, image=CardQuiz)
-    NomeQuiz = QuizBox(gridOpcoes, "Python", 200, 37, 113, 468)
-    ButtonJogar = QuizButton("Jogar", 140, 740, rank)
+    gridOpcoes.create_image(250, 600, image=CardQuiz)
+    NomeQuiz = QuizBox(gridOpcoes, "Python", 200, 37, 113, 448)
+    QuizDescribe("Criador: TechQuiz", 250, 113, 506)
+    QuizDescribe("Nº Perguntas: 10", 250, 113, 536)
+    ButtonJogar = QuizButton("Jogar", 140, 720, rank)
 
     #Quiz Java
-    gridOpcoes.create_image(590, 620, image=CardQuiz)
-    NomeQuiz = QuizBox(gridOpcoes, "Java", 200, 37, 453, 468)
-    ButtonJogar = QuizButton("Jogar", 480, 740, rank)
+    gridOpcoes.create_image(590, 600, image=CardQuiz)
+    NomeQuiz = QuizBox(gridOpcoes, "Java", 200, 37, 453, 448)
+    QuizDescribe("Criador: TechQuiz", 250, 453, 506)
+    QuizDescribe("Nº Perguntas: 10", 250, 453, 536)
+    ButtonJogar = QuizButton("Jogar", 480, 720, rank)
 
     #Quiz MySQL
-    gridOpcoes.create_image(930, 620, image=CardQuiz)
-    NomeQuiz = QuizBox(gridOpcoes, "MySQL", 200, 37, 793, 468)
-    ButtonJogar = QuizButton("Jogar", 820, 740, rank)
+    gridOpcoes.create_image(930, 600, image=CardQuiz)
+    NomeQuiz = QuizBox(gridOpcoes, "MySQL", 200, 37, 793, 448)
+    QuizDescribe("Criador: TechQuiz", 250, 793, 506)
+    QuizDescribe("Nº Perguntas: 10", 250, 793, 536)
+    ButtonJogar = QuizButton("Jogar", 820, 720, rank)
 
     #Quiz MOO
-    gridOpcoes.create_image(1270, 620, image=CardQuiz)
-    NomeQuiz = QuizBox(gridOpcoes, "MOO", 200, 37, 1133, 468)
-    ButtonJogar = QuizButton("Jogar", 1160, 740, rank)
+    gridOpcoes.create_image(1270, 600, image=CardQuiz)
+    NomeQuiz = QuizBox(gridOpcoes, "MOO", 200, 37, 1133, 448)
+    QuizDescribe("Criador: TechQuiz", 250, 1133, 506)
+    QuizDescribe("Nº Perguntas: 10", 250, 1133, 536)
+    ButtonJogar = QuizButton("Jogar", 1160, 720, rank)
+
+    #Quiz Personalizado
+    QuizPersonalizado = ctk.CTkEntry(master=gridOpcoes, placeholder_text="QUIZ PERSONALIZADO", placeholder_text_color=black, font=("Roboto", 42, "bold"),
+            width=500, height=44, bg_color=white, fg_color=white, border_color=white, text_color=black, border_width=1, justify="left",)
+    QuizPersonalizado.configure(state=ctk.DISABLED)  # Impede de mudar o valor
+    QuizPersonalizado.place(x=85, y=40)
+
+    QuizPersonalizadotxt = ctk.CTkEntry(master=gridOpcoes, placeholder_text="Caso queira jogar um quiz criado pelo seu professor insira o código de acesso a baixo:",
+            placeholder_text_color=black, font=("Roboto", 18, "bold"), width=800, height=20, bg_color=white, fg_color=white, border_color=white, text_color=black,border_width=1, justify="left",)
+    QuizPersonalizadotxt.configure(state=ctk.DISABLED)  # Impede de mudar o valor
+    QuizPersonalizadotxt.place(x=90, y=90)
+
+    QuizPersonalizadoSerch = ctk.CTkEntry(master=gridOpcoes,placeholder_text="XXXXX",placeholder_text_color=white,font=("Roboto", 30, "bold"),
+            width=800,height=32,bg_color=white,fg_color=lightGray2,border_color=lightGray2,text_color=white,border_width=1,justify="left", corner_radius=20 
+        )
+    QuizPersonalizadoSerch.place(x=95, y=120)
+
+    gridOpcoes.create_image(1150, 200, image=CardQuiz)
+    NomeQuiz = QuizBox(gridOpcoes, "Pendente...", 200, 37, 1013, 48)
+    QuizDescribe("Criador:", 250, 1013, 106)
+    QuizDescribe("...", 172, 1100, 106)
+    QuizDescribe("Nº Perguntas:", 250, 1013, 136)
+    QuizDescribe("...", 110, 1163, 136)
+    #ButtonJogar = QuizButton("Jogar", 990, 320, rank)
 
     Menu.mainloop()
+
+Menu(1)

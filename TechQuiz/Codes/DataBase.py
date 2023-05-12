@@ -7,31 +7,29 @@ user = "CodeConnection"
 password = "TechQuiz2023--"
 DataBase = "dbtechquiz"
 
-# Conectar com o Banco de Dados.
-def getConnection():
-    connection = connect(
-        host="localhost",
-        user=user,
-        passwd=password
-    )
-    return connection
+connection = connect(
+    host="localhost",
+    user=user,
+    passwd=password
+)
 
-# Retorna o Cursor, variável que executa comandos com o Banco de Dados.
-def getCursor(connection):
+
+def setOneData(table, chgAtribute,chgValue, findAtribute, findValue):
     cursor = connection.cursor()
     use_DataBase = f"USE {DataBase}"
     cursor.execute(use_DataBase)
-    return cursor
 
-# Fecha a conexão com o Banco de Dados e apaga o cursor.
-def setCloseCxtion(cursor, connection):
-    cursor.close()
-    connection.close() 
+    code = "UPDATE {} SET {} = {} WHERE ({} = %(dado)s)".format(table,chgAtribute, chgValue, findAtribute)
+    data = {
+        'dado':findValue
+    }
+    cursor.execute(code,data)
 
-# Cria o Banco de Dados do jogo.
+    connection.commit()
+
 def createDataBase():
-    connection=getConnection()
     cursor = connection.cursor()
+
     try:
         cursor.execute(f"drop database {DataBase}")
     except:
@@ -64,57 +62,67 @@ def createDataBase():
         cursor.execute(command)
     for command in InsertTables:
         cursor.execute(command)
+
     connection.commit()
-    setCloseCxtion(cursor,connection)
+    
+
     return DataBase
 
 
-# Alteração de um dado.
-def setOneData(table, chgAtribute,chgValue, findAtribute, findValue):
-    connection = getConnection()
-    cursor = getCursor(connection)
-    code = "UPDATE {} SET {} = {} WHERE ({} = %(dado)s)".format(table,chgAtribute, chgValue, findAtribute)
-    data = {
-        'dado':findValue
-    }
-    cursor.execute(code,data)
-    connection.commit()
-    setCloseCxtion(cursor,connection)
-    
 
-# Verificar se o dado é duplicado.
-def hasDuplicated(what, dado):
-    connection = getConnection()
-    cursor = getCursor(connection)
+# Verificar já o dado é duplicado
+def duplicated(what, dado):
+    cursor = connection.cursor()
+
+    use_DataBase = f"USE {DataBase}"
+    cursor.execute(use_DataBase)
+
     duplicate = "SELECT * FROM usuario WHERE ({} = %(what)s)".format(what)
     values = {"what": dado}
     cursor.execute(duplicate, values)
+
     hasDuplicate = cursor.fetchone()
+
+    
+
     if hasDuplicate:
         return False
-    setCloseCxtion(cursor,connection)
+    
   
-# Retorna um dado de origem especificada.
+
 def getOneData(target_atribute,table,atribute, data):
-    connection = getConnection()
-    cursor = getCursor(connection)
+    cursor = connection.cursor()
+
+    use_DataBase = f"USE {DataBase}"
+    cursor.execute(use_DataBase)
+
     getPasswd = "SELECT {} FROM {} WHERE ({} = %(data)s)".format(target_atribute, table, atribute)
     values={
         'data':data
     }
+
     cursor.execute(getPasswd, values)
     target = cursor.fetchone()
-    setCloseCxtion(cursor,connection)
+
+    
+
     return target[0]
 
 
-# Cadastrar um novo jogador.
+# Inserir dados na tabela de login
+
+
 def cadastrarDados(registroUser, nomeUser, senhaUser, emailUser, idCargo):
-    connection = getConnection()
-    cursor = getCursor(connection)
+    cursor = connection.cursor()
+
+    use_DataBase = f"USE {DataBase}"
+    cursor.execute(use_DataBase)
+
     insertDatas = "INSERT INTO usuario (registroUser, nomeUser, senhaUser, emailUser, idCargo, datetimeSignup) VALUES (%(registro)s, %(nome)s, %(senha)s, %(email)s, %(cargo)s, %(time)s)"
+
     time = datetime.today()
     time = time.strftime("%Y-%m-%d  %H:%M:%S")
+
     values = {
         "registro": registroUser,
         "nome": nomeUser,
@@ -123,56 +131,92 @@ def cadastrarDados(registroUser, nomeUser, senhaUser, emailUser, idCargo):
         "cargo": idCargo,
         "time": time,
     }
-    cursor.execute(insertDatas, values)
-    connection.commit()
-    setCloseCxtion(cursor,connection)
 
-# Faz a operação Sigma na relação desejada.
+    cursor.execute(insertDatas, values)
+
+    connection.commit()
+    
+
 def getSigma(table, atribute, data):
-    connection = getConnection()
-    cursor = getCursor(connection)
+    cursor = connection.cursor()
+
+    use_DataBase = f"USE {DataBase}"
+    cursor.execute(use_DataBase)
+
     Operation_Sigma = "SELECT * FROM {} WHERE ({} = %(data)s)".format(table,atribute)
+
     values = {
         "data": data
     }
+
     cursor.execute(Operation_Sigma, values)
     group = cursor.fetchone()
-    setCloseCxtion(cursor,connection)
+
+    connection.commit()
+
     return group
 
-# Verificação de dados de Login.
+# Localizar se item já possui na tabela
+
 def getLogin(whatAtribute, login):
-    connection = getConnection()
-    cursor = getCursor(connection)
+    cursor = connection.cursor()
+
+    use_DataBase = f"USE {DataBase}"
+    cursor.execute(use_DataBase)
+
     getData = "SELECT senhaUser FROM usuario WHERE ({} = %(dado)s)".format(
         whatAtribute
     )
     values = {"dado": login}
+
     cursor.execute(getData, values)
     data = cursor.fetchone()
-    setCloseCxtion(cursor,connection)
+
+    connection.commit()
+
     return data
     
 
 
 
-# # Inserir perguntas e respostas
-# def inputPerguntaResposta(nameTable, Pergunta, respostaCorreta, resposta1, resposta2, resposta3, resposta4):
-#     cursor = getCursor()
+# Inserir perguntas e respostas
 
-#     insertDatas = "INSERT INTO {} (Pergunta, respostaCorreta, resposta1, resposta2, resposta3, resposta4) Values (%(Pergunta)s, %(respostaCorreta)s, %(resposta1)s, %(resposta2)s, %(resposta3)s, %(resposta4)s)".format(
-#         nameTable
-#     )
 
+def inputPerguntaResposta(
+    nameTable, Pergunta, respostaCorreta, resposta1, resposta2, resposta3, resposta4
+):
+    cursor = connection.cursor()
+
+    use_DataBase = f"USE {DataBase}"
+    cursor.execute(use_DataBase)
+
+    insertDatas = "INSERT INTO {} (Pergunta, respostaCorreta, resposta1, resposta2, resposta3, resposta4) Values (%(Pergunta)s, %(respostaCorreta)s, %(resposta1)s, %(resposta2)s, %(resposta3)s, %(resposta4)s)".format(
+        nameTable
+    )
+
+    values = {
+        "Pergunta": Pergunta,
+        "respostaCorreta": respostaCorreta,
+        "resposta1": resposta1,
+        "resposta2": resposta2,
+        "resposta3": resposta3,
+        "resposta4": resposta4,
+    }
+
+    cursor.execute(insertDatas, values)
+
+    connection.commit()
+
+
+# def getOneValue(whatOperation,data,):
+#     cursor = connection.cursor()
+
+#     use_DataBase= f'USE {DataBase}'
+#     cursor.execute(use_DataBase)
+
+#     getPasswd = "SELECT senhaUser FROM usuario WHERE ({} = %(dado)s)".format(whatAtribute)
 #     values = {
-#         "Pergunta": Pergunta,
-#         "respostaCorreta": respostaCorreta,
-#         "resposta1": resposta1,
-#         "resposta2": resposta2,
-#         "resposta3": resposta3,
-#         "resposta4": resposta4,
+#         'dado': login
 #     }
 
-#     cursor.execute(insertDatas, values)
 
-#     connection.commit()
