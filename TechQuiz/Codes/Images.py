@@ -41,15 +41,32 @@ def ImageRnkgLogo(resize=None):
     else:
         return loadImage("TechQuiz\Imagens\RANKING.png")
 
-
 def ImageLogoNEscrita(resize=None):
     if resize != None:
-        return loadImage("TechQuiz\Imagens\LOGO_N_Escrita.png", resize)
+        return loadImage("TechQuiz\Imagens\LogoSemEscrita.png", resize)
     else:
-        return loadImage("TechQuiz\Imagens\LOGO_N_Escrita.png")
+        return loadImage("TechQuiz\Imagens\LogoSemEscrita.png")
 
 def ImageCardQuiz(resize=None):
     if resize != None:
         return loadImage("TechQuiz\Imagens\CardQuiz.png", resize)
     else:
         return loadImage("TechQuiz\Imagens\CardQuiz.png")
+    
+def ImageGoBack(resize=None):
+    if resize != None:
+        return loadImage("TechQuiz\Imagens\Back.png", resize)
+    else:
+        return loadImage("TechQuiz\Imagens\Back.png")
+    
+def ImageQuestao(resize=None):
+    if resize != None:
+        return loadImage("TechQuiz\Imagens\questao.png", resize)
+    else:
+        return loadImage("TechQuiz\Imagens\questao.png")
+
+def ImagePesquisa(resize=None):
+    if resize != None:
+        return loadImage("TechQuiz\Imagens\lupa.PNG", resize)
+    else:
+        return loadImage("TechQuiz\Imagens\lupa.PNG")

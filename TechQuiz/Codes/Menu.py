@@ -1,33 +1,30 @@
 import customtkinter as ctk
 from Colors import *
-from Images import (
-    ImageCheckEdit,
-    ImageRnkgLogo,
-    ImageEdit,
-    ImageLogoNEscrita,
-    ImageCardQuiz
-)
+from DataBase import hasDuplicated, setOneData
+from Images import (ImageCheckEdit, ImageRnkgLogo, ImageEdit, ImageLogoNEscrita, ImageCardQuiz)
+from Account import *
+from checkValidation_Username_Email_Password import check_user_operation
+from CtkFunc import createQuizBox
+# from Ranking import Ranking
 
 
-def Menu(Account):
+def InterfaceMenu(Account):
 
+    Cargo = Account.getCargo()
     Width = 1920
-    Height = 1040
+    Height = 1020
     Menu = ctk.CTk()
-    Menu.geometry("1920x1040")
+    Menu.title('TechQuiz - Menu')
+    Menu.geometry("1920x1020")
     Menu.maxsize(Width, Height)
     Menu.config(bg="white")
 
     # Imagens dos botões
-
     RankPng = ImageRnkgLogo([203, 166])
     confInfosPng = ImageEdit([54, 54])
     checkInfosPng = ImageCheckEdit()
     imageLogo = ImageLogoNEscrita([300, 280])
     CardQuiz = ImageCardQuiz([300, 360])
-
-    Menu.columnconfigure(0, weight=1)
-    Menu.columnconfigure(1, weight=3)
 
     # Informações
     gridInfo = ctk.CTkCanvas(
@@ -35,7 +32,7 @@ def Menu(Account):
     )
     gridInfo.grid(column=0, row=0, sticky=ctk.W)
     gridInfo.create_rectangle(0, 0, 400, 50, fill=darkBlue, outline=darkBlue)
-    gridInfo.create_rectangle(0, 990, 400, 990 + 50, fill=darkBlue, outline=darkBlue)
+    gridInfo.create_rectangle(0, 970, 400, 970 + 50, fill=darkBlue, outline=darkBlue)
 
     # Opções
     gridOpcoes = ctk.CTkCanvas(
@@ -48,17 +45,16 @@ def Menu(Account):
     gridOpcoes.grid(column=1, row=0, sticky=ctk.E)
 
     def apagarRegisters(master):
-        for items in master.place_slaves():
-            items.place_forget()
-        for items in master.find_all():
-            master.delete(items)
+        for item in master.grid_slaves():
+            item.grid_forget()
+
 
     # Adição das informações
 
     def inputBox(master, text, width, height, x, y):
         inputBox = ctk.CTkEntry(
             master,
-            placeholder_text=text,
+            # placeholder_text=text,
             placeholder_text_color=white,
             font=("Roboto", 25, "bold"),
             width=width,
@@ -70,52 +66,54 @@ def Menu(Account):
             corner_radius=20,
             justify="center",
         )
-
+        inputBox.insert(0,text)
         inputBox.configure(state=ctk.DISABLED)  # Impede de mudar o valor
         inputBox.place(x=x, y=y)
         return inputBox
 
     gridInfo.create_image(205, 320, image=imageLogo)
     inputNome = inputBox(gridInfo, Account.getNome(), 324, 85, 38, 500)
-    inputCurso = inputBox(gridInfo, Account.getCurso(), 324, 85, 38, 620)
-    inputAno = inputBox(gridInfo, Account.getAno(), 324, 85, 38, 740)
-
-    # Pontuações
-    def inputBoxPoint(master, text, width, height, x, y):
-        inputBox = ctk.CTkEntry(
-            master,
-            placeholder_text=text,
-            placeholder_text_color=black,
-            font=("Roboto Mono Regular", 60),
-            width=width,
-            height=height,
-            fg_color=mainBlue,
-            border_color=mainBlue,
-            text_color=black,
-            border_width=1,
-            corner_radius=360,
-        )
-        inputBox.configure(state=ctk.DISABLED)  # Impede de mudar o valor
-        inputBox.place(x=x, y=y)
-        return inputBox
-
-    # Botão de edição de configurações
-    varteste = 0
+    if Cargo == 3:
+        inputCurso = inputBox(gridInfo, Account.getCurso(), 324, 85, 38, 620)
+        inputAno = inputBox(gridInfo, Account.getAno(), 324, 85, 38, 740)
 
     def botao_Alterar():
         inputNome.configure(state=ctk.NORMAL)
         inputCurso.configure(state=ctk.NORMAL)
         inputAno.configure(state=ctk.NORMAL)
-        #comando pra salvar informações no banco de dados
         buttonEditar.configure(image=checkInfosPng, command=botao_Confirmar)
+        
 
     def botao_Confirmar():
         #Botão de Confirmar
-        inputNome.configure(state=ctk.DISABLED)
-        inputCurso.configure(state=ctk.DISABLED)
-        inputAno.configure(state=ctk.DISABLED)
+        idUser = Account.getIdUsuario()
+        Nome = inputNome.get()
+        if Cargo == 3:
+            Curso = inputCurso.get()
+            Ano = inputAno.get()
+        else:
+            Curso=1
+            Ano = 1
+        if Nome != Account.getNome():
+            checkName = check_user_operation(Nome)
+            continues=hasDuplicated('nomeUser', Nome)
+        else:
+            checkName=True
+            continues=True
 
-        buttonEditar.configure(image=confInfosPng, command=botao_Alterar)
+        if len(Curso) <= 100 and Ano.isnumeric() and int(Ano)<6 and checkName != False and continues !=False:
+            if Nome != Account.getNome():
+                Account.setNome(Nome)
+                setOneData('usuario','nomeUser',Nome,'idUser',idUser)
+            inputNome.configure(state=ctk.DISABLED)
+            if Cargo == 3:
+                Account.setCurso(Curso)
+                setOneData('usuario','cursoUser',Curso,'idUser',idUser)
+                Account.setAno(Ano)
+                setOneData('usuario','anoUser',Ano,'idUser',idUser)
+                inputCurso.configure(state=ctk.DISABLED)
+                inputAno.configure(state=ctk.DISABLED)
+            buttonEditar.configure(image=confInfosPng, command=botao_Alterar)
 
     buttonEditar = ctk.CTkButton(
         master=gridInfo,
@@ -131,92 +129,58 @@ def Menu(Account):
     buttonEditar.place(x=6.4, y=54)
 
     # Botões
+    def GoRanking():
+        apagarRegisters(Menu)
+        # Ranking(Menu, Account)
+        
 
-    def createButtonInput(master, image, width, height, x, y, command, text):
-        anyButton = ctk.CTkButton(
-            master,
-            image=image,
-            text=text,
-            text_color=white,
-            width=width,
-            height=height,
-            fg_color=white,
-            bg_color=white,
-            hover_color=white,
-            command=command,
-        )
-        anyButton.place(x=x, y=y)
-
-    def rank():
-        apagarRegisters(gridInfo)
-        apagarRegisters(gridOpcoes)
+        
 
     buttonRank = ctk.CTkButton(
-        gridOpcoes,
-        width=1320,
-        height=166,
-        image=RankPng,
-        command=rank,
-        text="",
-        corner_radius=20,
-        fg_color=mainBlue,
-        hover=False,
-    )
-    buttonRank.place(x=100, y=850)
-
-    def QuizBox(master, text, width, height, x, y):
-        QuizBox = ctk.CTkEntry(
-            master,
-            placeholder_text=text,
-            placeholder_text_color=black,
-            font=("Roboto", 35, "bold"),
-            width=width,
-            height=height,
-            bg_color=lightGray,
-            fg_color=lightGray,
-            border_color=lightGray,
-            text_color=black,
-            border_width=1,
-            justify="left",
-        )
-
-        QuizBox.configure(state=ctk.DISABLED)  # Impede de mudar o valor
-        QuizBox.place(x=x, y=y)
-        return QuizBox
-
-    def QuizButton(text, x, y, command):
-        Button = ctk.CTkButton(
-            master=gridOpcoes,
-            text=text,
-            font=("Roboto", 28, "bold"),
-            width=200,
-            height=32,
-            command=command,
+            gridOpcoes,
+            image=RankPng,
+            text="",
+            width=1320,
+            height=166,
             fg_color=mainBlue,
-            bg_color=lightGray,
-            hover_color=mainBlue,
-            corner_radius=360
+            bg_color=white,
+            command=GoRanking,
+            corner_radius=20,
+            hover=False
         )
-        Button.place(x=x, y=y)
+    buttonRank.place(x=100, y=810)
 
-    #Quiz Python
-    gridOpcoes.create_image(250, 620, image=CardQuiz)
-    NomeQuiz = QuizBox(gridOpcoes, "Python", 200, 37, 113, 468)
-    ButtonJogar = QuizButton("Jogar", 140, 740, rank)
+    createQuizBox(gridOpcoes,100,450,white,'Python',"TechQuiz",'Teste',10, GoRanking)
+    createQuizBox(gridOpcoes, 440, 450,white,'Java','TechQuiz','Teste',10, GoRanking)
+    createQuizBox(gridOpcoes, 780,450,white,"MySQL","TechQuiz",'Teste',10, GoRanking)
+    createQuizBox(gridOpcoes, 1120, 450,white,"MOO",'TechQuiz','Teste',10, GoRanking)
 
-    #Quiz Java
-    gridOpcoes.create_image(590, 620, image=CardQuiz)
-    NomeQuiz = QuizBox(gridOpcoes, "Java", 200, 37, 453, 468)
-    ButtonJogar = QuizButton("Jogar", 480, 740, rank)
+    #Quiz Personalizado
 
-    #Quiz MySQL
-    gridOpcoes.create_image(930, 620, image=CardQuiz)
-    NomeQuiz = QuizBox(gridOpcoes, "MySQL", 200, 37, 793, 468)
-    ButtonJogar = QuizButton("Jogar", 820, 740, rank)
+    title = ctk.CTkLabel(gridOpcoes, text="QUIZ PERSONALIZADO", font=(
+                "Roboto", 42, "bold"), bg_color=white, text_color=black, fg_color=white)
+    title.place(x=85, y=40)
+    titleDscrptn = ctk.CTkLabel(gridOpcoes, text="Caso queira jogar um quiz criado pelo seu professor insira o código de acesso a baixo:", font=(
+                "Roboto", 18, "bold"), bg_color=white, text_color=black, fg_color=white)
+    titleDscrptn.place(x=90, y=87.5)
 
-    #Quiz MOO
-    gridOpcoes.create_image(1270, 620, image=CardQuiz)
-    NomeQuiz = QuizBox(gridOpcoes, "MOO", 200, 37, 1133, 468)
-    ButtonJogar = QuizButton("Jogar", 1160, 740, rank)
+    def getPesquisa():
+        if len(QuizPersonalizadoSearch.get()) == 5:
+            texto = QuizPersonalizadoSearch.get()
+            return texto
+        
+    def limitar_caracteres(entry, tamanho):
+        entry.configure(validate="key", validatecommand=(entry.register(lambda texto: len(texto) <= tamanho), '%P'))
+
+    QuizPersonalizadoSearch = ctk.CTkEntry(master=gridOpcoes,placeholder_text="XXXX",placeholder_text_color=white,font=("Roboto", 30, "bold"),
+            width=800,height=32,bg_color=white,fg_color=lightGray2,border_color=lightGray2,text_color=white,border_width=1,justify="center", corner_radius=20
+        )
+    QuizPersonalizadoSearch.place(x=90, y=120)
+    limitar_caracteres(QuizPersonalizadoSearch, 4)
+    QuizPersonalizadoSearch.bind('<Key>',getPesquisa)
+    createQuizBox(gridOpcoes,1000,50,white,None,None,'Teste',0,GoRanking)
 
     Menu.mainloop()
+
+# account = Account(4,'11133', 'Felipe','Felpim123-','felipe@gamil.com','CIC', '02',3,0,"1")
+# InterfaceMenu(account)

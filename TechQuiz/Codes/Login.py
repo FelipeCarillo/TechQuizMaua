@@ -8,7 +8,9 @@ from Account import Account
 # from Menu import menu
 
 def startGame():
-    global Usuario
+    global Usuario, Process
+    Usuario=None
+    Process=False
     monitorScale = ctypes.windll.shcore.GetScaleFactorForDevice(0)
 
     Window = ctk.CTk()
@@ -106,7 +108,7 @@ def startGame():
             
 
             def registrarLogin():
-                global Usuario
+                global Usuario, Process
                 def msgError():
                     textError = ctk.CTkLabel(winRegisters, text="⚠️\nUsername / RA / Matrícula ou a Senha está inválido.", font=(
                         "Roboto Mono Regular", 16, "bold"), text_color="#E10E0E", bg_color="white")
@@ -114,22 +116,22 @@ def startGame():
 
                 userLogin = inputUser.get()
                 idCargo = check.indentificador(userLogin)
-                
-                if idCargo == 1:
-                            atribute = 'nomeUser'
-                else:
-                            atribute = 'registroUser'
+                try:
+                    if idCargo == 1:
+                                atribute = 'nomeUser'
+                    else:
+                                atribute = 'registroUser'
 
-                Dados = con.getLogin(atribute, userLogin)
-                senha = Dados[0]
-                passwdLogin = inputPasswd.get()
+                    Dados = con.getLogin(atribute, userLogin)
+                    senha = Dados[0]
+                    passwdLogin = inputPasswd.get()
 
-                if senha == passwdLogin:
-                    data = con.getSigma('usuario', atribute, userLogin)
-                    Usuario=Account(data[0],data[1],data[2],data[3],data[4],data[5],data[6],data[7],data[9],data[8])
-                    Window.destroy()
-
-                else:
+                    if senha == passwdLogin:
+                        data = con.getSigma('usuario', atribute, userLogin)
+                        Usuario=Account(data[0],data[1],data[2],data[3],data[4],data[5],data[6],data[7],data[9],data[8])
+                        Process=True
+                        Window.destroy()
+                except:
                     msgError()
 
             buttonLogin = ctk.CTkButton(winRegisters, width=180, height=52, text="LOGIN", font=(
@@ -289,7 +291,7 @@ def startGame():
         
     if monitorScale == 100:
         Interface_Login()
-        return Usuario
+        return Usuario, Process
     else:
         Interface_Aviso_Escala()
 

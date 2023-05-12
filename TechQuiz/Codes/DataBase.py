@@ -2,15 +2,17 @@ from mysql.connector import connect
 from mysql.connector import Error
 import pandas as pd
 from datetime import datetime
+from Account import Account
 
-user = "CodeConnection"
-password = "TechQuiz2023--"
+user = "usr-techquiz"
+password = "TechQuiz"
 DataBase = "dbtechquiz"
 
 # Conectar com o Banco de Dados.
 def getConnection():
     connection = connect(
-        host="localhost",
+        host="mysql246.umbler.com",
+        port='41890',
         user=user,
         passwd=password
     )
@@ -50,14 +52,14 @@ def createDataBase():
         "CREATE TABLE jogo (idJogo int auto_increment primary key, nomeJogo varchar(100) not null, idCategoria int not null, foreign key (idCategoria) references categoria_jogo(idCategoria),idUser int not null, foreign key (idUser) references usuario (idUser))",
         "CREATE TABLE progresso_usuario (idProgresso int auto_increment primary key, idJogo int not null, foreign key (idJogo) references jogo(idJogo), idUser int not null, foreign key (idUser) references usuario (idUser), progresso varchar(5) not null default 0)",
         "CREATE TABLE nivel_pergunta(idNivel int auto_increment primary key, nomeNivel varchar(50))",
-        "CREATE TABLE perguntas(idPergunta int auto_increment primary key, idJogo int not null, foreign key (idJogo) references jogo(idJogo), Pergunta varchar(500) not null, idNivel int not null, foreign key (idNivel) references nivel_pergunta(idNivel))",
+        "CREATE TABLE perguntas(idPergunta int auto_increment primary key, idJogo int not null, foreign key (idJogo) references jogo(idJogo), Pergunta varchar(500) not null)",
         "CREATE TABLE alternativas(idResposta int auto_increment primary key, idPergunta int not null, foreign key (idPergunta) references perguntas(idPergunta), Alternativa varchar(100) not null, isRight boolean not null)",
     ]
 
     InsertTables = [
         'INSERT INTO cargo VALUES (1,"Administrador"), (2,"Professor"), (3, "Aluno")',
         'INSERT INTO categoria_jogo values (1,"Lógica de Programação"),(2,"Programação Orientada a Objetos"),(3,"Modelagem Orientada a Objetos"), (4,"Banco de Dados Relacionais")',
-        'INSERT INTO nivel_pergunta values (1,"Iniciante"), (2,"Intermediário"), (3,"Avançado")',
+        "insert into usuario value (1, 1, 'TechQuiz', 'TechQuiz2023', 'techquizIMT@gmail.com','...','..', 2, '2023-05-08 09:57:00',0)"
     ]
 
     for command in CreateTables:
@@ -73,8 +75,9 @@ def createDataBase():
 def setOneData(table, chgAtribute,chgValue, findAtribute, findValue):
     connection = getConnection()
     cursor = getCursor(connection)
-    code = "UPDATE {} SET {} = {} WHERE ({} = %(dado)s)".format(table,chgAtribute, chgValue, findAtribute)
+    code = "UPDATE {} SET {} = %(dadoChange)s WHERE ({} = %(dado)s)".format(table,chgAtribute, findAtribute)
     data = {
+        'dadoChange':chgValue,
         'dado':findValue
     }
     cursor.execute(code,data)
@@ -105,7 +108,10 @@ def getOneData(target_atribute,table,atribute, data):
     cursor.execute(getPasswd, values)
     target = cursor.fetchone()
     setCloseCxtion(cursor,connection)
-    return target[0]
+    try:
+        return target[0]
+    except:
+        return target
 
 
 # Cadastrar um novo jogador.
@@ -152,7 +158,80 @@ def getLogin(whatAtribute, login):
     data = cursor.fetchone()
     setCloseCxtion(cursor,connection)
     return data
+
+def insertOneData(table,whtAtrbute,Value):
+    connection = getConnection()
+    cursor = getCursor(connection)
+    code = "INSERT INTO {} ({}) VALUES (%(value)s)".format(table,whtAtrbute)
+    values={
+        'value':Value
+    }
+    cursor.execute(code,values)
+    connection.commit()
+    setCloseCxtion(cursor,connection)
     
+
+def createQuiz(Account,nome,categoria,dictPerguntas):
+    idUser = Account.getIdUsuario()
+    connection = getConnection()
+    cursor = getCursor(connection)
+    idCategoria = getOneData('idCategoria','categoria_jogo', 'nomeCategoria', categoria)
+
+    if not idCategoria:    
+        insertOneData('categoria_jogo','nomeCategoria',categoria)
+        idCategoria=getOneData('idCategoria','categoria_jogo', 'nomeCategoria', categoria)
+        print(idCategoria)
+    insertJogo = "INSERT INTO jogo (nomeJogo,idCategoria,idUser) VALUE (%(nome)s,%(idCat)s,%(idUser)s)"
+    values ={'nome':nome,'idCat':idCategoria,'idUser':idUser}
+    cursor.execute(insertJogo,values)
+    connection.commit()
+    idJogo = getOneData(table='jogo',atribute='nomeJogo',target_atribute='idJogo',data=nome)
+    
+
+    for pergunta, alternativas in dictPerguntas.items():
+        insertPergunta = "INSERT INTO perguntas (idJogo, Pergunta) VALUE (%(idJogo)s,%(pergunta)s)"
+        values ={'idJogo':idJogo,'pergunta':pergunta}
+        cursor.execute(insertPergunta,values)
+        connection.commit()
+        IdPergunta = getOneData(table='perguntas',target_atribute='idPergunta',atribute='Pergunta',data=pergunta)
+        for alternativa in alternativas:
+            insertAlternativa = "INSERT INTO alternativas (idPergunta, Alternativa,isRight) VALUE (%(idPergunta)s,%(alternativa)s,%(bool)s)"
+            values ={'idPergunta':IdPergunta,'alternativa':alternativa[0],'bool':alternativa[1]}
+            cursor.execute(insertAlternativa,values)
+            connection.commit()
+    setCloseCxtion(cursor,connection)
+
+def getRankingTop():
+    # idUser = Account.getIdUsuario()
+    connection = getConnection()
+    cursor = getCursor(connection)
+    select = """select aluno.nomeUser,professor.nomeUser, j.nomeJogo, p.progresso from progresso_usuario as p 
+        inner join jogo as j on p.idJogo = j.idJogo 
+        inner join usuario as professor on j.idUser = professor.idUser 
+        inner join usuario as aluno on p.idUser = aluno.idUser order by p.progresso limit 10;"""
+    cursor.execute(select)
+    lisTop10 = cursor.fetchall()
+    setCloseCxtion(cursor,connection)
+    return lisTop10
+
+def getUserRanking(Account):
+    idUser = Account.getIdUsuario()
+    connection = getConnection()
+    cursor = getCursor(connection)
+    select = """select aluno.nomeUser,professor.nomeUser, j.nomeJogo, p.progresso  from progresso_usuario as p 
+        inner join jogo as j on p.idJogo = j.idJogo 
+        inner join usuario as professor on j.idUser = professor.idUser 
+        inner join usuario as aluno on p.idUser = aluno.idUser where aluno.idUser = %(id)s;"""
+    value = {'id':idUser}
+    cursor.execute(select)
+    selfProgress = cursor.fetchall()
+    setCloseCxtion(cursor,connection)
+    return selfProgress;
+# Usuario = Account(1,'11133', 'Felipe','Felpim123-','felipe@gamil.com','CIC', '02',3,0,"1")
+# dictPerguntas = {'Você sabe Python':[['Sim',False],['Não',True]],'Como vai?':[['Uma bosta',True],['Felicidade',False]]}
+
+# createQuiz(Usuario,'Felipe','Lóic',dictPerguntas)
+
 
 
 

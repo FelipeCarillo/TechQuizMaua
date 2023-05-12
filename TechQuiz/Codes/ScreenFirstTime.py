@@ -35,11 +35,10 @@ def ScreenFrstTime(registro):
                 buttonSave.configure(hover=True)
                 if (len(ano) == 2 or len(ano) == 1)and ano.isnumeric() and len(curso) <= 100:
                     data_list = 0, curso, ano
-                    Window.destroy()
                     setOneData(table='usuario',chgAtribute='FirstLogin',chgValue=0, findAtribute="idUser",findValue=registro)
                     setOneData(table='usuario',chgAtribute='cursoUser',chgValue=curso, findAtribute="idUser",findValue=registro)
                     setOneData(table='usuario',chgAtribute='anoUser',chgValue=ano, findAtribute="idUser",findValue=registro)
-                    
+                    Window.destroy()
                 else:
                     buttonSave.configure(hover=False)
 

@@ -1,20 +1,22 @@
 from Login import startGame 
 from ScreenFirstTime import ScreenFrstTime
-from Menu import Menu
-from Account import Account
+from MainScreen import MainScreen
+from MenuClass import *
 
-Usuario = startGame()
+Usuario, Continues = startGame()
 
-while True:
-    print(Usuario.getFirstLogin(), Usuario.getCurso())
-    if Usuario.getFirstLogin() == 1 and Usuario.getCargo() == 3:
-        FirstLogin, Curso, Ano = ScreenFrstTime(Usuario.getIdUsuario())
-        Usuario.setFirstLogin(FirstLogin)
-        Usuario.setCurso(Curso)
-        Usuario.setAno(Ano)
-    else:
-        break
-Menu(Usuario)
+if Continues == True:
+    while True:
+        if Usuario.getFirstLogin() == 1 and Usuario.getCargo() == 3:
+            FirstLogin, Curso, Ano = ScreenFrstTime(Usuario.getIdUsuario())
+            Usuario.setFirstLogin(FirstLogin)
+            Usuario.setCurso(Curso)
+            Usuario.setAno(Ano)
+        else:
+            break
+    MainScreen(Menu,Usuario).mainloop()
+
+    
 
 
 
