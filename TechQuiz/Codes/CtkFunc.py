@@ -1,7 +1,8 @@
 import customtkinter as ctk
-from Colors import lightGray,black,mainBlue,lightGray2
+from Colors import lightGray,black,mainBlue,lightGray2,hoverColor
 
-def createQuizBox(master,x,y,bg_color,Quiz,NumQuestoes,command):
+def createQuizBox(master,x,y,bg_color,Quiz,NumQuestoes,command,width=None,height=None):
+    
     if Quiz != None:
         Nome = Quiz.get_nome()
         Autor =Quiz.get_autor()
@@ -33,8 +34,6 @@ def createQuizBox(master,x,y,bg_color,Quiz,NumQuestoes,command):
                 "Roboto", 20, "bold"), bg_color=lightGray, text_color=black, fg_color=lightGray)
     NQuestoes.place(x=x,y=y+170)
 
-
-
     ButtonJogar = ctk.CTkButton(
             master=canvas,
             text='Jogar',
@@ -44,9 +43,12 @@ def createQuizBox(master,x,y,bg_color,Quiz,NumQuestoes,command):
             command=command,
             fg_color=mainBlue,
             bg_color=lightGray,
-            hover_color=mainBlue,
+            hover_color=hoverColor,
             corner_radius=360
     )
     ButtonJogar.place(x=269/2-100, y=298+15-62)
+
+    if width !=None and height !=None:
+        canvas.configure(width=width,height=height)
 
     return  tittle,autor,Categoria,NQuestoes,ButtonJogar

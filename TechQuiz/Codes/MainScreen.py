@@ -9,7 +9,6 @@ from Quiz import Quiz
 
 Width = 1920
 Height = 1020
-
 class MainScreen(ctk.CTk):
     def __init__(self,Account):
         super().__init__()
@@ -204,7 +203,7 @@ class Menu(ctk.CTkFrame):
         def getQuizSearch():
             global slctQuiz
             idJogo = QuizSearch.get()
-            if len(idJogo) == 4:
+            if len(idJogo) == 1:
                 try:
                     searchButton.configure(state='disabled')
                     slctQuiz=Quiz(idJogo,None,None,None,None)
@@ -222,7 +221,7 @@ class Menu(ctk.CTkFrame):
                 except:
                     searchButton.configure(state='enable')
 
-        searchButton = ctk.CTkButton(gridOpcoes,height=40,corner_radius=20,text='PESQUISAR',font=("Roboto", 30, "bold"),command=getQuizSearch)
+        searchButton = ctk.CTkButton(gridOpcoes,height=40,corner_radius=20,text='PESQUISAR',fg_color=mainBlue,hover_color='#1D2D74',font=("Roboto", 30, "bold"),command=getQuizSearch)
         searchButton.place(x=680,y=165)
         title, autor,categoria, nquestoes, buttonjogar = createQuizBox(gridOpcoes,1000,50,white,None,0,playQuiz)
         buttonjogar.configure(state='disabled')
@@ -236,12 +235,12 @@ class Ranking(ctk.CTkFrame):
         parent.config(bg=mainBlue)
 
         LupaPng = ImageLupa([65,65])
-        goBackPng = ImageGoBack([90,89])
+        goBackPng = ImageGoBack([110,105])
 
         window = ctk.CTkCanvas(parent, background=white, width=Width-50, height=Height-50, highlightthickness=0)
         window.place(x=25, y=25)
 
-        createQuizBox(window,145,260,white,None,None,None)
+        createQuizBox(window,200,260,white,None,None,None)
 
         def getQuizSearch():
             global slctQuiz
@@ -262,7 +261,8 @@ class Ranking(ctk.CTkFrame):
         limitar_caracteres(QuizSearch, 4)
 
 
-        ctk.CTkLabel(parent,text='RANKING',font=("Roboto", 72, "bold")).place(x=1200,y=125.4)
+        ctk.CTkLabel(parent,text='RANKING',font=("Roboto", 72, "bold",'underline'),anchor='w',fg_color=white,bg_color=white,text_color=black).place(x=1092.3,y=64.6)
+        
 
         def apagarRegisters(window):
             for item in window.grid_slaves():
@@ -272,8 +272,8 @@ class Ranking(ctk.CTkFrame):
             apagarRegisters(parent)
             MainScreen.setFrame(self=MainScreen,frame=Menu(parent,Account))
             
-        buttonGoBack=ctk.CTkButton(parent,image=goBackPng,fg_color=white,hover_color=white,bg_color=white,text=None,command=GoMenu)
-        buttonGoBack.place(x=51,y=47.1)
+        buttonGoBack=ctk.CTkButton(parent,image=goBackPng,anchor='nw',fg_color=white,bg_color=white,hover=None,text=None,corner_radius=0,command=GoMenu)
+        buttonGoBack.place(x=25,y=25)
 
 
 Usuario = Account(4,'11133', 'Felipe','Felpim123-','felipe@gamil.com','CIC', '02',3,0,"1")
