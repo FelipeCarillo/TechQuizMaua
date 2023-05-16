@@ -1,7 +1,8 @@
 from Login import startGame 
 from ScreenFirstTime import ScreenFrstTime
 from MainScreen import MainScreen
-from MenuClass import *
+from QuizScreen import QuizScreen
+
 
 Usuario, Continues = startGame()
 
@@ -13,8 +14,15 @@ if Continues == True:
             Usuario.setCurso(Curso)
             Usuario.setAno(Ano)
         else:
+            break    
+    while True:
+        MainScreen(Usuario).mainloop()
+        Quiz = MainScreen.getQuiz(self=MainScreen)
+        if Quiz:
+            QuizScreen(Usuario,Quiz).mainloop()
+        else:
             break
-    MainScreen(Menu,Usuario).mainloop()
+
 
     
 

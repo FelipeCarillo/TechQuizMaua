@@ -1,8 +1,17 @@
 import customtkinter as ctk
 from Colors import lightGray,black,mainBlue,lightGray2
 
-def createQuizBox(master,x,y,bg_color,QuizName,Owner,categoria, number_questions,command):
-    
+def createQuizBox(master,x,y,bg_color,Quiz,NumQuestoes,command):
+    if Quiz != None:
+        Nome = Quiz.get_nome()
+        Autor =Quiz.get_autor()
+        Categoria =Quiz.get_categoria()
+
+    else:
+        Nome = None
+        Autor = None
+        Categoria = None
+
     canvas = ctk.CTkCanvas(master, background=bg_color, width=269+18, height=298+15, highlightthickness=0)
     canvas.place(x=x,y=y)
 
@@ -11,18 +20,21 @@ def createQuizBox(master,x,y,bg_color,QuizName,Owner,categoria, number_questions
     x=10
     y=15
     
-    tittle=ctk.CTkLabel(canvas, text=f"{QuizName}", font=(
+    tittle=ctk.CTkLabel(canvas, text=f"{Nome}", font=(
                 "Roboto", 42, "bold"), bg_color=lightGray, text_color=black, fg_color=lightGray)
     tittle.place(x=x,y=y+30)
-    Autor=ctk.CTkLabel(canvas, text=f"Autor: {Owner}", font=(
+    autor=ctk.CTkLabel(canvas, text=f"Autor: {Autor}", font=(
     "Roboto", 20, "bold"), bg_color=lightGray, text_color=black, fg_color=lightGray)
-    Autor.place(x=x,y=y+90)
-    Categoria=ctk.CTkLabel(canvas, text=f"Categoria: {categoria}", font=(
+    autor.place(x=x,y=y+90)
+    Categoria=ctk.CTkLabel(canvas, text=f"{Categoria}", font=(
                 "Roboto", 20, "bold"), bg_color=lightGray, text_color=black, fg_color=lightGray)
     Categoria.place(x=x,y=y+130)
-    NQuestoes=ctk.CTkLabel(canvas, text=f"N° de Questões: {number_questions}", font=(
+    NQuestoes=ctk.CTkLabel(canvas, text=f"N° de Questões: {NumQuestoes}", font=(
                 "Roboto", 20, "bold"), bg_color=lightGray, text_color=black, fg_color=lightGray)
     NQuestoes.place(x=x,y=y+170)
+
+
+
     ButtonJogar = ctk.CTkButton(
             master=canvas,
             text='Jogar',
@@ -36,4 +48,5 @@ def createQuizBox(master,x,y,bg_color,QuizName,Owner,categoria, number_questions
             corner_radius=360
     )
     ButtonJogar.place(x=269/2-100, y=298+15-62)
-    return ButtonJogar 
+
+    return  tittle,autor,Categoria,NQuestoes,ButtonJogar

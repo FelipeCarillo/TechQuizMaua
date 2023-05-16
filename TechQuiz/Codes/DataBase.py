@@ -4,6 +4,8 @@ import pandas as pd
 from datetime import datetime
 from Account import Account
 
+
+
 user = "usr-techquiz"
 password = "TechQuiz"
 DataBase = "dbtechquiz"
@@ -227,32 +229,62 @@ def getUserRanking(Account):
     cursor.execute(select)
     selfProgress = cursor.fetchall()
     setCloseCxtion(cursor,connection)
-    return selfProgress;
-# Usuario = Account(1,'11133', 'Felipe','Felpim123-','felipe@gamil.com','CIC', '02',3,0,"1")
-# dictPerguntas = {'Você sabe Python':[['Sim',False],['Não',True]],'Como vai?':[['Uma bosta',True],['Felicidade',False]]}
+    return selfProgress
 
-# createQuiz(Usuario,'Felipe','Lóic',dictPerguntas)
+def getQuiz(idJogo):
+    connection = getConnection()
+    cursor = getCursor(connection)
+    select = """
+    select j.idJogo,u.nomeUser, j.nomeJogo, catg.nomeCategoria from jogo as j
+    inner join usuario as u on u.idUser = j.idUser
+    inner join categoria_jogo as catg on catg.idCategoria = j.idCategoria
+    where j.idJogo = %(idJogo)s
+    """
+    values={'idJogo':idJogo}
+    cursor.execute(select,values)
+    Jogo=cursor.fetchone()
+    setCloseCxtion(cursor,connection)
+    return Jogo
 
 
+def getQtdQuestoes(idJogo):
+    connection = getConnection()
+    cursor = getCursor(connection)
+    select = """
+    select count(*) from jogo as j 
+    inner join perguntas as pg on pg.idJogo = j.idJogo
+    where j.idJogo = %(idJogo)s
+    """
+    values={'idJogo':idJogo}
+    cursor.execute(select,values)
+    select=cursor.fetchone()
+    setCloseCxtion(cursor,connection)
+    return select[0]
 
+def getPerAltQuiz(idJogo):
+    connection = getConnection()
+    cursor = getCursor(connection)
+    select = """
+    select pg.idPergunta,pg.Pergunta, alt.Alternativa, alt.isRight from jogo as j 
+    inner join perguntas as pg on pg.idJogo = j.idJogo
+    inner join alternativas as alt on pg.idPergunta = alt.idPergunta
+    where j.idJogo = %(idJogo)s
+    """
+    values={'idJogo':idJogo}
+    cursor.execute(select,values)
+    select=cursor.fetchall()
+    setCloseCxtion(cursor,connection)
+    df=pd.DataFrame(select,columns=('ID','Pergunta','Alternativa','isRight'))
+    df.set_index('ID',inplace=True)
+    dict = {}
+    for index, row in df.iterrows():
+        Pergunta = row['Pergunta']
+        dict[Pergunta]=[]
 
-# # Inserir perguntas e respostas
-# def inputPerguntaResposta(nameTable, Pergunta, respostaCorreta, resposta1, resposta2, resposta3, resposta4):
-#     cursor = getCursor()
-
-#     insertDatas = "INSERT INTO {} (Pergunta, respostaCorreta, resposta1, resposta2, resposta3, resposta4) Values (%(Pergunta)s, %(respostaCorreta)s, %(resposta1)s, %(resposta2)s, %(resposta3)s, %(resposta4)s)".format(
-#         nameTable
-#     )
-
-#     values = {
-#         "Pergunta": Pergunta,
-#         "respostaCorreta": respostaCorreta,
-#         "resposta1": resposta1,
-#         "resposta2": resposta2,
-#         "resposta3": resposta3,
-#         "resposta4": resposta4,
-#     }
-
-#     cursor.execute(insertDatas, values)
-
-#     connection.commit()
+    for index, row in df.iterrows():
+        Pergunta = row['Pergunta']
+        Alternativa = row['Alternativa']
+        isRight = row['isRight']
+        dict[Pergunta].append([Alternativa,isRight])
+    
+    return dict
