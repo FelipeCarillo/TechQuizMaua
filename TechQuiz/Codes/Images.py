@@ -1,11 +1,12 @@
-from PIL import Image, ImageTk
+from PIL import Image
+from customtkinter import CTkImage
 
 
 def loadImage(path, resize=None):
     if resize != None:
-        return ImageTk.PhotoImage(Image.open(path).resize(resize))
+        return CTkImage(Image.open(path),size=resize)
     else:
-        return ImageTk.PhotoImage(Image.open(path))
+        return CTkImage(Image.open(path),size=resize)
 
 
 def ImageLogo(resize=None):
@@ -13,7 +14,12 @@ def ImageLogo(resize=None):
         return loadImage("TechQuiz\Imagens\LOGO.png", resize)
     else:
         return loadImage("TechQuiz\Imagens\LOGO.png")
-
+    
+def ImageExcel(resize=None):
+    if resize != None:
+        return loadImage("TechQuiz\Imagens\logoExcel.png", resize)
+    else:
+        return loadImage("TechQuiz\Imagens\logoExcel.png")
 
 def ImageInformation(resize=None):
     if resize != None:

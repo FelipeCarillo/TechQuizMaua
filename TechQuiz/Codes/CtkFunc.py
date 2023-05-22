@@ -34,21 +34,45 @@ def createQuizBox(master,x,y,bg_color,Quiz,NumQuestoes,command,width=None,height
                 "Roboto", 20, "bold"), bg_color=lightGray, text_color=black, fg_color=lightGray)
     NQuestoes.place(x=x,y=y+170)
 
+    
     ButtonJogar = ctk.CTkButton(
-            master=canvas,
-            text='Jogar',
-            font=("Roboto", 28, "bold"),
-            width=200,
-            height=32,
-            command=command,
-            fg_color=mainBlue,
-            bg_color=lightGray,
-            hover_color=hoverColor,
-            corner_radius=360
+        master=canvas,
+        text='Jogar',
+        font=("Roboto", 28, "bold"),
+        width=200,
+        height=32,
+        fg_color=mainBlue,
+        bg_color=lightGray,
+        hover_color=hoverColor,
+        corner_radius=360
     )
     ButtonJogar.place(x=269/2-100, y=298+15-62)
+    
+    if command == None:
+        ButtonJogar.destroy()
 
     if width !=None and height !=None:
         canvas.configure(width=width,height=height)
 
-    return  tittle,autor,Categoria,NQuestoes,ButtonJogar
+    return tittle,autor,Categoria,NQuestoes,ButtonJogar
+    
+def InfoRnkBox(parent, x, y, username, progress, underline=None):
+    ctk.CTkLabel(parent,width=660,height=42,text=None,corner_radius=20,bg_color=lightGray2,fg_color=mainBlue).place(x=x,y=y)
+    text = ctk.CTkLabel(parent,text=username,font=("Roboto", 32, "bold"),bg_color=mainBlue,fg_color=mainBlue)
+    text.place(x=x+20,y=y+2.5)
+    if underline:
+        text.configure(font=("Roboto", 32, "bold","underline"))
+    else:
+        text.configure(font=("Roboto", 32, "bold"))
+
+    ctk.CTkLabel(parent,width=80,text=progress,font=("Roboto", 32, "bold"),bg_color=mainBlue,fg_color=mainBlue,anchor='e').place(x=x+560,y=y+2.5)
+
+def chngQuizBoxData(slctQuiz,varQtdQuestoes,title,autor,categoria,nquestoes,buttonjogar,searchButton):
+    title.configure(text=slctQuiz.get_nome())
+    autor.configure(text=f"Autor: {slctQuiz.get_autor()}")
+    categoria.configure(text=slctQuiz.get_categoria())
+    nquestoes.configure(text=f'N° de Questões: {varQtdQuestoes}')
+    if buttonjogar != None:
+        buttonjogar.configure(state='enable')
+        searchButton.configure(state='enable')
+        searchButton.configure(state='enable')

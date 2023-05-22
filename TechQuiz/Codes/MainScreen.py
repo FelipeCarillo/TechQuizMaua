@@ -1,15 +1,15 @@
 import customtkinter as ctk
 from Colors import *
-from DataBase import hasDuplicated, setOneData,getQuiz,getQtdQuestoes,getPerAltQuiz
-from Images import (ImageCheckEdit, ImageRnkgLogo, ImageEdit, ImageLogoNEscrita, ImageLupa,ImageGoBack)
+from DataBase import hasDuplicated, setOneData,getInfoQuiz,getQtdQuestoes,getPerAltQuiz, getUserRanking,getRankingTop,getRnkgAll 
+from Images import (ImageCheckEdit, ImageRnkgLogo, ImageEdit, ImageLogoNEscrita,ImageGoBack,ImageExcel)
 from Account import *
 from checkValidation_Username_Email_Password import check_user_operation
-from CtkFunc import createQuizBox
+from CtkFunc import createQuizBox, InfoRnkBox, chngQuizBoxData
 from Quiz import Quiz
 
 Width = 1920
 Height = 1020
-class MainScreen(ctk.CTk):
+class MainScreen(ctk.CTkToplevel):
     def __init__(self,Account):
         super().__init__()
         self.geometry("1920x1020")
@@ -46,8 +46,7 @@ class Menu(ctk.CTkFrame):
         gridInfo.create_rectangle(0, 0, 400, 50, fill=darkBlue, outline=darkBlue)
         gridInfo.create_rectangle(0, 970, 400, 970 + 50, fill=darkBlue, outline=darkBlue)
 
-        ctk.CTkButton(gridInfo,image=imageLogoNPng,fg_color=mainBlue,state='disable',text='').place(x=50,y= 180)
-
+        ctk.CTkButton(gridInfo,image=ImageLogoNEscrita([300, 280]),fg_color=mainBlue,state='disable',text='').place(x=50,y= 180)
 
         # Opções
         gridOpcoes = ctk.CTkCanvas(
@@ -203,21 +202,16 @@ class Menu(ctk.CTkFrame):
         def getQuizSearch():
             global slctQuiz
             idJogo = QuizSearch.get()
-            if len(idJogo) == 1:
+            if len(idJogo) == 4:
                 try:
                     searchButton.configure(state='disabled')
                     slctQuiz=Quiz(idJogo,None,None,None,None)
-                    dados = getQuiz(idJogo)
+                    dados = getInfoQuiz(idJogo)
                     slctQuiz.set_autor(dados[1])
                     slctQuiz.set_nome(dados[2])
                     varQtdQuestoes = getQtdQuestoes(idJogo)
                     slctQuiz.set_categoria(dados[3])
-                    title.configure(text=slctQuiz.get_nome())
-                    autor.configure(text=f"Autor: {slctQuiz.get_autor()}")
-                    categoria.configure(text=slctQuiz.get_categoria())
-                    nquestoes.configure(text=f'N° de Questões: {varQtdQuestoes}')
-                    buttonjogar.configure(state='enable')
-                    searchButton.configure(state='enable')
+                    chngQuizBoxData(slctQuiz,varQtdQuestoes,title,autor,categoria,nquestoes,buttonjogar,searchButton)
                 except:
                     searchButton.configure(state='enable')
 
@@ -231,38 +225,89 @@ class Menu(ctk.CTkFrame):
 class Ranking(ctk.CTkFrame):
     def __init__(self, parent, Account):
 
+        cargoUser = Account.getCargo()
+
         parent.title('Techquiz - Ranking')
         parent.config(bg=mainBlue)
 
-        LupaPng = ImageLupa([65,65])
         goBackPng = ImageGoBack([110,105])
+        excelPng = ImageExcel([100,100])
 
         window = ctk.CTkCanvas(parent, background=white, width=Width-50, height=Height-50, highlightthickness=0)
         window.place(x=25, y=25)
 
-        createQuizBox(window,200,260,white,None,None,None)
+        #  Construção do RankingBox
 
-        def getQuizSearch():
-            global slctQuiz
-            idJogo = QuizSearch.get()
-            if len(idJogo) == 4:
-                print()
-            
+        def setRnking(idJogo):
+            UserRank = getUserRanking(Account,idJogo)
+            Username = UserRank[0]
+            UserPgss = UserRank[3]    
+            InfoRnkBox(quizBox,10,95,Username,UserPgss,'underline')
+            Top10Rank = getRankingTop(idJogo)
+            y=162
+            for dados in Top10Rank:
+                Username = dados[0]
+                UserPgss = dados[3]
+                InfoRnkBox(quizBox, 10, y,Username,UserPgss)
+                y+=56
+
+        def buttonExcel(idJogo, nomeJogo, Autor):
+            def setExExcelRnkng():
+                getRnkgAll(Account,idJogo, nomeJogo)
+            autor = Account.getNome()
+            if autor == Autor: 
+                ctk.CTkButton(quizBox, width= 580,text=None,image=excelPng,height=150,corner_radius=20,bg_color=green,fg_color=green,command=setExExcelRnkng).place(x=40,y=250)
+        
+
+
+        ctk.CTkLabel(parent,text='RANKING',font=("Roboto", 82, "bold",'underline'),anchor='w',fg_color=white,bg_color=white,text_color=black).place(x=1140,y=65)
+        ctk.CTkButton(parent,700,750,fg_color=lightGray,bg_color=white,corner_radius=20,state='disable').place(x=960,y=180)
+        quizBox = ctk.CTkCanvas(parent,background=lightGray2, width=680, height=730, highlightthickness=0)
+        quizBox.place(x=970,y=190)
+        if cargoUser == 3:
+            ctk.CTkLabel(parent,width=660,height=60,text=None,corner_radius=20,bg_color=lightGray2,fg_color=mainBlue).place(x=980,y=200)
+            ctk.CTkLabel(parent,text='USERNAME',font=("Roboto", 42, "bold"),bg_color=mainBlue,fg_color=mainBlue).place(x=1000,y=205)
+            ctk.CTkLabel(parent,text='PROGRESSO',font=("Roboto", 42, "bold"),bg_color=mainBlue,fg_color=mainBlue).place(x=1380,y=205)
+
+        # Construção da Pesquisa
+
         def limitar_caracteres(entry, tamanho):
             entry.configure(validate="key", validatecommand=(entry.register(lambda texto: len(texto) <= tamanho), '%P'))
         
-        searchButton = ctk.CTkButton(window,image=LupaPng,bg_color=white,fg_color=lightGray2,border_color=lightGray2,text=None,command=getQuizSearch)
-        searchButton.place(x=490,y=135)
-        
-        QuizSearch = ctk.CTkEntry(master=window,placeholder_text="Busque pelo ID do Jogo",placeholder_text_color=white,font=("Roboto", 30, "bold"),
-                width=383.3,height=65,bg_color=white,fg_color=lightGray2,border_color=lightGray2,text_color=white,border_width=1,justify="center", corner_radius=20
+        def getQuizSearch():
+            global slctQuiz
+            idJogo = QuizSearch.get()
+            if len(idJogo) == 4 or len(idJogo) == 1:
+                try:
+                    searchButton.configure(state='disabled')
+                    slctQuiz=Quiz(idJogo,None,None,None,None)
+                    dados = getInfoQuiz(idJogo)
+                    slctQuiz.set_autor(dados[1])
+                    slctQuiz.set_nome(dados[2])
+                    varQtdQuestoes = getQtdQuestoes(idJogo)
+                    slctQuiz.set_categoria(dados[3])
+                    chngQuizBoxData(slctQuiz,varQtdQuestoes,title,autor,categoria,nquestoes,None,searchButton)
+                    for item in quizBox.place_slaves():
+                        item.place_forget()
+                    if cargoUser == 3:
+                        setRnking(idJogo)
+                    elif cargoUser ==2:
+                        buttonExcel(idJogo,slctQuiz.get_nome(),slctQuiz.get_autor())
+                except:
+                    searchButton.configure(state='enable')
+                searchButton.configure(state='enable')
+
+        QuizSearch = ctk.CTkEntry(master=parent,placeholder_text="Busque pelo ID do Jogo",placeholder_text_color=white,font=("Roboto", 30, "bold"),
+                width=440,height=75,bg_color=white,fg_color=lightGray2,border_color=lightGray2,text_color=white,border_width=1,justify="center", corner_radius=20
             )
-        QuizSearch.place(x=105, y=135)
+        QuizSearch.place(x=200, y=250)
         limitar_caracteres(QuizSearch, 4)
 
+        searchButton = ctk.CTkButton(parent,height=40,corner_radius=20,text='PESQUISAR',fg_color=mainBlue,bg_color=white,hover_color='#1D2D74',font=("Roboto", 30, "bold"),command=getQuizSearch)
+        searchButton.place(x=430,y=330)
+        title, autor,categoria, nquestoes, nothing = createQuizBox(parent,260,400,white,None,0,None)
 
-        ctk.CTkLabel(parent,text='RANKING',font=("Roboto", 72, "bold",'underline'),anchor='w',fg_color=white,bg_color=white,text_color=black).place(x=1092.3,y=64.6)
-        
+        #  Retorno para o Menu.
 
         def apagarRegisters(window):
             for item in window.grid_slaves():
@@ -275,6 +320,5 @@ class Ranking(ctk.CTkFrame):
         buttonGoBack=ctk.CTkButton(parent,image=goBackPng,anchor='nw',fg_color=white,bg_color=white,hover=None,text=None,corner_radius=0,command=GoMenu)
         buttonGoBack.place(x=25,y=25)
 
-
-Usuario = Account(4,'11133', 'Felipe','Felpim123-','felipe@gamil.com','CIC', '02',3,0,"1")
-MainScreen(Usuario).mainloop()
+# Usuario = Account(11,'11133', 'TechQuiz','Felpim123-','felipe@gamil.com','CIC', '02',2,0,"1")
+# MainScreen(Usuario).mainloop()

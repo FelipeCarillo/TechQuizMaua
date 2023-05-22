@@ -3,12 +3,37 @@ from mysql.connector import Error
 import pandas as pd
 from datetime import datetime
 from Account import Account
-
+import pandas as pd
+from time import sleep
 
 
 user = "usr-techquiz"
 password = "TechQuiz"
 DataBase = "dbtechquiz"
+
+
+from smtplib import SMTP
+from email.message import EmailMessage
+
+def sendEmail(fileName,filePath, email):
+
+    file = open(filePath,'rb')
+
+    user = "techquizmaua@gmail.com"
+    password = "wgdomarxnnqlimiu"
+    smtp_porta = 587
+    
+    msg = EmailMessage()
+    msg['To'] = email
+    msg['Subject'] = f"Planilha TechQuiz_{fileName}"
+    msg.add_attachment(file.read(),maintype='application', subtype='octet-stream', filename=f"TechQuiz_{fileName}.xlsx")
+
+    with SMTP("smtp.gmail.com",smtp_porta) as email:
+        email.starttls()
+        email.login(user,password)
+        email.send_message(msg)
+        email.quit()
+
 
 # Conectar com o Banco de Dados.
 def getConnection():
@@ -32,46 +57,6 @@ def getCursor(connection):
 def setCloseCxtion(cursor, connection):
     cursor.close()
     connection.close() 
-
-# Cria o Banco de Dados do jogo.
-def createDataBase():
-    connection=getConnection()
-    cursor = connection.cursor()
-    try:
-        cursor.execute(f"drop database {DataBase}")
-    except:
-        pass
-
-    database_TECHQUIZ = f"CREATE DATABASE {DataBase}"
-    cursor.execute(database_TECHQUIZ)
-
-    use_DataBase = f"USE {DataBase}"
-    cursor.execute(use_DataBase)
-
-    CreateTables = [
-        "CREATE TABLE cargo (idCargo INT PRIMARY KEY, nomeCargo VARCHAR(100) NOT NULL)",
-        "CREATE TABLE usuario (idUser int auto_increment primary key, registroUser char(11) not null, nomeUser varchar(40) not null, senhaUser varchar(40) not null,emailUser varchar(100) not null, cursoUser varchar(100), anoUser char(2), idCargo int not null, foreign key (idCargo) references cargo(idCargo), datetimeSignup datetime not null, FirstLogin boolean not null default true)",
-        "CREATE TABLE categoria_jogo (idCategoria int auto_increment primary key, nomeCategoria varchar(100) not null)",
-        "CREATE TABLE jogo (idJogo int auto_increment primary key, nomeJogo varchar(100) not null, idCategoria int not null, foreign key (idCategoria) references categoria_jogo(idCategoria),idUser int not null, foreign key (idUser) references usuario (idUser))",
-        "CREATE TABLE progresso_usuario (idProgresso int auto_increment primary key, idJogo int not null, foreign key (idJogo) references jogo(idJogo), idUser int not null, foreign key (idUser) references usuario (idUser), progresso varchar(5) not null default 0)",
-        "CREATE TABLE nivel_pergunta(idNivel int auto_increment primary key, nomeNivel varchar(50))",
-        "CREATE TABLE perguntas(idPergunta int auto_increment primary key, idJogo int not null, foreign key (idJogo) references jogo(idJogo), Pergunta varchar(500) not null)",
-        "CREATE TABLE alternativas(idResposta int auto_increment primary key, idPergunta int not null, foreign key (idPergunta) references perguntas(idPergunta), Alternativa varchar(100) not null, isRight boolean not null)",
-    ]
-
-    InsertTables = [
-        'INSERT INTO cargo VALUES (1,"Administrador"), (2,"Professor"), (3, "Aluno")',
-        'INSERT INTO categoria_jogo values (1,"Lógica de Programação"),(2,"Programação Orientada a Objetos"),(3,"Modelagem Orientada a Objetos"), (4,"Banco de Dados Relacionais")',
-        "insert into usuario value (1, 1, 'TechQuiz', 'TechQuiz2023', 'techquizIMT@gmail.com','...','..', 2, '2023-05-08 09:57:00',0)"
-    ]
-
-    for command in CreateTables:
-        cursor.execute(command)
-    for command in InsertTables:
-        cursor.execute(command)
-    connection.commit()
-    setCloseCxtion(cursor,connection)
-    return DataBase
 
 
 # Alteração de um dado.
@@ -204,34 +189,71 @@ def createQuiz(Account,nome,categoria,dictPerguntas):
             connection.commit()
     setCloseCxtion(cursor,connection)
 
-def getRankingTop():
+def getRankingTop(idJogo):
     # idUser = Account.getIdUsuario()
     connection = getConnection()
     cursor = getCursor(connection)
-    select = """select aluno.nomeUser,professor.nomeUser, j.nomeJogo, p.progresso from progresso_usuario as p 
+    select = """select aluno.nomeUser,professor.nomeUser, j.nomeJogo, concat(p.progresso,'%') from progresso_usuario as p 
         inner join jogo as j on p.idJogo = j.idJogo 
         inner join usuario as professor on j.idUser = professor.idUser 
-        inner join usuario as aluno on p.idUser = aluno.idUser order by p.progresso limit 10;"""
-    cursor.execute(select)
+        inner join usuario as aluno on p.idUser = aluno.idUser
+        where j.idJogo = %(id)s order by p.progresso desc limit 10"""
+    value = {'id':idJogo}
+    cursor.execute(select,value)
     lisTop10 = cursor.fetchall()
     setCloseCxtion(cursor,connection)
     return lisTop10
 
-def getUserRanking(Account):
+def getUserRanking(Account,idJogo):
     idUser = Account.getIdUsuario()
     connection = getConnection()
     cursor = getCursor(connection)
-    select = """select aluno.nomeUser,professor.nomeUser, j.nomeJogo, p.progresso  from progresso_usuario as p 
-        inner join jogo as j on p.idJogo = j.idJogo 
-        inner join usuario as professor on j.idUser = professor.idUser 
-        inner join usuario as aluno on p.idUser = aluno.idUser where aluno.idUser = %(id)s;"""
-    value = {'id':idUser}
-    cursor.execute(select)
-    selfProgress = cursor.fetchall()
+        
+    select = """select aluno.nomeUser,professor.nomeUser, j.nomeJogo, concat(p.progresso,'%') from progresso_usuario as p 
+            inner join jogo as j on p.idJogo = j.idJogo 
+            inner join usuario as professor on j.idUser = professor.idUser 
+            inner join usuario as aluno on p.idUser = aluno.idUser 
+            where aluno.idUser = %(idUser)s and j.idJogo = %(idJogo)s order by p.progresso desc limit 1"""
+    values = {'idUser':idUser, 'idJogo':idJogo}
+    cursor.execute(select,values)
+    selfProgress = cursor.fetchone()
+    if selfProgress == None:
+        select = """select u.nomeUser, j.nomeJogo from jogo as j
+                inner join usuario as u on u.idUser = j.idUser 
+                where j.idJogo = %(idJogo)s"""
+        value = {'idJogo':idJogo}
+        cursor.execute(select,value)
+        selfProgress = cursor.fetchone()
+    selfProgress = [Account.getNome(),selfProgress[0],selfProgress[1],"0%"]
     setCloseCxtion(cursor,connection)
     return selfProgress
 
-def getQuiz(idJogo):
+def getRnkgAll(Account,idJogo, nomeJogo):
+    connection = getConnection()
+    cursor = getCursor(connection)
+    select = """select aluno.nomeUser, aluno.registroUser, p.progresso from progresso_usuario as p 
+            inner join jogo as j on p.idJogo = j.idJogo 
+            inner join usuario as professor on j.idUser = professor.idUser 
+            inner join usuario as aluno on p.idUser = aluno.idUser
+            where j.idJogo = %(id)s order by aluno.NomeUser"""
+    value = {'id':idJogo}
+    cursor.execute(select,value)
+    RnkgAll = cursor.fetchall()
+    setCloseCxtion(cursor,connection)
+    dfAll = pd.DataFrame(RnkgAll, columns=('Username', 'Registro', 'Pontuação'))
+    dfBestPoint = dfAll.sort_values(by='Pontuação',ascending=False)
+    dfBestPoint.drop_duplicates(subset='Username',keep='first',inplace=True)
+    dfWorstPoint = dfAll.sort_values(by='Pontuação',ascending=False)
+    dfWorstPoint.drop_duplicates(subset='Username',keep='last',inplace=True)
+    with pd.ExcelWriter(f"TechQuiz\Documentos\Pontuações_{nomeJogo}.xlsx") as writer:
+        dfAll.to_excel(writer,sheet_name='Todas as Pontuações',index=False)
+        dfBestPoint.to_excel(excel_writer=writer,sheet_name='Melhores Pontuações de cada Usuario',index=False)
+        dfWorstPoint.to_excel(excel_writer=writer,sheet_name='Piores Pontuações de cada Usuario',index=False)
+    sendEmail(nomeJogo,f"TechQuiz\Documentos\Pontuações_{nomeJogo}.xlsx",Account.getEmail())
+    
+    
+
+def getInfoQuiz(idJogo):
     connection = getConnection()
     cursor = getCursor(connection)
     select = """
@@ -262,6 +284,7 @@ def getQtdQuestoes(idJogo):
     return select[0]
 
 def getPerAltQuiz(idJogo):
+    
     connection = getConnection()
     cursor = getCursor(connection)
     select = """
@@ -288,3 +311,8 @@ def getPerAltQuiz(idJogo):
         dict[Pergunta].append([Alternativa,isRight])
     
     return dict
+
+# Usuario = Account(11,'11133', 'TechQuiz','Felpim123-','felipecarillo@outlook.com','CIC', '02',3,0,"1")
+# (getRnkgAll(Usuario,1,'Python'))
+
+
