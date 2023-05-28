@@ -36,12 +36,18 @@ def ImageEdit(resize=None):
         return loadImage("TechQuiz\Imagens\EDIT.png")
 
 
+def ImageEdit2(resize=None):
+    if resize != None:
+        return loadImage("TechQuiz\Imagens\EDIT2.png", resize)
+    else:
+        return loadImage("TechQuiz\Imagens\EDIT2.png")
+
+
 def ImageRnkgLogo(resize=None):
     if resize != None:
         return loadImage("TechQuiz\Imagens\RANKING.png", resize)
     else:
         return loadImage("TechQuiz\Imagens\RANKING.png")
-
 
 def ImageLogoNEscrita(resize=None):
     if resize != None:

@@ -24,60 +24,44 @@ class QuizScreen(ctk.CTk):
         varChange = 0
         
         listaQuiz = []
-        for item in questoes:
-            listaQuiz.append(item)
+        for questao in questoes:
+            listaQuiz.append(questao)
         shuffle(listaQuiz)
-        alt = questoes[listaQuiz[varChange]]
-        shuffle(alt)
-        alt1 = alt[0][0]
-        alt2 = alt[1][0]
-        alt3 = alt[2][0]
-        alt4 = alt[3][0]
-        alt1V = alt[0][1]
-        alt2V = alt[1][1]
-        alt3V = alt[2][1]
-        alt4V = alt[3][1]
-        valoresAlternativas = [alt1V,alt2V,alt3V,alt4V]
-        print(valoresAlternativas)
+        numQuest = len(listaQuiz)
 
-        # def apagarRegisters(window):
-        #     for item in window.grid_slaves():
-        #         item.grid_forget()
-        
-        # def GoMenu():
-        #     apagarRegisters(parent)
-        #     MainScreen.setFrame(self=MainScreen,frame=Menu(parent,Account))
+        listaDeAlternativas = []
+        listaValoresDasAlternativas = []
+        listaDasRepostasDasAlternativas = []
+        conjAlternativas = 0
+        while conjAlternativas < numQuest:
+            alt = questoes[listaQuiz[conjAlternativas]]
+            shuffle(alt)
+            alt1 = alt[0][0]
+            alt2 = alt[1][0]
+            alt3 = alt[2][0]
+            alt4 = alt[3][0]
+            alt1V = alt[0][1]
+            alt2V = alt[1][1]
+            alt3V = alt[2][1]
+            alt4V = alt[3][1]
+            listaDeAlternativas.append([alt1,alt2,alt3,alt4])
+            listaValoresDasAlternativas.append([alt1V,alt2V,alt3V,alt4V])
+            listaDasRepostasDasAlternativas.append([False,False,False,False])
+            conjAlternativas +=1
 
-        buttonBack = ctk.CTkButton(
-            screen,
-            text='SAIR',
-            command=None,
-            bg_color=white,
-            fg_color=red,
-            hover_color=red
-        )
-        buttonBack.place(x=30, y=100)
+        # print(listaQuiz[0])
+        # print(listaDeAlternativas[0])
+        # print(listaValoresDasAlternativas[0])
 
-        buttonFinalizar = ctk.CTkButton(
-            screen,
-            text='FINALIZAR',
-            command=None,
-            bg_color=white,
-            fg_color=gray,
-            hover_color=gray
-        )
-        buttonFinalizar.place(x=1750, y=100)
-
-        def callQuest():
+        def chamaQuest(valor):
             None
 
-        numQuest = len(listaQuiz)
         posiQuest = 200
         i = 0
         listaBotoes = []
         while i < numQuest:
             placeNumQuest = ctk.CTkButton(screen,text=i+1,font=("Roboto", 10, "bold"),width=38,height=24,fg_color=lightGray,border_color="#8F8F8F", hover_color=mainBlue,
-                         border_width=5, text_color=black,corner_radius=10, command=callQuest)
+                         border_width=5, text_color=black,corner_radius=10, command=chamaQuest)
             if i <=35:
                 placeNumQuest.place(x=posiQuest,y=900)
                 posiQuest += 42
@@ -116,159 +100,108 @@ class QuizScreen(ctk.CTk):
             linha = ""
             frase = ""
             for palavra in aux:
-                if len(linha + palavra + " ") >= 30:
+                if len(linha + palavra + " ") >= 25:
                     linha += '\n'
                     frase += linha
                     linha = ""
                 linha += palavra + " "
             frase += linha
             return frase
-        
-        def frases():
-            global frase1, frase2, frase3, frase4
-            frase1 = formata_texto(alt1)
-            frase2 = formata_texto(alt2)
-            frase3 = formata_texto(alt3)
-            frase4 = formata_texto(alt4)
-        frases()
 
-        global alter1, alter2, alter3, alter4
-        def botao1_precionado():
-            global alter1
-            if alter1 == False:
-                opcao1.configure(fg_color=mainBlue)
-                alter1 = True
-            else:
+        def botao1_precionado(onlyshow=False):
+            if onlyshow == False:
+                listaDasRepostasDasAlternativas[varChange][0] = not listaDasRepostasDasAlternativas[varChange][0] 
+            if listaDasRepostasDasAlternativas[varChange][0] == False:
                 opcao1.configure(fg_color=lightGray)
-                alter1 = False
-        def botao2_precionado():
-            global alter2
-            if alter2 == False:
-                opcao2.configure(fg_color=mainBlue)
-                alter2 = True
             else:
-                opcao2.configure(fg_color=lightGray)
-                alter2 = False
-        def botao3_precionado():
-            global alter3
-            if alter3 == False:
-                opcao3.configure(fg_color=mainBlue)
-                alter3 = True
-            else:
-                opcao3.configure(fg_color=lightGray)
-                alter3 = False
-        def botao4_precionado():
-            global alter4
-            if alter4 == False:
-                opcao4.configure(fg_color=mainBlue)
-                alter4 = True
-            else:
-                opcao4.configure(fg_color=lightGray)
-                alter4 = False
+                opcao1.configure(fg_color=mainBlue)
+            opcao1.configure(text=formata_texto(listaDeAlternativas[varChange][0]))
 
-        opcao1 = ctk.CTkButton(screen,width=600,height=200,fg_color=lightGray,hover_color=mainBlue,text=frase1,font=("Roboto", 34, "bold"),text_color=black,corner_radius=45,border_color="#8F8F8F",border_width=4, command=botao1_precionado)
+        def botao2_precionado(onlyshow=False):
+            if onlyshow == False:
+                listaDasRepostasDasAlternativas[varChange][1] = not listaDasRepostasDasAlternativas[varChange][1] 
+            if listaDasRepostasDasAlternativas[varChange][1] == False:
+                opcao2.configure(fg_color=lightGray)
+            else:
+                opcao2.configure(fg_color=mainBlue)
+            opcao2.configure(text=formata_texto(listaDeAlternativas[varChange][1]))
+            
+        def botao3_precionado(onlyshow=False):
+            if onlyshow == False:
+                listaDasRepostasDasAlternativas[varChange][2] = not listaDasRepostasDasAlternativas[varChange][2] 
+            if listaDasRepostasDasAlternativas[varChange][2] == False:
+                opcao3.configure(fg_color=lightGray)
+            else:
+                opcao3.configure(fg_color=mainBlue)
+            opcao3.configure(text=formata_texto(listaDeAlternativas[varChange][2]))
+
+        def botao4_precionado(onlyshow=False):
+            if onlyshow == False:
+                listaDasRepostasDasAlternativas[varChange][3] = not listaDasRepostasDasAlternativas[varChange][3] 
+            if listaDasRepostasDasAlternativas[varChange][3] == False:
+                opcao4.configure(fg_color=lightGray)
+            else:
+                opcao4.configure(fg_color=mainBlue)
+            opcao4.configure(text=formata_texto(listaDeAlternativas[varChange][3]))
+
+        opcao1 = ctk.CTkButton(screen,width=600,height=200,fg_color=lightGray,hover_color=mainBlue,text="frase1",font=("Roboto", 34, "bold"),text_color=black,corner_radius=45,border_color="#8F8F8F",border_width=4, command=botao1_precionado)
         opcao1.place(x=200,y=450)
-        opcao2 = ctk.CTkButton(screen,width=600,height=200,fg_color=lightGray,hover_color=mainBlue,text=frase2,font=("Roboto", 34, "bold"),text_color=black,corner_radius=45,border_color="#8F8F8F",border_width=4, command=botao2_precionado)
+        opcao2 = ctk.CTkButton(screen,width=600,height=200,fg_color=lightGray,hover_color=mainBlue,text="frase2",font=("Roboto", 34, "bold"),text_color=black,corner_radius=45,border_color="#8F8F8F",border_width=4, command=botao2_precionado)
         opcao2.place(x=200,y=670)
-        opcao3 = ctk.CTkButton(screen,width=600,height=200,fg_color=lightGray,hover_color=mainBlue,text=frase3,font=("Roboto", 34, "bold"),text_color=black,corner_radius=45,border_color="#8F8F8F",border_width=4, command=botao3_precionado)
+        opcao3 = ctk.CTkButton(screen,width=600,height=200,fg_color=lightGray,hover_color=mainBlue,text="frase3",font=("Roboto", 34, "bold"),text_color=black,corner_radius=45,border_color="#8F8F8F",border_width=4, command=botao3_precionado)
         opcao3.place(x=1120,y=450)
-        opcao4 = ctk.CTkButton(screen,width=600,height=200,fg_color=lightGray,hover_color=mainBlue,text=frase4,font=("Roboto", 34, "bold"),text_color=black,corner_radius=45,border_color="#8F8F8F",border_width=4, command=botao4_precionado)
+        opcao4 = ctk.CTkButton(screen,width=600,height=200,fg_color=lightGray,hover_color=mainBlue,text="frase4",font=("Roboto", 34, "bold"),text_color=black,corner_radius=45,border_color="#8F8F8F",border_width=4, command=botao4_precionado)
         opcao4.place(x=1120,y=670)
 
         def restoreButtonState():
-            global alter1, alter2, alter3, alter4
-            alter1 = salvaBotoesList[varChange][0]
-            alter2 = salvaBotoesList[varChange][1]
-            alter3 = salvaBotoesList[varChange][2]
-            alter4 = salvaBotoesList[varChange][3]
-            botao1_precionado()
-            botao2_precionado()
-            botao3_precionado()
-            botao4_precionado()
-            botao1_precionado()
-            botao2_precionado()
-            botao3_precionado()
-            botao4_precionado()
+            botao1_precionado(True)
+            botao2_precionado(True)
+            botao3_precionado(True)
+            botao4_precionado(True)
         
-        def resetBottonState():
-            global alter1, alter2, alter3, alter4
-            alter1 = True
-            alter2 = True
-            alter3 = True
-            alter4 = True
-            botao1_precionado()
-            botao2_precionado()
-            botao3_precionado()
-            botao4_precionado()
-        resetBottonState()
-
-        salvaBotoesList = []
-        salvaBotoesVar = 0
-        while salvaBotoesVar < numQuest:
-            salvaBotoesList.append([False,False,False,False])
-            salvaBotoesVar +=1
-
-        def saveBottonState():
-            salvaBotoesList[varChange]=[alter1, alter2, alter3, alter4]
-            # print(varChange)
-            # print(salvaBotoesList)
-
         def showNumberQuestion():
             for botoes in listaBotoes:
                 botoes.configure(border_color="#8F8F8F")
             questaoAtual = listaBotoes[varChange]
             questaoAtual.configure(border_color=mainBlue)
+        
+        def verificaResposta():
+            questaoAtual = listaBotoes[varChange]
+            questaoAtual.configure(fg_color=lightGray)
+            for resposta in listaDasRepostasDasAlternativas[varChange]:
+                if resposta == True:
+                    questaoAtual.configure(fg_color=green)
 
 
         def mudaPagB():
             global varChange
             if varChange > 0:
-                saveBottonState()
+                verificaResposta()
                 varChange = varChange-1
                 pergunta.configure(text=listaQuiz[varChange])
                 #botoes
-                global alt1, alt2, alt3, alt4
-                alt = questoes[listaQuiz[varChange]]
-                alt1 = alt[0][0]
-                alt2 = alt[1][0]
-                alt3 = alt[2][0]
-                alt4 = alt[3][0]
-                global frase1, frase2, frase3, frase4
-                frase1 = formata_texto(alt1)
-                frase2 = formata_texto(alt2)
-                frase3 = formata_texto(alt3)
-                frase4 = formata_texto(alt4)
-                opcao1.configure(text=frase1)
-                opcao2.configure(text=frase2)
-                opcao3.configure(text=frase3)
-                opcao4.configure(text=frase4)
                 restoreButtonState()
                 showNumberQuestion()
+                # print('')
+                # print(listaQuiz[varChange])
+                # print(listaDeAlternativas[varChange])
+                # print(listaValoresDasAlternativas[varChange])
+                # print(listaDasRepostasDasAlternativas)
                 
         def mudaPagF():
             global varChange
             if varChange < numQuest-1:
-                saveBottonState()
+                verificaResposta()
                 varChange = varChange+1
                 pergunta.configure(text=listaQuiz[varChange])
                 #botoes
-                global alt1, alt2, alt3, alt4
-                alt = questoes[listaQuiz[varChange]]
-                alt1 = alt[0][0]
-                alt2 = alt[1][0]
-                alt3 = alt[2][0]
-                alt4 = alt[3][0]
-                global frase1, frase2, frase3, frase4
-                frase1 = formata_texto(alt1)
-                frase2 = formata_texto(alt2)
-                frase3 = formata_texto(alt3)
-                frase4 = formata_texto(alt4)
-                opcao1.configure(text=frase1)
-                opcao2.configure(text=frase2)
-                opcao3.configure(text=frase3)
-                opcao4.configure(text=frase4)
                 restoreButtonState()
                 showNumberQuestion()
+                # print('')
+                # print(listaQuiz[varChange])
+                # print(listaDeAlternativas[varChange])
+                # print(listaValoresDasAlternativas[varChange])
+                # print(listaDasRepostasDasAlternativas)
 
         Seta = ImageGoBack([70, 70])
         Seta2 = ImageGoFoward([70, 70])
@@ -277,6 +210,139 @@ class QuizScreen(ctk.CTk):
 
         questaoAtual = listaBotoes[varChange]
         questaoAtual.configure(border_color=mainBlue)
+
+        botao1_precionado(True)
+        botao2_precionado(True)
+        botao3_precionado(True)
+        botao4_precionado(True)
+
+        def clear_frame():
+            for widgets in screen.winfo_children():
+                widgets.destroy()
+
+        def sair():
+            self.destroy()
+
+        buttonBack = ctk.CTkButton(
+            screen,
+            text='SAIR',
+            command=sair,
+            bg_color=white,
+            fg_color=red,
+            hover_color=red
+        )
+        buttonBack.place(x=30, y=100)
+
+        global validar
+        validar = 0
+        def finalizar():
+            global validar
+            verificaQuiz = 0
+            for resposta in listaDasRepostasDasAlternativas:
+                if resposta[0]==True or resposta[1]==True or resposta[2] == True or resposta[3]==True:
+                    verificaQuiz +=1
+            if verificaQuiz == numQuest:
+                if validar == 0:
+                    validar = 1
+                    Confirmacao()
+                elif validar == 1:
+                    clear_frame()
+                    screen.create_rectangle(0, 0, 50, Height, fill=darkBlue, outline=darkBlue)
+                    screen.create_rectangle(1870, 0, Width, Height, fill=darkBlue, outline=darkBlue)
+                    screen.create_rectangle(200, 100,1720,400,fill=white,outline=white)
+
+                    nome = ctk.CTkEntry(screen,placeholder_text_color=white,placeholder_text="Nome do Jogador", font=("Roboto", 35, "bold"),width=1260,height=90,fg_color=mainBlue,border_color=mainBlue,text_color=white,border_width=1,corner_radius=90,justify="center")
+                    nome.configure(state=ctk.DISABLED)
+                    nome.place(x=330,y=110)
+
+                    acertos = 0
+                    varFinalizadora = 0
+                    telaFinalX = 585.3
+                    telaFinalY = 311.8 
+                    while varFinalizadora < numQuest:
+                        if listaDasRepostasDasAlternativas[varFinalizadora] == listaValoresDasAlternativas[varFinalizadora]:
+                            acertos += 1
+
+                            showErrosEAcertos = ctk.CTkButton(screen,text=varFinalizadora+1,font=("Roboto", 20, "bold"),width=70,height=70,fg_color='#36D437',border_color=black, hover_color='#36D437', border_width=5, text_color=black, command=None)
+                            showErrosEAcertos.place(x=telaFinalX,y=telaFinalY)
+                            if varFinalizadora == 8 or varFinalizadora == 17 or varFinalizadora == 26 or varFinalizadora == 35 or varFinalizadora == 44 or varFinalizadora == 53 or varFinalizadora == 62:
+                                telaFinalX = 585.3
+                                telaFinalY = telaFinalY+80
+                            else:
+                                telaFinalX = telaFinalX+85
+                        else:
+                            showErrosEAcertos = ctk.CTkButton(screen,text=varFinalizadora+1,font=("Roboto", 20, "bold"),width=70,height=70,fg_color="#D43636",border_color=black, hover_color="#D43636", border_width=5, text_color=black, command=None)
+                            showErrosEAcertos.place(x=telaFinalX,y=telaFinalY)
+                            if varFinalizadora == 8 or varFinalizadora == 17 or varFinalizadora == 26 or varFinalizadora == 35 or varFinalizadora == 44 or varFinalizadora == 53 or varFinalizadora == 62:
+                                telaFinalX = 585.3
+                                telaFinalY = telaFinalY+80
+                            else:
+                                telaFinalX = telaFinalX+85  
+                        varFinalizadora = varFinalizadora+1
+                    descAcertos = ctk.CTkButton(screen,text="",font=("Trocchi", 20, "bold"),width=70,height=70,fg_color='#36D437',border_color=black, hover_color='#36D437', border_width=5, text_color=black, command=None).place(x=1404.7,y=791.8)
+                    textoAcertos = ctk.CTkLabel(screen,justify='left',text="Acertos",font=("Roboto", 18),text_color=black,fg_color=white,bg_color=white,wraplength=1720-250).place(x=1487.7,y=812.7)
+                    descErros = ctk.CTkButton(screen,text="",font=("Trocchi", 20, "bold"),width=70,height=70,fg_color="#D43636",border_color=black, hover_color="#D43636", border_width=5, text_color=black, command=None).place(x=1404.7,y=871.8)
+                    textoErros = ctk.CTkLabel(screen,justify='left',text="Erros",font=("Roboto", 18),text_color=black,fg_color=white,bg_color=white,wraplength=1720-250).place(x=1487.7,y=892.7)
+                    resultado = acertos/numQuest * 100
+
+                    resultado ="Resultado: " + str(int(resultado)) + "%"
+                    pontuacao = ctk.CTkEntry(screen,placeholder_text_color=black,placeholder_text=resultado, font=("Roboto", 32.5, "bold"),width=320,height=52,fg_color=white,border_color=white,text_color=black,border_width=1,justify="center")
+                    pontuacao.configure(state=ctk.DISABLED)
+                    pontuacao.place(x=800,y=230)
+
+                    buttonBack = ctk.CTkButton(
+                        screen,
+                        text='Voltar ao menu',
+                        command=sair,
+                        bg_color=white,
+                        fg_color=lightGray,
+                        hover_color=lightGray,
+                        text_color=black
+                    )
+                    buttonBack.place(x=100, y=915)
+            else:
+                AvisoRespostas()
+
+        buttonFinalizar = ctk.CTkButton(
+            screen,
+            text='FINALIZAR',
+            command=finalizar,
+            bg_color=white,
+            fg_color=gray,
+            hover_color=gray
+        )
+        buttonFinalizar.place(x=1750, y=100)
+
+class AvisoRespostas(ctk.CTk):
+     def __init__(self):
+        super().__init__()
+        self.geometry("400x300")
+        self.minsize(400, 300) 
+        self.maxsize(400, 300)
+        self.config(bg="#7D9EFF")
+
+        self.label = ctk.CTkLabel(self, text="Ainda faltam \nquestões a \nserem respondidas\n\nConfira as questões que\nnão estão em verde", font=("Roboto", 30, "bold"), bg_color="#7D9EFF")
+        self.label.pack(padx=20, pady=20)
+
+        self.mainloop()
+
+class Confirmacao(ctk.CTk):
+    def __init__(self):
+        super().__init__()
+        self.geometry("460x350")
+        self.minsize(480, 350) 
+        self.maxsize(480, 350)
+        self.config(bg="#7D9EFF")
+
+        def ok():
+            self.destroy()
+            
+        self.label = ctk.CTkLabel(self, text="AVISO!\n\nApós clicar no botão finalizar\nnovamente você não podera\nalterar as suas respostas, \nrecomendamos revizá-las uma\nultima vez antes de finalizar.", font=("Roboto", 30, "bold"), bg_color="#7D9EFF")
+        self.label.pack(padx=20, pady=20)
+        self.botaoConfirm = ctk.CTkButton(self, text="OK", font=("Roboto", 10, "bold"), bg_color="#7D9EFF", fg_color=green,hover_color=green, command=ok)
+        self.botaoConfirm.place(x=172,y=300)
+
+        self.mainloop()
 
 
 df = getPerAltQuiz(1)
