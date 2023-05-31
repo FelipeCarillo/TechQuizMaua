@@ -1,9 +1,6 @@
 customtkinter
 requests
-json
-re
 mysql-connector
 pandas
 smtplib
-email
 Pillow
