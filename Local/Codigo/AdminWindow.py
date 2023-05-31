@@ -10,7 +10,7 @@ import customtkinter as ctk
 
 def chatGPT(Funcao,Comando):
     try:
-        API_KEY = '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'
+        API_KEY = 'API_KEY_AQUI'
         url = "https://api.openai.com/v1/chat/completions"
         Headers={"Authorization": f"Bearer {API_KEY}","Content-Type":"application/json"}
         id_model = "gpt-3.5-turbo"
@@ -35,7 +35,7 @@ def chatGPT(Funcao,Comando):
         return "Erro, tente novamente mais tarde. Verifique a API KEY."
 
 
-class Administrador(ctk.CTk):
+class AdminMainScreen(ctk.CTk):
     def __init__ (self,Account):
         super().__init__()
         Width = 1920
@@ -43,8 +43,6 @@ class Administrador(ctk.CTk):
         self.geometry("1920x1020")
         self.maxsize(Width, Height)
         self.config(bg="white")
-        Cargo = Account.getCargo()
-        idUser = Account.getIdUsuario()
         self.config(bg=white)
         self.title('TechQuiz - Administrador')
         
@@ -154,5 +152,3 @@ class showTable (ctk.CTkToplevel):
         self.maxsize(Width, Height)
         PNGDataBase=ImageDataBase([Width,Height])
         ctk.CTkButton(self,width=1920,height=1020,state='disabled',image=PNGDataBase,text=None,bg_color=white,fg_color=white).pack()
-
-Administrador(Account(1,1,'TechQuiz','TechQuiz2023','techquizmaua@gmail.com',None,None,1,0,0)).mainloop()

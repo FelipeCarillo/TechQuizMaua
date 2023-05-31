@@ -9,6 +9,7 @@ class ScreenFrstTime(ctk.CTk):
         registro = Usuario.getRegistro()
         self.geometry("700x700")
         self.maxsize(700, 700)
+        self.title("TechQuiz - Bem Vindo")
 
         imageNLogo = ImageLogoNEscrita([300,280])
 
@@ -22,25 +23,22 @@ class ScreenFrstTime(ctk.CTk):
         fundo.grid(column=0, row=0)
 
         def check_Entry():
-            buttonSave.configure(state='disable')
+            buttonSave.configure(state='disabled')
             curso = inputCurso.get()
             ano = inputAno.get()
             var_list = [inputCurso, inputAno]
             try:
                 if all(var.get() for var in var_list):
-                    buttonSave.configure(hover=True)
                     if (len(ano) == 2 or len(ano) == 1)and ano.isnumeric() and len(curso) <= 100:
-                        setOneData(table='usuario',chgAtribute='FirstLogin',chgValue=0, findAtribute="idUser",findValue=registro)
-                        setOneData(table='usuario',chgAtribute='cursoUser',chgValue=curso, findAtribute="idUser",findValue=registro)
-                        setOneData(table='usuario',chgAtribute='anoUser',chgValue=ano, findAtribute="idUser",findValue=registro)
+                        setOneData(table='usuario',chgAtribute='FirstLogin',chgValue=0, findAtribute="registroUser",findValue=registro)
+                        setOneData(table='usuario',chgAtribute='cursoUser',chgValue=curso, findAtribute="registroUser",findValue=registro)
+                        setOneData(table='usuario',chgAtribute='anoUser',chgValue=ano, findAtribute="registroUser",findValue=registro)
                         Usuario.setFirstLogin(0)
                         Usuario.setCurso(curso)
                         Usuario.setAno(ano)
                         self.destroy()
-                    else:
-                        buttonSave.configure(hover=False)
             except:
-                buttonSave.configure(state='enable')
+                buttonSave.configure(state='normal')
 
         def Entry(x, values):
             
@@ -93,10 +91,10 @@ class ScreenFrstTime(ctk.CTk):
             font=("Roboto", 20, "bold"),
             fg_color=white,
             border_width=3,
-            hover_color="#d9d9d9",
+            hover_color=hoverColor,
             border_color=gray,
-            command= check_Entry,
-            hover=False
+            command= check_Entry
         )
 
         buttonSave.place(x=302.5, y=649.4)
+

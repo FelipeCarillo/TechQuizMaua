@@ -10,6 +10,7 @@ class QuizScreen(ctk.CTkToplevel):
         Height = 1020
         super().__init__()
         self.geometry("1920x1020") 
+        self.title("TechQuiz - Quiz")
         self.maxsize(Width, Height)
         screen = ctk.CTkCanvas(self, background="#FFFFFF", width=Width, height=Height, highlightthickness=0)
         screen.pack()
