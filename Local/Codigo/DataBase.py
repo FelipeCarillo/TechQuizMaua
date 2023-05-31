@@ -1,13 +1,12 @@
 from mysql.connector import connect
-from mysql.connector import Error
 import pandas as pd
 from datetime import datetime
 import pandas as pd
 from Local.Codigo.EmailFunction import sendEmail
 
-user = "username"
-password = "password"
-DataBase = "database_name"
+user = "root"
+password = "Felipesql134859"
+DataBase = "dbtechquiz"
 
 # Conectar com o Banco de Dados.
 def getConnection():
@@ -325,13 +324,20 @@ def getDescribe():
     setCloseCxtion(cursor,connection)
     return tables
 
-def operationGPT(message):
+def operationGPT(Funcao,Query):
     connection = getConnection()
     cursor=getCursor(connection)
-    cursor.execute(message)
-    atributes=[atribute[0] for atribute in cursor.description]
-    answer=cursor.fetchall()
-    df = pd.DataFrame(answer,columns=atributes)
-    df = df.to_string()
-    setCloseCxtion(cursor,connection)
-    return df
+    if Funcao == "CONSULTAR":
+        cursor.execute(Query)
+        atributes=[atribute[0] for atribute in cursor.description]
+        answer=cursor.fetchall()
+        df = pd.DataFrame(answer,columns=atributes)
+        df = df.to_string(col_space=15,justify="right")
+        setCloseCxtion(cursor,connection)
+        return df
+    else:
+        cursor.execute(Query)
+        connection.commit()
+        setCloseCxtion(cursor,connection)
+        return "Concluido."
+    

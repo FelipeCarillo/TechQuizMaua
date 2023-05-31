@@ -6,7 +6,7 @@ def loadImage(file, resize=None):
     if resize != None:
         return CTkImage(Image.open(path),size=resize)
     else:
-        return CTkImage(Image.open(file))
+        return CTkImage(Image.open(path))
 
 def ImageLogo(resize=None):
     file = "LOGO.png"
@@ -46,4 +46,8 @@ def ImageLupa(resize=None):
 
 def ImageGoFoward(resize=None):
     file = "Foward.PNG"
+    return loadImage(file, resize)
+
+def ImageDataBase(resize=None):
+    file = "DataBase.png"
     return loadImage(file, resize)

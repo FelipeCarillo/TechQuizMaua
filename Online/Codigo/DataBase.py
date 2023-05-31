@@ -326,13 +326,3 @@ def getDescribe():
     setCloseCxtion(cursor,connection)
     return tables
 
-def operationGPT(message):
-    connection = getConnection()
-    cursor=getCursor(connection)
-    cursor.execute(message)
-    atributes=[atribute[0] for atribute in cursor.description]
-    answer=cursor.fetchall()
-    df = pd.DataFrame(answer,columns=atributes)
-    df = df.to_string()
-    setCloseCxtion(cursor,connection)
-    return df
