@@ -57,7 +57,7 @@ Para executar o projeto com um banco de dados local, siga as etapas abaixo:
 4. Navegue até o diretório do projeto:
 
     ```shell
-    cd TechQuizMaua/Local/Codigo
+    cd Local/Codigo
     ```
 5. Acesse o arquivo DataBase.py: 
 
@@ -79,15 +79,13 @@ Pode ser feito de duas maneiras, localmente ou em um servidor.
    1. Navegue até o diretório do projeto:
 
        ```shell
-       cd TechQuizMaua
+       .. /TechQuizMaua
        ```
-
    2. Execute o arquivo `TechQuiz.py`:
 
       ```shell
       python TechQuizLocal.py
       ```
-
       O programa será iniciado e estará pronto para uso.
 
    3. Siga as instruções fornecidas pelo programa para interagir com ele.
@@ -97,9 +95,8 @@ Pode ser feito de duas maneiras, localmente ou em um servidor.
    1. Navegue até o diretório do projeto:
 
        ```shell
-       cd TechQuizMaua
+       .. /TechQuizMaua
        ```
-
    2. Execute o arquivo `TechQuiz.py`:
 
       ```shell
