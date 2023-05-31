@@ -5,10 +5,6 @@ from datetime import datetime
 import pandas as pd
 from Codigo.EmailFunction import sendEmail
 
-user = "usr-techquiz"
-password = "TechQuiz"
-DataBase = "dbtechquiz"
-
 
 # Conectar com o Banco de Dados.
 def getConnection():
