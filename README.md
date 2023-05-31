@@ -49,7 +49,7 @@ Para executar o projeto com um banco de dados local, siga as etapas abaixo:
 4. Navegue até o diretório do projeto:
 
     ```shell
-    cd TechQuizMaua/Local
+    cd TechQuizMaua/Local/Codigo
     ```
 
 5. Acesse o arquivo DataBase.py: 
