@@ -2,8 +2,8 @@ from PIL import Image
 from customtkinter import CTkImage
 
 def loadImage(file, resize=None):
+    path = f"Imagens/{file}"
     if resize != None:
-        path = f"Imagens/{file}"
         return CTkImage(Image.open(path),size=resize)
     else:
         return CTkImage(Image.open(file))

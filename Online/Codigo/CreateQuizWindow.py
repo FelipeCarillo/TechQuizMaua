@@ -57,9 +57,16 @@ class CreateQuizScreen(ctk.CTkToplevel):
             if len(pergunta) < 601:
                 perguntaEntry.delete(0, 600)
                 perguntaEntry.configure(state=ctk.DISABLED)
-                perguntaLabel.configure(text=pergunta)
                 buttonEditarPergunta.configure(image=confInfosPngP, command=botao_Alterar_Pergunta)
-                listaDeQuestoes[varChange] = pergunta #adiciona a pergunta lista de perguntas
+                inList = [perguntas.lower() for perguntas in listaDeQuestoes]
+                if pergunta.lower() not in inList:
+                    perguntaLabel.configure(text=pergunta)
+                    listaDeQuestoes[varChange] = pergunta #adiciona a pergunta lista de perguntas
+                elif pergunta == "":
+                    None
+                else:
+                    AvisoPerguntaRep()
+                    perguntaLabel.configure(text="")
             else:
                 perguntaLabel.configure(text="Seu texto é grande demais, por favor reformule a sua pergunta para que ela caiba no espaço de 600 caracteres, para seu conhecimento, o texo atual possui " + str(len(pergunta)) + " caracteres.")
 
@@ -587,6 +594,24 @@ class AvisoNomeQuiz(ctk.CTk):
             self.destroy()
 
         self.label = ctk.CTkLabel(self, text="Aviso\nÉ necessário atribuir um nome ao Quiz e categoria ao Quiz", font=("Roboto", 30, "bold"), bg_color="#7D9EFF", wraplength=480)
+        self.label.pack(padx=20, pady=20)
+        self.botaoConfirm = ctk.CTkButton(self, text="OK", font=("Roboto", 10, "bold"), bg_color="#7D9EFF", fg_color=green,hover_color=green, command=ok)
+        self.botaoConfirm.place(x=172,y=300)
+
+        self.mainloop()
+        
+class AvisoPerguntaRep(ctk.CTk):
+     def __init__(self):
+        super().__init__()
+        self.geometry("500x400")
+        self.minsize(520, 400) 
+        self.maxsize(520, 400)
+        self.config(bg="#7D9EFF")
+
+        def ok():
+            self.destroy()
+
+        self.label = ctk.CTkLabel(self, text="Aviso\nEsta pergunta já foi feita anteriormente, por favor crie uma nova.", font=("Roboto", 30, "bold"), bg_color="#7D9EFF", wraplength=480)
         self.label.pack(padx=20, pady=20)
         self.botaoConfirm = ctk.CTkButton(self, text="OK", font=("Roboto", 10, "bold"), bg_color="#7D9EFF", fg_color=green,hover_color=green, command=ok)
         self.botaoConfirm.place(x=172,y=300)

@@ -2,8 +2,6 @@ from Local.Codigo.LoginWindow import LoginMainScreen
 from Local.Codigo.ScreenFirstTime import ScreenFrstTime
 from Local.Codigo.MenuWindow import MainScreen
 
-
-
 def main():
     # Criar a tela de login e iniciar o loop principal
     login_screen = LoginMainScreen()
