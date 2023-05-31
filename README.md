@@ -9,7 +9,10 @@ Antes de executar o projeto, certifique-se de ter os seguintes requisitos instal
 - Pacote `mysql.connector`
 - Pacote `pandas`
 - Pacote `PIL`
+- DBMS `Mysql`
+
 # Instalação
+
 Siga as etapas abaixo para instalar e configurar o projeto:
 1. Clone este repositório em sua máquina local:
    ```shell
@@ -36,14 +39,20 @@ Para executar o projeto com um banco de dados local, siga as etapas abaixo:
     ```shell
     cd TechQuizMaua
     ```
-
-3. Execute o seguinte comando para importar o arquivo SQL:
+    
+3. Execute o seguinte comando para criar um DataBase:
+    
+    ```shell
+    mysql -u username -p -e "CREATE DATABASE database_name;"
+    ```
+    
+5. Execute o seguinte comando para importar o arquivo SQL:
 
     ```shell
     mysql -u username -p database_name < DBTechQuizServer.sql
     ```
 
-    Substitua "username" pelo seu nome de usuário do MySQL e "database_name" pelo nome do banco de dados que deseja usar para o projeto.
+    Substitua "username" pelo seu nome de usuário do MySQL e "database_name" pelo nome do banco de dados que deseja usar       para o projeto.
     Se necessário, forneça a senha quando solicitado.
 
 4. Navegue até o diretório do projeto:
