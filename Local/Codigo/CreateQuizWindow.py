@@ -1,7 +1,7 @@
 import customtkinter as ctk
-from Codigo.Colors import *
-from Codigo.Images import ImageGoBack, ImageGoFoward, ImageEdit, ImageCheckEdit
-from Codigo.DataBase import createQuiz
+from Local.Codigo.Colors import *
+from Local.Codigo.Images import ImageGoBack, ImageGoFoward, ImageEdit, ImageCheckEdit
+from Local.Codigo.DataBase import createQuiz
 
 class CreateQuizScreen(ctk.CTkToplevel):
     def __init__(self, Account):

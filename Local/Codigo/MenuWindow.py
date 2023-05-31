@@ -1,13 +1,13 @@
 import customtkinter as ctk
-from Codigo.Colors import *
-from Codigo.DataBase import hasDuplicated, setOneData,getInfoQuiz,getQtdQuestoes,getPerAltQuiz, getUserRanking,getRankingTop,getRnkgAll, getAllQuizesProf
-from Codigo.Images import (ImageCheckEdit, ImageRnkgLogo, ImageEdit, ImageLogoNEscrita,ImageGoBack,ImageExcel)
-from Codigo.Account import *
-from Codigo.ChecksInputs import check_user_operation
-from Codigo.CtkFunc import createQuizBox, InfoRnkBox, chngQuizBoxData
-from Codigo.Quiz import Quiz
-from Codigo.QuizScreen import QuizScreen
-from Codigo.CreateQuizWindow import CreateQuizScreen
+from Local.Codigo.Colors import *
+from Local.Codigo.DataBase import hasDuplicated, setOneData,getInfoQuiz,getQtdQuestoes,getPerAltQuiz, getUserRanking,getRankingTop,getRnkgAll, getAllQuizesProf
+from Local.Codigo.Images import (ImageCheckEdit, ImageRnkgLogo, ImageEdit, ImageLogoNEscrita,ImageGoBack,ImageExcel)
+from Local.Codigo.Account import *
+from Local.Codigo.ChecksInputs import check_user_operation
+from Local.Codigo.CtkFunc import createQuizBox, InfoRnkBox, chngQuizBoxData
+from Local.Codigo.Quiz import Quiz
+from Local.Codigo.QuizScreen import QuizScreen
+from Local.Codigo.CreateQuizWindow import CreateQuizScreen
 
 Width = 1920
 Height = 1020

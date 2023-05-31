@@ -1,7 +1,7 @@
 import customtkinter as ctk
-from Codigo.Colors import *
-from Codigo.DataBase import setProgress
-from Codigo.Images import ImageGoBack, ImageGoFoward
+from Local.Codigo.Colors import *
+from Local.Codigo.DataBase import setProgress
+from Local.Codigo.Images import ImageGoBack, ImageGoFoward
 from random import shuffle
 
 class QuizScreen(ctk.CTkToplevel):

@@ -1,10 +1,10 @@
 import customtkinter as ctk
 import ctypes
-import Codigo.ChecksInputs as check
-import Codigo.DataBase as con
-from Codigo.Images import ImageLogo, ImageInformation
-from Codigo.Account import Account
-from Codigo.Colors import *
+import Online.Codigo.ChecksInputs as check
+import Online.Codigo.DataBase as con
+from Online.Codigo.Images import ImageLogo, ImageInformation
+from Online.Codigo.Account import Account
+from Online.Codigo.Colors import *
 
 def createTextInput(master, message, msgX, msgY, inpX, inpY):
     title = ctk.CTkLabel(master, text=message, font=(

@@ -15,18 +15,20 @@ Antes de executar o projeto, certifique-se de ter os seguintes requisitos instal
 
 Siga as etapas abaixo para instalar e configurar o projeto:
 1. Clone este repositório em sua máquina local:
+   
    ```shell
    git clone https://github.com/TechIMTGroup/TechQuizMaua
    ```
 2. Acesse o diretório do projeto:
+   
    ```shell
    cd TechQuizMaua
    ```
 3. Instale as dependências do projeto usando o gerenciador de pacotes `pip`:
+   
    ```shell
    pip install -r requirements.txt
    ```
-
 
 ## Instalação do Banco de Dados Local
 
@@ -39,19 +41,16 @@ Para executar o projeto com um banco de dados local, siga as etapas abaixo:
     ```shell
     .. /TechQuizMaua
     ```
-    
 3. Execute o seguinte comando para criar um DataBase:
     
     ```shell
     mysql -u username -p -e "CREATE DATABASE database_name;"
     ```
-    
 5. Execute o seguinte comando para importar o arquivo SQL:
 
     ```shell
     mysql -u username -p database_name < dbTechQuiz.sql
     ```
-
     Substitua "username" pelo seu nome de usuário do MySQL e "database_name" pelo nome do banco de dados que deseja usar       para o projeto.
     Se necessário, forneça a senha quando solicitado.
 
@@ -60,7 +59,6 @@ Para executar o projeto com um banco de dados local, siga as etapas abaixo:
     ```shell
     cd TechQuizMaua/Local/Codigo
     ```
-
 5. Acesse o arquivo DataBase.py: 
 
     ```shell
@@ -68,8 +66,7 @@ Para executar o projeto com um banco de dados local, siga as etapas abaixo:
     password = "password"
     DataBase = "database_name"
     ```
-
-   Substitua "username" pelo seu nome de usuário do MySQL e "database_name" pelo nome do banco de dados que deseja usar para o projeto.
+   Substitua "username" pelo seu nome de usuário do MySQL e "database_name" pelo nome do banco de dados que deseja usar        para o projeto.
    Se necessário, forneça a senha quando solicitado substituindo "password".
 
 
@@ -82,13 +79,13 @@ Pode ser feito de duas maneiras, localmente ou em um servidor.
    1. Navegue até o diretório do projeto:
 
        ```shell
-       cd TechQuizMaua/Local
+       cd TechQuizMaua
        ```
 
    2. Execute o arquivo `TechQuiz.py`:
 
       ```shell
-      python TechQuiz.py
+      python TechQuizLocal.py
       ```
 
       O programa será iniciado e estará pronto para uso.
@@ -100,15 +97,14 @@ Pode ser feito de duas maneiras, localmente ou em um servidor.
    1. Navegue até o diretório do projeto:
 
        ```shell
-       cd TechQuizMaua/Online
+       cd TechQuizMaua
        ```
 
    2. Execute o arquivo `TechQuiz.py`:
 
       ```shell
-      python TechQuiz.py
+      python TechQuizOnline.py
       ```
-
       O programa será iniciado e estará pronto para uso.
 
    3. Siga as instruções fornecidas pelo programa para interagir com ele.
@@ -118,3 +114,4 @@ Pode ser feito de duas maneiras, localmente ou em um servidor.
 Se você tiver alguma dúvida ou sugestão sobre o projeto, sinta-se à vontade para entrar em contato:
 - Email: felipecarillo@outlook.com
 - GitHub: [FelipeCarillo](https://github.com/FelipeCarillo)
+

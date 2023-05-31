@@ -1,6 +1,6 @@
 import requests
 import json
-from Codigo.DataBase import getDescribe, operationGPT
+from Online.Codigo.DataBase import getDescribe, operationGPT
 import customtkinter as ctk
 
 def chatGPT(Message):

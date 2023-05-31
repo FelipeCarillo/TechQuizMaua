@@ -1,10 +1,7 @@
 import customtkinter as ctk
-from Codigo.Colors import *
-from Codigo.DataBase import setOneData
-from Codigo.Images import ImageLogoNEscrita
-
-
-
+from Online.Codigo.Colors import *
+from Online.Codigo.DataBase import setOneData
+from Online.Codigo.Images import ImageLogoNEscrita
 
 class ScreenFrstTime(ctk.CTk):
     def __init__(self, Usuario):

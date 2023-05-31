@@ -1,7 +1,7 @@
 import customtkinter as ctk
-from Codigo.Colors import *
-from Codigo.DataBase import setOneData
-from Codigo.Images import ImageLogoNEscrita
+from Local.Codigo.Colors import *
+from Local.Codigo.DataBase import setOneData
+from Local.Codigo.Images import ImageLogoNEscrita
 
 
 

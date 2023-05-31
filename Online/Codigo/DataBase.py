@@ -3,7 +3,7 @@ from mysql.connector import Error
 import pandas as pd
 from datetime import datetime
 import pandas as pd
-from Codigo.EmailFunction import sendEmail
+from Online.Codigo.EmailFunction import sendEmail
 
 user = "usr-techquiz"
 password = "TechQuiz"

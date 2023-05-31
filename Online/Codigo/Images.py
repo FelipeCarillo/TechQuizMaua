@@ -1,48 +1,49 @@
 from PIL import Image
 from customtkinter import CTkImage
 
-def loadImage(path, resize=None):
+def loadImage(file, resize=None):
+    path = f"Imagens/{file}"
     if resize != None:
         return CTkImage(Image.open(path),size=resize)
     else:
         return CTkImage(Image.open(path))
 
 def ImageLogo(resize=None):
-    path = "imagens\LOGO.png"
-    return loadImage(path, resize)
+    file = "LOGO.png"
+    return loadImage(file, resize)
 
 def ImageExcel(resize=None):
-    path = "imagens\logoExcel.png"
-    return loadImage(path, resize)
+    file = "logoExcel.png"
+    return loadImage(file, resize)
 
 def ImageInformation(resize=None):
-    path = "imagens\Information.png"
-    return loadImage(path, resize)
+    file = "Information.png"
+    return loadImage(file, resize)
 
 def ImageCheckEdit(resize=None):
-    path = "imagens\check.png"
-    return loadImage(path, resize)
+    file = "Check.png"
+    return loadImage(file, resize)
 
 def ImageEdit(resize=None):
-    path = "imagens\EDIT.png"
-    return loadImage(path, resize)
+    file = "EDIT.png"
+    return loadImage(file, resize)
 
 def ImageRnkgLogo(resize=None):
-    path = "imagens\RANKING.png"
-    return loadImage(path, resize)
+    file = "RANKING.png"
+    return loadImage(file, resize)
 
 def ImageLogoNEscrita(resize=None):
-    path = "imagens\LogoSemEscrita.png"
-    return loadImage(path, resize)
+    file = "LogoSemEscrita.png"
+    return loadImage(file, resize)
 
 def ImageGoBack(resize=None):
-    path = "imagens\Back.png"
-    return loadImage(path, resize)
+    file = "Back.png"
+    return loadImage(file, resize)
 
 def ImageLupa(resize=None):
-    path = "imagens\lupa.PNG"
-    return loadImage(path, resize)
+    file = "lupa.PNG"
+    return loadImage(file, resize)
 
 def ImageGoFoward(resize=None):
-    path = "imagens\Foward.PNG"
-    return loadImage(path, resize)
+    file = "Foward.PNG"
+    return loadImage(file, resize)

@@ -1,5 +1,5 @@
 import customtkinter as ctk
-from Codigo.Colors import lightGray,black,mainBlue,lightGray2,hoverColor
+from Local.Codigo.Colors import lightGray,black,mainBlue,lightGray2,hoverColor
 
 def createQuizBox(master,x,y,bg_color,Quiz,NumQuestoes,command,width=None,height=None):
     
