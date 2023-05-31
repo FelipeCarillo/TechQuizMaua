@@ -37,7 +37,7 @@ Para executar o projeto com um banco de dados local, siga as etapas abaixo:
 2. Navegue até o diretório do projeto:
 
     ```shell
-    cd TechQuizMaua
+    .. /TechQuizMaua
     ```
     
 3. Execute o seguinte comando para criar um DataBase:
