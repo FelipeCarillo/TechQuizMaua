@@ -105,17 +105,6 @@ Pode ser feito de duas maneiras, localmente ou em um servidor.
    3. Siga as instruções fornecidas pelo programa para interagir com ele.
 
 ## Contato
-
-
-    
-          
-            
-    
-
-          
-          Expand Down
-    
-    
   
 Se você tiver alguma dúvida ou sugestão sobre o projeto, sinta-se à vontade para entrar em contato:
 - Email: felipecarillo@outlook.com
