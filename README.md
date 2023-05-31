@@ -49,7 +49,7 @@ Para executar o projeto com um banco de dados local, siga as etapas abaixo:
 5. Execute o seguinte comando para importar o arquivo SQL:
 
     ```shell
-    mysql -u username -p database_name < DBTechQuizServer.sql
+    mysql -u username -p database_name < dbTechQuiz.sql
     ```
 
     Substitua "username" pelo seu nome de usuário do MySQL e "database_name" pelo nome do banco de dados que deseja usar       para o projeto.
