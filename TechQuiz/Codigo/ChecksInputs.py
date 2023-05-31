@@ -7,8 +7,13 @@ validacao_com_br_razao = '^[a-z0-9]+[\._]?[a-z0-9]+[@]\w+[.]\w{2,3}\w+[.]\w{2,3}
 estruturaRA = '^[0-9]+[.][0-9]+[-][0-9]'
 estruturaMatricula = '^[0-9]'
 
+estruturaUsername = '^[a-zA-Z0-9]'
+
 def check_user_operation(username):
-    if len(username)>30 or len(username)<4:
+    
+    hasEspecial= any(
+            caracteres for caracteres in username if not caracteres.isalnum())
+    if len(username)>30 or len(username)<4 or hasEspecial:
         return False
        
 
