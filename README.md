@@ -36,20 +36,86 @@ Siga as etapas abaixo para instalar e configurar o projeto:
    ```shell
    pip install -r requirements.txt
    ```
+   
+   
+## Instalação do Banco de Dados Local
 
-   Certifique-se de ter o Python instalado corretamente e que esteja usando a versão correta.
+Para executar o projeto com um banco de dados local, siga as etapas abaixo:
 
-## Uso
+1. Abra o terminal ou prompt de comando.
+   
+2. Navegue até o diretório do projeto:
+ 
+    ```shell
+    cd TechQuizMaua
+    ```
+ 
+3. Execute o seguinte comando para importar o arquivo SQL:
+     
+    ```shell
+    mysql -u username -p database_name < DBTechQuizServer.sql
+    ```
+   
+    Substitua "username" pelo seu nome de usuário do MySQL e "database_name" pelo nome do banco de dados que deseja usar para o projeto.
+    Se necessário, forneça a senha quando solicitado.
 
-1. Execute o arquivo `TechQuiz.py`:
+4. Navegue até o diretório do projeto:
+ 
+    ```shell
+    cd TechQuizMaua/Local
+    ```
 
-   ```shell
-   python TechQuiz.py
-   ```
+5. Acesse o arquivo DataBase.py: 
 
-   O programa será iniciado e estará pronto para uso.
+    ```shell
+    user = "username"
+    password = "password"
+    DataBase = "database_name"
+    ```
+    
+   Substitua "username" pelo seu nome de usuário do MySQL e "database_name" pelo nome do banco de dados que deseja usar para o projeto.
+   Se necessário, forneça a senha quando solicitado substituindo "password".
+   
 
-2. Siga as instruções fornecidas pelo programa para interagir com ele.
+Uma vez que as dependências estejam instaladas e o banco de dados tenha sido criado (se necessário), você estará pronto para executar o projeto.
+
+# Uso
+
+   ## Local
+
+   1. Navegue até o diretório do projeto:
+
+       ```shell
+       cd TechQuizMaua/Local
+       ```
+
+   2. Execute o arquivo `TechQuiz.py`:
+
+      ```shell
+      python TechQuiz.py
+      ```
+
+      O programa será iniciado e estará pronto para uso.
+
+   3. Siga as instruções fornecidas pelo programa para interagir com ele.
+   
+   ## Online 
+   
+   1. Navegue até o diretório do projeto:
+
+       ```shell
+       cd TechQuizMaua/Online
+       ```
+
+   2. Execute o arquivo `TechQuiz.py`:
+
+      ```shell
+      python TechQuiz.py
+      ```
+
+      O programa será iniciado e estará pronto para uso.
+
+   3. Siga as instruções fornecidas pelo programa para interagir com ele.
 
 ## Contato
 
