@@ -12,11 +12,11 @@ def main():
         Usuario = login_screen.get_Account()
 
         if Usuario.getFirstLogin() == 1 and Usuario.getCargo() == 3:
-                        # Abrir a tela de primeira vez
-                        first_time_screen = ScreenFrstTime(Usuario)
-                        first_time_screen.mainloop()
+            # Abrir a tela de primeira vez
+            first_time_screen = ScreenFrstTime(Usuario)
+            first_time_screen.mainloop()
 
-                # Abrir a tela principal
+        # Abrir a tela principal
         main_screen = MainScreen(Usuario)
         main_screen.mainloop()
     except:
