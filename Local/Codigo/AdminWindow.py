@@ -149,6 +149,7 @@ class showTable (ctk.CTkToplevel):
         super().__init__()
         Width = 880
         Height = 600
+        self.title("TechQuiz - DataBase Tables")
         self.maxsize(Width, Height)
         PNGDataBase=ImageDataBase([Width,Height])
         ctk.CTkButton(self,width=1920,height=1020,state='disabled',image=PNGDataBase,text=None,bg_color=white,fg_color=white).pack()
