@@ -10,7 +10,7 @@ import customtkinter as ctk
 
 def chatGPT(Funcao,Comando):
     try:
-        API_KEY = 'API_KEY_AQUI'
+        API_KEY = open("APIKEY.txt","r").readline()
         url = "https://api.openai.com/v1/chat/completions"
         Headers={"Authorization": f"Bearer {API_KEY}","Content-Type":"application/json"}
         id_model = "gpt-3.5-turbo"

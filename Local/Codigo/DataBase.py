@@ -1,27 +1,34 @@
 from mysql.connector import connect
-import pandas as pd
 from datetime import datetime
 import pandas as pd
 from Local.Codigo.EmailFunction import sendEmail
 
-user = "root"
-password = "Felipesql134859"
-DataBase = "dbtechquiz"
+
+class Acesso():
+    def __init__(self):
+        arquivo = open("AcessoBD.txt","r",encoding="utf8").readline().split(' -- ')
+        self.user = arquivo[0]
+        self.password = arquivo[1]
+
+    def _getUser(self):  
+        return self.user
+    def _getPassword(self):  
+        return self.password
 
 # Conectar com o Banco de Dados.
 def getConnection():
+    dados = Acesso()
     connection = connect(
         host="localhost",
-        user=user,
-        passwd=password
+        user=dados._getUser(),
+        passwd=dados._getPassword()
     )
-    
     return connection
 
 # Retorna o Cursor, variável que executa comandos com o Banco de Dados.
 def getCursor(connection):
     cursor = connection.cursor()
-    use_DataBase = f"USE {DataBase}"
+    use_DataBase = "USE dbTechQuiz2023"
     cursor.execute(use_DataBase)
     return cursor
 

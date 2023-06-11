@@ -3,7 +3,6 @@ import re
 validacao_com_razao = '\w+[@]\w+[.]\w{2,3}$'
 validacao_com_br_razao = '^[a-z0-9]+[\._]?[a-z0-9]+[@]\w+[.]\w{2,3}\w+[.]\w{2,3}$'
 
-
 estruturaRA = '^[0-9]+[.][0-9]+[-][0-9]'
 estruturaMatricula = '^[0-9]'
 
