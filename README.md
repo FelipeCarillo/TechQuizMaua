@@ -46,32 +46,41 @@ Para executar o projeto com um banco de dados local, siga as etapas abaixo:
 3. Execute o seguinte comando para criar um DataBase:
     
     ```shell
-    mysql -u username -p -e "CREATE DATABASE database_name;"
+    mysql -u "username" -p -e "CREATE DATABASE dbTechQuiz2023"
     ```
+    Substitua "username" pelo seu nome de usuário do MySQL.
+    Se necessário, forneça a senha quando solicitado.
 5. Execute o seguinte comando para importar o arquivo SQL:
 
     ```shell
-    mysql -u username -p database_name < dbTechQuiz.sql
+    mysql -u "username"-p dbTechQuiz2023 < dbTechQuiz.sql
     ```
-    Substitua "username" pelo seu nome de usuário do MySQL e "database_name" pelo nome do banco de dados que deseja usar       para o projeto.
+    Substitua "username" pelo seu nome de usuário do MySQL.
     Se necessário, forneça a senha quando solicitado.
 
 4. Navegue até o diretório do projeto:
 
     ```shell
-    cd Local/Codigo
+    .. /TechQuizMaua
     ```
-5. Acesse o arquivo DataBase.py: 
+5. Acesse o arquivo AcessoDB.txt: 
 
     ```shell
-    user = "username"
-    password = "password"
-    DataBase = "database_name"
+    username -- password
     ```
-   Substitua "username" pelo seu nome de usuário do MySQL e "database_name" pelo nome do banco de dados que deseja usar        para o projeto.
-   Se necessário, forneça a senha quando solicitado substituindo "password".
-
-
+   Substitua "username" pelo seu nome de usuário do MySQL e forneça a senha substituindo "password".
+   
+   Exemplo:
+   ```shell
+    Tech -- Quiz
+    ```
+   ## Opicional
+      Para a execução da parte administrativa do Jogo Local é necessário a utilização de uma API_KEY da [OPENAI](https://platform.openai.com/account/api-keys), para a implementação da chave acesse o arquvio txt do diretorio:
+      ```shell
+       TechQuizMaua/APIKEY.txt
+      ```
+      E dentro dele substitua o "API_KEY_AQUI" pela sua respectiva chave.
+ 
 Uma vez que as dependências estejam instaladas e o banco de dados tenha sido criado (se necessário), você estará pronto para executar o projeto.
 
 # Uso
