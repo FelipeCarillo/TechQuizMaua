@@ -1,3 +1,4 @@
+tkinter-page
 customtkinter
 requests
 mysql-connector-python==8.0.26

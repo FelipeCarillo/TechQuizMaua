@@ -4,12 +4,14 @@ Já alocados no Jogo, terão 4 “Quizes” que correspondem as disciplinas de L
 Ademais, outra funcionalidade seria os “Quizes Personalizados”, em que os usuários cadastrados como professores, poderão criar “Quizes” sobre diversos assuntos, categorizados como Banco de Dados Relacionais, Programação Orientada a Objetos, Modelagem Orientada a Objetos, Lógica de Programação e outros (poderá registrar nova categoria, ou seja, não se limitando apenas ao curso de CIC e SI). 
 ## Requisitos
 Antes de executar o projeto, certifique-se de ter os seguintes requisitos instalados:
+- `Python` --> [INSTALAÇÃO](https://python.org.br/instalacao-windows/)
+- DBMS `Mysql` --> [INSTALAÇÃO](https://www.alura.com.br/artigos/mysql-do-download-e-instalacao-ate-sua-primeira-tabela)
+- Pacote `tkinter`
 - Pacote `customtkinter`
 - Pacote `requests`
 - Pacote `mysql.connector`
 - Pacote `pandas`
 - Pacote `PIL`
-- DBMS `Mysql`
 
 # Instalação
 
