@@ -225,10 +225,8 @@ class Menu(ctk.CTkFrame):
             
         def getQuizSearch():
             global quizSlcted
-            if Cargo == 3:
-                idJogo = QuizSearch.get()
-            elif Cargo == 2:
-                idJogo = QuizComboBox.get().split(" : ")[0]
+            
+            idJogo = QuizSearch.get()
             if len(idJogo) == 4:
                 try:
                     searchButton.configure(state='disable')

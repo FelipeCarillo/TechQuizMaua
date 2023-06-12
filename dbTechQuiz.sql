@@ -1,3 +1,9 @@
+-- MySQL dump 10.13  Distrib 8.0.32, for Win64 (x86_64)
+--
+-- Host: 127.0.0.1    Database: dbtechquiz
+-- ------------------------------------------------------
+-- Server version	8.0.32
+
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
@@ -17,14 +23,14 @@ DROP TABLE IF EXISTS `alternativas`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `alternativas` (
-  `idResposta` int(11) NOT NULL AUTO_INCREMENT,
-  `idPergunta` int(11) NOT NULL,
+  `idResposta` int NOT NULL AUTO_INCREMENT,
+  `idPergunta` int NOT NULL,
   `Alternativa` varchar(100) NOT NULL,
   `isRight` tinyint(1) NOT NULL,
   PRIMARY KEY (`idResposta`),
   KEY `alternativas_ibfk_1` (`idPergunta`),
-  CONSTRAINT `alternativas_ibfk_1` FOREIGN KEY (`idPergunta`) REFERENCES `perguntas` (`idPergunta`) ON DELETE CASCADE ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=265 DEFAULT CHARSET=latin1;
+  CONSTRAINT `alternativas_ibfk_1` FOREIGN KEY (`idPergunta`) REFERENCES `perguntas` (`idPergunta`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=317 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -45,7 +51,7 @@ DROP TABLE IF EXISTS `cargo`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `cargo` (
-  `idCargo` int(11) NOT NULL,
+  `idCargo` int NOT NULL,
   `nomeCargo` varchar(100) NOT NULL,
   PRIMARY KEY (`idCargo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -69,10 +75,10 @@ DROP TABLE IF EXISTS `categoria_jogo`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `categoria_jogo` (
-  `idCategoria` int(11) NOT NULL AUTO_INCREMENT,
+  `idCategoria` int NOT NULL AUTO_INCREMENT,
   `nomeCategoria` varchar(100) NOT NULL,
   PRIMARY KEY (`idCategoria`)
-) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -81,7 +87,7 @@ CREATE TABLE `categoria_jogo` (
 
 LOCK TABLES `categoria_jogo` WRITE;
 /*!40000 ALTER TABLE `categoria_jogo` DISABLE KEYS */;
-INSERT INTO `categoria_jogo` VALUES (1,'Lógica de Programação'),(2,'Programação Orientada a Objetos'),(3,'Modelagem Orientada a Objetos'),(4,'Banco de Dados Relacionais');
+INSERT INTO `categoria_jogo` VALUES (1,'Lógica de Programação'),(2,'Programação Orientada a Objetos'),(3,'Modelagem Orientada a Objetos'),(4,'Banco de Dados Relacionais'),(31,'Gostosa'),(32,'Python'),(33,'Felipones'),(34,'DssadrQEW');
 /*!40000 ALTER TABLE `categoria_jogo` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -93,16 +99,16 @@ DROP TABLE IF EXISTS `jogo`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `jogo` (
-  `idJogo` int(11) NOT NULL AUTO_INCREMENT,
+  `idJogo` int NOT NULL AUTO_INCREMENT,
   `nomeJogo` varchar(100) NOT NULL,
-  `idCategoria` int(11) NOT NULL,
-  `idUser` int(11) NOT NULL,
+  `idCategoria` int NOT NULL,
+  `idUser` int NOT NULL,
   PRIMARY KEY (`idJogo`),
   KEY `idCategoria` (`idCategoria`),
   KEY `idUser` (`idUser`),
-  CONSTRAINT `jogo_ibfk_1` FOREIGN KEY (`idCategoria`) REFERENCES `categoria_jogo` (`idCategoria`),
-  CONSTRAINT `jogo_ibfk_2` FOREIGN KEY (`idUser`) REFERENCES `usuario` (`idUser`)
-) ENGINE=InnoDB AUTO_INCREMENT=1021 DEFAULT CHARSET=latin1;
+  CONSTRAINT `jogo_ibfk_1` FOREIGN KEY (`idCategoria`) REFERENCES `categoria_jogo` (`idCategoria`) ON DELETE RESTRICT,
+  CONSTRAINT `jogo_ibfk_2` FOREIGN KEY (`idUser`) REFERENCES `usuario` (`idUser`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=1026 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -123,13 +129,13 @@ DROP TABLE IF EXISTS `perguntas`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `perguntas` (
-  `idPergunta` int(11) NOT NULL AUTO_INCREMENT,
-  `idJogo` int(11) NOT NULL,
+  `idPergunta` int NOT NULL AUTO_INCREMENT,
+  `idJogo` int NOT NULL,
   `Pergunta` varchar(500) NOT NULL,
   PRIMARY KEY (`idPergunta`),
   KEY `perguntas_ibfk_1` (`idJogo`),
   CONSTRAINT `perguntas_ibfk_1` FOREIGN KEY (`idJogo`) REFERENCES `jogo` (`idJogo`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=78 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=91 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -150,16 +156,16 @@ DROP TABLE IF EXISTS `progresso_usuario`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `progresso_usuario` (
-  `idProgresso` int(11) NOT NULL AUTO_INCREMENT,
-  `idJogo` int(11) NOT NULL,
-  `idUser` int(11) NOT NULL,
+  `idProgresso` int NOT NULL AUTO_INCREMENT,
+  `idJogo` int NOT NULL,
+  `idUser` int NOT NULL,
   `progresso` decimal(5,2) NOT NULL DEFAULT '0.00',
   PRIMARY KEY (`idProgresso`),
   KEY `progresso_usuario_ibfk_1` (`idJogo`),
   KEY `progresso_usuario_ibfk_2` (`idUser`),
   CONSTRAINT `progresso_usuario_ibfk_1` FOREIGN KEY (`idJogo`) REFERENCES `jogo` (`idJogo`) ON DELETE CASCADE,
   CONSTRAINT `progresso_usuario_ibfk_2` FOREIGN KEY (`idUser`) REFERENCES `usuario` (`idUser`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -179,20 +185,20 @@ DROP TABLE IF EXISTS `usuario`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `usuario` (
-  `idUser` int(11) NOT NULL AUTO_INCREMENT,
+  `idUser` int NOT NULL AUTO_INCREMENT,
   `registroUser` char(11) NOT NULL,
   `nomeUser` varchar(40) NOT NULL,
   `senhaUser` varchar(40) NOT NULL,
   `emailUser` varchar(100) NOT NULL,
   `cursoUser` varchar(100) DEFAULT NULL,
   `anoUser` char(2) DEFAULT NULL,
-  `idCargo` int(11) NOT NULL,
+  `idCargo` int NOT NULL,
   `datetimeSignup` datetime NOT NULL,
   `FirstLogin` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`idUser`),
   KEY `idCargo` (`idCargo`),
   CONSTRAINT `usuario_ibfk_1` FOREIGN KEY (`idCargo`) REFERENCES `cargo` (`idCargo`)
-) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=12357 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -201,7 +207,7 @@ CREATE TABLE `usuario` (
 
 LOCK TABLES `usuario` WRITE;
 /*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
-INSERT INTO `usuario` VALUES (1,'1','TechQuiz','TechQuiz2023','felipecarillo@outlook.com','...','...',1,'2023-05-08 09:57:00',0);
+INSERT INTO `usuario` VALUES (1,'1','TechQuiz','TechQuiz2023','felipecarill@outlook.com','AdminSupremo','..',1,'2023-05-08 09:57:00',0);
 /*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -213,3 +219,5 @@ UNLOCK TABLES;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2023-06-12 16:06:41
