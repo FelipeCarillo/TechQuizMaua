@@ -29,7 +29,7 @@ Siga as etapas abaixo para instalar e configurar o projeto:
 3. Instale as dependências do projeto usando o gerenciador de pacotes `pip`:
    
    ```shell
-   pip install -r requirements.txt
+   pip install -r requirements.txt --user
    ```
 
 ## Instalação do Banco de Dados Local
@@ -53,7 +53,7 @@ Para executar o projeto com um banco de dados local, siga as etapas abaixo:
 5. Execute o seguinte comando para importar o arquivo SQL:
 
     ```shell
-    mysql -u "username"-p dbTechQuiz2023 < dbTechQuiz.sql
+    mysql -u "username" -p dbTechQuiz2023 < dbTechQuiz.sql
     ```
     Substitua "username" pelo seu nome de usuário do MySQL.
     Se necessário, forneça a senha quando solicitado.
