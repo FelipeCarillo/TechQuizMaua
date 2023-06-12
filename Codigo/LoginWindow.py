@@ -112,16 +112,16 @@ class Login(ctk.CTkFrame):
 
         # Botões
         def registrarLogin():
-                buttonLogin.configure(state='disable')
-                def msgError():
-                        textError = ctk.CTkLabel(grid, text="⚠️\nUsername / RA / Matrícula ou a Senha está inválido.", font=(
+            buttonLogin.configure(state='disable')
+            def msgError():
+                textError = ctk.CTkLabel(grid, text="⚠️\nUsername / RA / Matrícula ou a Senha está inválido.", font=(
                             "Roboto Mono Regular", 16, "bold"), text_color="#E10E0E", bg_color="white")
-                        textError.place(x=25, y=550)
+                textError.place(x=25, y=550)
 
-                userLogin = inputUser.get()
-                idCargo = check.indentificador(userLogin)
+            userLogin = inputUser.get()
+            idCargo = check.indentificador(userLogin)
             
-            # try:
+            try:
                 if idCargo == 1:
                     atribute = 'nomeUser'
                 else:
@@ -134,9 +134,9 @@ class Login(ctk.CTkFrame):
                     data = con.getSigma('usuario', atribute, userLogin)
                     LoginMainScreen.set_Account(LoginMainScreen,Account(data[0],data[1],data[2],data[3],data[4],data[5],data[6],data[7],data[9],data[8]))
                     parent.destroy()
-            # except:
-            #     msgError()
-            #     buttonLogin.configure(state='normal') 
+            except:
+                msgError()
+                buttonLogin.configure(state='normal') 
 
         buttonLogin = ctk.CTkButton(grid, width=180, height=52, text="LOGIN", font=(
                 "Roboto Mono Regular", 18, "bold"), corner_radius=6, text_color="#FFFFFF", fg_color="#5271FF", bg_color="#FFFFFF", hover_color="#004AAD", command=registrarLogin)
@@ -233,10 +233,11 @@ class SignUp(ctk.CTkFrame):
                 isDadosCorretos.append(continues)
                 if continues == False:
                     operacao(False, 0, inputUser, "Usuário Inválido.")
+                
                 item = check.indentificador(registro)
+                
                 if item == 3:
-                    registro, continues = operacao(check.check_RA_operation(
-                        registro), registro, inputRegistro, "RA Inválido.")
+                    registro, continues = operacao(check.check_RA_operation(registro), registro, inputRegistro, "RA Inválido.")
                     isDadosCorretos.append(continues)
                     continues = con.hasDuplicated('registroUser', registro)
                     isDadosCorretos.append(continues)
@@ -249,9 +250,14 @@ class SignUp(ctk.CTkFrame):
                     isDadosCorretos.append(continues)
                     continues = con.hasDuplicated('registroUser', registro)
                     isDadosCorretos.append(continues)
+
                     if continues == False:
                         operacao(False, 0, inputRegistro, "Matrícula Inválida.")
                     cargo = 2
+                else:
+                    isDadosCorretos.append(False)
+                    operacao(False, 0, inputRegistro, "Dado Inválido.")
+
                 email, continues = operacao(check.check_email_operation(
                     email), email, inputEmail, "Email Inválido.")
                 isDadosCorretos.append(continues)
@@ -259,6 +265,7 @@ class SignUp(ctk.CTkFrame):
                 isDadosCorretos.append(continues)
                 if continues == False:
                     operacao(False, 0, inputEmail, "Email Inválido.")
+
                 senha, continues = operacao(check.check_password_operation(
                     senha), senha, inputPasswd, "Senha Inválida.")
                 isDadosCorretos.append(continues)
@@ -268,14 +275,14 @@ class SignUp(ctk.CTkFrame):
                     continues = False
                     inputConfirmPasswd.delete(0, 100)
                     inputConfirmPasswd.configure(
-                        placeholder_text="⚠️ Senha não é a mesma.")
+                        placeholder_text="Senha não é a mesma.")
                 isDadosCorretos.append(continues)
                 
                 if False not in isDadosCorretos:
                     con.cadastrarDados(registro, nome, senha, email, str(cargo))
                     GoLogin()
             except:
-                buttonSignup.configure(state='normal')
+                buttonSignup.configure(state=ctk.NORMAL)
         buttonSignup = createButtonInput(
             grid, 180, 52, 23.7, 646.8, registrarLogin, "CADASTRAR")
         
@@ -291,6 +298,7 @@ class SignUp(ctk.CTkFrame):
                 inputPasswd.configure(show="*")
                 inputConfirmPasswd.configure(show="*")
         showPsswdButton(grid,showPasswd, show_Passwd, 23.7, 605)
+        
         def showIftnPasswd():
             textIftnPasswd = "{}\n{}\n{}\n{}\n{}\n{}".format("SENHA DEVE TER:", "- No mínimo 8 e no máximo 40 caracteres.",
                                                             "- No mínimo uma letra MAIÚSCULA.", "- No mínimo um caractere especial.", "- No mínimo uma letra.", "- No mínimo um número.")

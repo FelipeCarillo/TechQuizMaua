@@ -1,32 +1,35 @@
 import re
 
-validacao_com_razao = '\w+[@]\w+[.]\w{2,3}$'
-validacao_com_br_razao = '^[a-z0-9]+[\._]?[a-z0-9]+[@]\w+[.]\w{2,3}\w+[.]\w{2,3}$'
+validacao_email = r'^\w+[@]\w+[.]\w{2,3}(\.\w+)?$'
 
-estruturaRA = '^[0-9]+[.][0-9]+[-][0-9]'
-estruturaMatricula = '^[0-9]'
+estruturaRA = r'^[0-9]+[.][0-9]+[-][0-9]+$'
+estruturaMatricula = r'^[0-9]+$'
 
-estruturaUsername = '^[a-zA-Z0-9]'
+estruturaUsername = r'^[a-zA-Z0-9]+$'
 
 def check_user_operation(username):
     
     hasEspecial= any(
             caracteres for caracteres in username if not caracteres.isalnum())
-    if len(username)>30 or len(username)<4 or hasEspecial:
+    hasLetter= any(
+            caracteres for caracteres in username if caracteres.isalpha())
+    
+    if len(username)>40 or len(username)<4 or hasEspecial and not hasLetter:
         return False
-       
+    else:
+        return True
 
 def check_email_operation(email):
 
-    validacao_com = re.search(validacao_com_razao, email)
-    validacao_com_br = re.search(validacao_com_br_razao, email)
-    if not validacao_com and not validacao_com_br:
+    validacao_email = re.search(validacao_email,email)
+
+    if not validacao_email or len(email)>100:
         return False
+    else:
+        return True
 
 
 def check_password_operation(passwd):
-    
-    verification = []
 
     hasNumber = any(caracteres.isnumeric() for caracteres in passwd)
     hasLetters = any(caracteres.isalpha() for caracteres in passwd)
@@ -34,7 +37,7 @@ def check_password_operation(passwd):
     hasSpecials = any(
             caracteres for caracteres in passwd if not caracteres.isalnum())
 
-    if hasNumber and hasLetters and hasSpecials and hasUPLetters:
+    if hasNumber and hasLetters and hasSpecials and hasUPLetters and len(passwd)<=40:
         return True
     else:
         return False
@@ -47,6 +50,8 @@ def check_RA_operation(RA):
     
     if not val_estruturaRA or tamanhoRA != 10:
         return False
+    else:
+        return True
          
 
 def check_Matricula_operation(Matricula):
@@ -56,6 +61,8 @@ def check_Matricula_operation(Matricula):
     
     if not val_estruturaMatricula or tamanhoMatricula != 5:
         return False
+    else:
+        return True
     
 
 def indentificador(dado):
@@ -67,7 +74,6 @@ def indentificador(dado):
     isMatricula=2
     isRA=3
     
-
     if val_estruturaRA:
         return isRA
     

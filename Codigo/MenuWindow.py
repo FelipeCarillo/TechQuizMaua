@@ -340,6 +340,8 @@ class Ranking(ctk.CTkFrame):
 
         elif cargoUser == 2:
             ListaQuizes=getAllQuizesProf(idUser)
+            if len(ListaQuizes) == 0:
+                ListaQuizes.append('Crie seu primeiro Quiz.')
             QuizComboBox = ctk.CTkComboBox(parent,values=ListaQuizes,width=440,height=75,bg_color=white,fg_color=lightGray2,border_color=lightGray2,text_color=white,button_color=mainBlue,border_width=1, corner_radius=20,font=("Roboto", 30, "bold"))
             QuizComboBox.place(x=200, y=250)
 
