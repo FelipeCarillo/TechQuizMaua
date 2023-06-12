@@ -121,5 +121,5 @@ Pode ser feito de duas maneiras, localmente ou em um servidor.
   
 Se você tiver alguma dúvida ou sugestão sobre o projeto, sinta-se à vontade para entrar em contato:
 - Email: felipecarillo@outlook.com
-- GitHub: [FelipeCarillo](https://github.com/FelipeCarillo)
+- GitHub: [TechIMTGroup](https://github.com/TechIMTGroup)
 
