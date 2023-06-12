@@ -114,12 +114,3 @@ Pode ser feito de duas maneiras, localmente ou em um servidor.
       python TechQuizOnline.py
       ```
       O programa será iniciado e estará pronto para uso.
-
-   3. Siga as instruções fornecidas pelo programa para interagir com ele.
-
-## Contato
-  
-Se você tiver alguma dúvida ou sugestão sobre o projeto, sinta-se à vontade para entrar em contato:
-- Email: felipecarillo@outlook.com
-- GitHub: [FelipeCarillo](https://github.com/FelipeCarillo)
-
