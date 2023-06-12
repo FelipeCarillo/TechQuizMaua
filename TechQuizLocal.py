@@ -1,7 +1,7 @@
-from Local.Codigo.LoginWindow import LoginMainScreen
-from Local.Codigo.ScreenFirstTime import ScreenFrstTime
-from Local.Codigo.MenuWindow import MainScreen
-from Local.Codigo.AdminWindow import AdminMainScreen
+from Codigo.LoginWindow import LoginMainScreen
+from Codigo.ScreenFirstTime import ScreenFrstTime
+from Codigo.MenuWindow import MainScreen
+from Codigo.AdminWindow import AdminMainScreen
 
 def main():
     # Criar a tela de login e iniciar o loop principal
