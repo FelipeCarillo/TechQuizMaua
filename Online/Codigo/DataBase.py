@@ -1,29 +1,22 @@
 from mysql.connector import connect
-from mysql.connector import Error
 import pandas as pd
 from datetime import datetime
-import pandas as pd
 from Online.Codigo.EmailFunction import sendEmail
-
-user = "usr-techquiz"
-password = "TechQuiz"
-DataBase = "dbtechquiz"
 
 # Conectar com o Banco de Dados.
 def getConnection():
     connection = connect(
         host="mysql246.umbler.com",
         port='41890',
-        user=user,
-        passwd=password
+        user="usr-techquiz",
+        passwd="TechQuiz"
     )
-    
     return connection
 
 # Retorna o Cursor, variável que executa comandos com o Banco de Dados.
 def getCursor(connection):
     cursor = connection.cursor()
-    use_DataBase = f"USE {DataBase}"
+    use_DataBase = "USE dbtechquiz"
     cursor.execute(use_DataBase)
     return cursor
 

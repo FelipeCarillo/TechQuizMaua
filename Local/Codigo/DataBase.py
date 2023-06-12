@@ -15,6 +15,7 @@ class Acesso():
     def _getPassword(self):  
         return self.password
 
+
 # Conectar com o Banco de Dados.
 def getConnection():
     dados = Acesso()

@@ -214,6 +214,7 @@ class QuizScreen(ctk.CTkToplevel):
             screen,
             text='SAIR',
             command=sair,
+            font=("Roboto", 20, "bold"),
             bg_color=white,
             fg_color=red,
             hover_color=red
@@ -283,6 +284,7 @@ class QuizScreen(ctk.CTkToplevel):
                         screen,
                         text='Voltar ao menu',
                         command=sair,
+                        font=("Roboto", 20, "bold"),
                         bg_color=white,
                         fg_color=lightGray,
                         hover_color=lightGray,
@@ -296,6 +298,7 @@ class QuizScreen(ctk.CTkToplevel):
             screen,
             text='FINALIZAR',
             command=finalizar,
+            font=("Roboto", 20, "bold"),
             bg_color=white,
             fg_color=gray,
             hover_color=gray
@@ -306,12 +309,18 @@ class AvisoRespostas(ctk.CTk):
      def __init__(self):
         super().__init__()
         self.geometry("400x300")
+        self.title("TechQuiz - Aviso")
         self.minsize(400, 300) 
         self.maxsize(400, 300)
         self.config(bg="#7D9EFF")
+        
+        def ok():
+            self.destroy()
 
         self.label = ctk.CTkLabel(self, text="Ainda faltam \nquestões a \nserem respondidas\n\nConfira as questões que\nnão estão em verde", font=("Roboto", 30, "bold"), bg_color="#7D9EFF")
         self.label.pack(padx=20, pady=20)
+        self.botaoConfirm = ctk.CTkButton(self, text="OK", font=("Roboto", 30, "bold"), bg_color="#7D9EFF", fg_color=green,hover_color=green, command=ok)
+        self.botaoConfirm.place(x=122,y=250)
 
         self.mainloop()
 
@@ -319,6 +328,7 @@ class Confirmacao(ctk.CTk):
     def __init__(self):
         super().__init__()
         self.geometry("460x350")
+        self.title("TechQuiz - Aviso")
         self.minsize(480, 350) 
         self.maxsize(480, 350)
         self.config(bg="#7D9EFF")
@@ -328,7 +338,7 @@ class Confirmacao(ctk.CTk):
             
         self.label = ctk.CTkLabel(self, text="AVISO!\n\nApós clicar no botão finalizar\nnovamente você não podera\nalterar as suas respostas, \nrecomendamos revizá-las uma\nultima vez antes de finalizar.", font=("Roboto", 30, "bold"), bg_color="#7D9EFF")
         self.label.pack(padx=20, pady=20)
-        self.botaoConfirm = ctk.CTkButton(self, text="OK", font=("Roboto", 10, "bold"), bg_color="#7D9EFF", fg_color=green,hover_color=green, command=ok)
-        self.botaoConfirm.place(x=172,y=300)
+        self.botaoConfirm = ctk.CTkButton(self, text="OK", font=("Roboto", 30, "bold"), bg_color="#7D9EFF", fg_color=green,hover_color=green, command=ok)
+        self.botaoConfirm.place(x=162,y=300)
 
         self.mainloop()

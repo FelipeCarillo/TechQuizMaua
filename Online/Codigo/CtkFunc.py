@@ -22,7 +22,7 @@ def createQuizBox(master,x,y,bg_color,Quiz,NumQuestoes,command,width=None,height
     y=15
     
     tittle=ctk.CTkLabel(canvas, text=f"{Nome}", font=(
-                "Roboto", 42, "bold"), bg_color=lightGray, text_color=black, fg_color=lightGray, wraplength= 269, justify='left'
+                "Roboto", 30, "bold"), bg_color=lightGray, text_color=black, fg_color=lightGray, wraplength= 260, justify='left'
                 )
     y+=30
     tittle.place(x=x,y=y)
@@ -79,6 +79,6 @@ def chngQuizBoxData(slctQuiz,varQtdQuestoes,title,autor,categoria,nquestoes,butt
     categoria.configure(text=slctQuiz.get_categoria())
     nquestoes.configure(text=f'N° de Questões: {varQtdQuestoes}')
     if buttonjogar != None:
-        buttonjogar.configure(state='enable')
-        searchButton.configure(state='enable')
-        searchButton.configure(state='enable')
+        buttonjogar.configure(state=ctk.NORMAL)
+        searchButton.configure(state=ctk.NORMAL)
+        searchButton.configure(state=ctk.NORMAL)

@@ -49,7 +49,7 @@ class Menu(ctk.CTkFrame):
         gridInfo.create_rectangle(0, 0, 400, 50, fill=darkBlue, outline=darkBlue)
         gridInfo.create_rectangle(0, 970, 400, 970 + 50, fill=darkBlue, outline=darkBlue)
 
-        ctk.CTkButton(gridInfo,image=imageLogoNPng,fg_color=mainBlue,state='disable',text='').place(x=50,y= 180)
+        ctk.CTkButton(gridInfo,image=imageLogoNPng,fg_color=mainBlue,state=ctk.DISABLED,text='').place(x=50,y= 170)
 
         # Opções
         gridOpcoes = ctk.CTkCanvas(
@@ -63,12 +63,12 @@ class Menu(ctk.CTkFrame):
 
         # Adição das informações
 
-        def inputBox(master, text, width, height, x, y):
+        def inputBox(master, textLabel,textEntry, width, height, x, y):
+            ctk.CTkLabel(master,text=textLabel,font=("Roboto", 30, "bold"),text_color=white).place(x=x,y=y-40)
             inputBox = ctk.CTkEntry(
                 master,
-                # placeholder_text=text,
                 placeholder_text_color=white,
-                font=("Roboto", 25, "bold"),
+                font=("Roboto", 22, "bold"),
                 width=width,
                 height=height,
                 fg_color=darkBlue,
@@ -78,15 +78,15 @@ class Menu(ctk.CTkFrame):
                 corner_radius=20,
                 justify="center",
             )
-            inputBox.insert(0,text)
+            inputBox.insert(0,textEntry)
             inputBox.configure(state=ctk.DISABLED)  # Impede de mudar o valor
             inputBox.place(x=x, y=y)
             return inputBox
         
-        inputNome = inputBox(gridInfo, Account.getNome(), 324, 85, 38, 500)
+        inputNome = inputBox(gridInfo,'Username', Account.getNome(), 324, 85, 38, 500)
         if Cargo == 3:
-            inputCurso = inputBox(gridInfo, Account.getCurso(), 324, 85, 38, 620)
-            inputAno = inputBox(gridInfo, Account.getAno(), 324, 85, 38, 740)
+            inputCurso = inputBox(gridInfo,'Curso', Account.getCurso(), 324, 85, 38, 640)
+            inputAno = inputBox(gridInfo,'Ano', Account.getAno(), 324, 85, 38, 780)
 
         def botao_Alterar():
             inputNome.configure(state=ctk.NORMAL)
@@ -230,12 +230,12 @@ class Menu(ctk.CTkFrame):
                     quizSlcted.set_categoria(dados[3])
                     chngQuizBoxData(quizSlcted,varQtdQuestoes,title,autor,categoria,nquestoes,buttonjogar,searchButton)
                 except:
-                    searchButton.configure(state='normal')
+                    searchButton.configure(state=ctk.NORMAL)
 
         searchButton = ctk.CTkButton(gridOpcoes,height=40,corner_radius=20,text='PESQUISAR',fg_color=mainBlue,hover_color='#1D2D74',font=("Roboto", 30, "bold"),command=getQuizSearch)
         searchButton.place(x=680,y=165)
         title, autor,categoria, nquestoes, buttonjogar = createQuizBox(gridOpcoes,1000,50,white,None,0,lambda:playQuiz(quizSlcted))
-        buttonjogar.configure(state='disable')
+        buttonjogar.configure(state=ctk.DISABLED)
 
 
 

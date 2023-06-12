@@ -346,6 +346,7 @@ class CreateQuizScreen(ctk.CTkToplevel):
         buttonBack = ctk.CTkButton(
             screen,
             text='SAIR',
+            font=("Roboto", 20, "bold"),
             command=sair,
             bg_color=white,
             fg_color=red,
@@ -368,7 +369,7 @@ class CreateQuizScreen(ctk.CTkToplevel):
                 for questao in listaDeQuestoes:
                     if questao != "":
                         numQuest += 1
-                if numQuest >= 2:
+                if numQuest >= 3:
                     global validar
                     if validar == 0:
                         validar = 1
@@ -389,7 +390,7 @@ class CreateQuizScreen(ctk.CTkToplevel):
 
                         nomeDoQuiz = ctk.CTkEntry(screen,placeholder_text_color=white,placeholder_text="Nome do Quiz / 100 caracteres", font=("Roboto", 35, "bold"),width=1260,height=90,fg_color=mainBlue,border_color=mainBlue,text_color=white,border_width=1,corner_radius=90,justify="center")
                         nomeDoQuiz.place(x=330,y=110)
-                        categoriaDoQuiz = ctk.CTkEntry(screen,placeholder_text_color=white,placeholder_text="Categoria do Quiz / 100 caracteres", font=("Roboto", 35, "bold"),width=1260,height=90,fg_color=mainBlue,border_color=mainBlue,text_color=white,border_width=1,corner_radius=90,justify="center")
+                        categoriaDoQuiz = ctk.CTkEntry(screen,placeholder_text_color=white,placeholder_text="Categoria do Quiz / 100 caracteres", font=("Roboto", 30, "bold"),width=1260,height=60,fg_color=mainBlue,border_color=mainBlue,text_color=white,border_width=1,corner_radius=90,justify="center")
                         categoriaDoQuiz.place(x=330,y=220)
                         
                         varFinalizadora = 0
@@ -433,6 +434,7 @@ class CreateQuizScreen(ctk.CTkToplevel):
                         buttonBack = ctk.CTkButton(
                             screen,
                             text='Voltar ao menu',
+                            font=("Roboto", 20, "bold"),
                             command=finalizarQuiz,
                             bg_color=white,
                             fg_color=lightGray,
@@ -449,6 +451,7 @@ class CreateQuizScreen(ctk.CTkToplevel):
         buttonFinalizar = ctk.CTkButton(
             screen,
             text='FINALIZAR',
+            font=("Roboto", 20, "bold"),
             command=finalizar,
             bg_color=white,
             fg_color=gray,
@@ -460,6 +463,7 @@ class CreateQuizScreen(ctk.CTkToplevel):
 class AvisoRespostasProf(ctk.CTk):
      def __init__(self):
         super().__init__()
+        self.title("TechQuiz - Aviso")
         self.geometry("500x400")
         self.minsize(500, 400) 
         self.maxsize(500, 400)
@@ -470,14 +474,15 @@ class AvisoRespostasProf(ctk.CTk):
 
         self.label = ctk.CTkLabel(self, text="Aviso\nAo menos uma das questões tem que ser verdadeira.\nPara configurar qual questão é a verdadeira click no quadrado vermelho, verde significa que a resposta é verdadeira\ne vermelho é que é falsa.", font=("Roboto", 30, "bold"), bg_color="#7D9EFF", wraplength=480)
         self.label.pack(padx=20, pady=20)
-        self.botaoConfirm = ctk.CTkButton(self, text="OK", font=("Roboto", 10, "bold"), bg_color="#7D9EFF", fg_color=green,hover_color=green, command=ok)
-        self.botaoConfirm.place(x=172,y=320)
+        self.botaoConfirm = ctk.CTkButton(self, text="OK", font=("Roboto", 30, "bold"), bg_color="#7D9EFF", fg_color=green,hover_color=green, command=ok)
+        self.botaoConfirm.place(x=182,y=320)
 
         self.mainloop()
 
 class AvisoFaltaAlternativa(ctk.CTk):
      def __init__(self):
         super().__init__()
+        self.title("TechQuiz - Aviso")
         self.geometry("500x400")
         self.minsize(520, 400) 
         self.maxsize(520, 400)
@@ -488,14 +493,15 @@ class AvisoFaltaAlternativa(ctk.CTk):
 
         self.label = ctk.CTkLabel(self, text="Aviso\nTodas as quatro alternativas devem possuir uma resposta caso já tenha a escrito confira se clickou no botão de confirmar.", font=("Roboto", 30, "bold"), bg_color="#7D9EFF", wraplength=480)
         self.label.pack(padx=20, pady=20)
-        self.botaoConfirm = ctk.CTkButton(self, text="OK", font=("Roboto", 10, "bold"), bg_color="#7D9EFF", fg_color=green,hover_color=green, command=ok)
-        self.botaoConfirm.place(x=172,y=300)
+        self.botaoConfirm = ctk.CTkButton(self, text="OK", font=("Roboto", 30, "bold"), bg_color="#7D9EFF", fg_color=green,hover_color=green, command=ok)
+        self.botaoConfirm.place(x=182,y=300)
 
         self.mainloop()
 
 class AvisoFaltaPergunta(ctk.CTk):
      def __init__(self):
         super().__init__()
+        self.title("TechQuiz - Aviso")
         self.geometry("500x400")
         self.minsize(520, 400) 
         self.maxsize(520, 400)
@@ -506,14 +512,15 @@ class AvisoFaltaPergunta(ctk.CTk):
 
         self.label = ctk.CTkLabel(self, text="Aviso\nAinda falta declarar qual é a questão, caso já tenha a escrito confira se clickou no botão de confirmar.", font=("Roboto", 30, "bold"), bg_color="#7D9EFF", wraplength=480)
         self.label.pack(padx=20, pady=20)
-        self.botaoConfirm = ctk.CTkButton(self, text="OK", font=("Roboto", 10, "bold"), bg_color="#7D9EFF", fg_color=green,hover_color=green, command=ok)
-        self.botaoConfirm.place(x=172,y=300)
+        self.botaoConfirm = ctk.CTkButton(self, text="OK", font=("Roboto", 30, "bold"), bg_color="#7D9EFF", fg_color=green,hover_color=green, command=ok)
+        self.botaoConfirm.place(x=182,y=300)
 
         self.mainloop()
 
 class ConfirmacaoProf(ctk.CTk):
      def __init__(self):
         super().__init__()
+        self.title("TechQuiz - Aviso")
         self.geometry("500x400")
         self.minsize(520, 400) 
         self.maxsize(520, 400)
@@ -524,8 +531,8 @@ class ConfirmacaoProf(ctk.CTk):
 
         self.label = ctk.CTkLabel(self, text="Aviso\nApós clickar no botão finalizar novamente, o quiz sera encerrado e criado para os alunos poderem jogar, logo recomendamos que revise o quiz um ultima fez antes de finaliza-lo.", font=("Roboto", 30, "bold"), bg_color="#7D9EFF", wraplength=480)
         self.label.pack(padx=20, pady=20)
-        self.botaoConfirm = ctk.CTkButton(self, text="OK", font=("Roboto", 10, "bold"), bg_color="#7D9EFF", fg_color=green,hover_color=green, command=ok)
-        self.botaoConfirm.place(x=172,y=300)
+        self.botaoConfirm = ctk.CTkButton(self, text="OK", font=("Roboto", 30, "bold"), bg_color="#7D9EFF", fg_color=green,hover_color=green, command=ok)
+        self.botaoConfirm.place(x=182,y=300)
 
         self.mainloop()
 
@@ -533,6 +540,7 @@ class AvisoPerguntasProf(ctk.CTk):
      def __init__(self):
         super().__init__()
         self.geometry("500x400")
+        self.title("TechQuiz - Aviso")
         self.minsize(520, 400) 
         self.maxsize(520, 400)
         self.config(bg="#7D9EFF")
@@ -540,16 +548,17 @@ class AvisoPerguntasProf(ctk.CTk):
         def ok():
             self.destroy()
 
-        self.label = ctk.CTkLabel(self, text="Aviso\nO quiz deve ter ao menos 10 questões.", font=("Roboto", 30, "bold"), bg_color="#7D9EFF", wraplength=480)
+        self.label = ctk.CTkLabel(self, text="Aviso\nO quiz deve ter ao menos 3 questões.", font=("Roboto", 30, "bold"), bg_color="#7D9EFF", wraplength=480)
         self.label.pack(padx=20, pady=20)
-        self.botaoConfirm = ctk.CTkButton(self, text="OK", font=("Roboto", 10, "bold"), bg_color="#7D9EFF", fg_color=green,hover_color=green, command=ok)
-        self.botaoConfirm.place(x=172,y=300)
+        self.botaoConfirm = ctk.CTkButton(self, text="OK", font=("Roboto", 30, "bold"), bg_color="#7D9EFF", fg_color=green,hover_color=green, command=ok)
+        self.botaoConfirm.place(x=182,y=300)
 
         self.mainloop()
 
 class AvisoSaida(ctk.CTk):
      def __init__(self):
         super().__init__()
+        self.title("TechQuiz - Aviso")
         self.geometry("500x400")
         self.minsize(520, 400) 
         self.maxsize(520, 400)
@@ -560,14 +569,15 @@ class AvisoSaida(ctk.CTk):
 
         self.label = ctk.CTkLabel(self, text="Aviso\nA próxima vez que você clickar no botão sair o quiz sera fechado e tudo sera perdido.", font=("Roboto", 30, "bold"), bg_color="#7D9EFF", wraplength=480)
         self.label.pack(padx=20, pady=20)
-        self.botaoConfirm = ctk.CTkButton(self, text="OK", font=("Roboto", 10, "bold"), bg_color="#7D9EFF", fg_color=green,hover_color=green, command=ok)
-        self.botaoConfirm.place(x=172,y=300)
+        self.botaoConfirm = ctk.CTkButton(self, text="OK", font=("Roboto", 30, "bold"), bg_color="#7D9EFF", fg_color=green,hover_color=green, command=ok)
+        self.botaoConfirm.place(x=182,y=300)
 
         self.mainloop()
 
 class AvisoConclusao(ctk.CTk):
      def __init__(self):
         super().__init__()
+        self.title("TechQuiz - Aviso")
         self.geometry("500x400")
         self.minsize(520, 400) 
         self.maxsize(520, 400)
@@ -578,14 +588,15 @@ class AvisoConclusao(ctk.CTk):
 
         self.label = ctk.CTkLabel(self, text="Aviso\nA próxima vez que você clickar no botão voltar ao menu\n o quiz sera encerrado e criado,\n após isso na tela inicial será\n possível de visualizar o código do quiz.", font=("Roboto", 30, "bold"), bg_color="#7D9EFF", wraplength=480)
         self.label.pack(padx=20, pady=20)
-        self.botaoConfirm = ctk.CTkButton(self, text="OK", font=("Roboto", 10, "bold"), bg_color="#7D9EFF", fg_color=green,hover_color=green, command=ok)
-        self.botaoConfirm.place(x=172,y=300)
+        self.botaoConfirm = ctk.CTkButton(self, text="OK", font=("Roboto", 30, "bold"), bg_color="#7D9EFF", fg_color=green,hover_color=green, command=ok)
+        self.botaoConfirm.place(x=182,y=300)
 
         self.mainloop()
 
 class AvisoNomeQuiz(ctk.CTk):
      def __init__(self):
         super().__init__()
+        self.title("TechQuiz - Aviso")
         self.geometry("500x400")
         self.minsize(520, 400) 
         self.maxsize(520, 400)
@@ -596,14 +607,15 @@ class AvisoNomeQuiz(ctk.CTk):
 
         self.label = ctk.CTkLabel(self, text="Aviso\nÉ necessário atribuir um nome ao Quiz e categoria ao Quiz", font=("Roboto", 30, "bold"), bg_color="#7D9EFF", wraplength=480)
         self.label.pack(padx=20, pady=20)
-        self.botaoConfirm = ctk.CTkButton(self, text="OK", font=("Roboto", 10, "bold"), bg_color="#7D9EFF", fg_color=green,hover_color=green, command=ok)
-        self.botaoConfirm.place(x=172,y=300)
+        self.botaoConfirm = ctk.CTkButton(self, text="OK", font=("Roboto", 30, "bold"), bg_color="#7D9EFF", fg_color=green,hover_color=green, command=ok)
+        self.botaoConfirm.place(x=182,y=300)
 
         self.mainloop()
         
 class AvisoPerguntaRep(ctk.CTk):
      def __init__(self):
         super().__init__()
+        self.title("TechQuiz - Aviso")
         self.geometry("500x400")
         self.minsize(520, 400) 
         self.maxsize(520, 400)
@@ -614,7 +626,7 @@ class AvisoPerguntaRep(ctk.CTk):
 
         self.label = ctk.CTkLabel(self, text="Aviso\nEsta pergunta já foi feita anteriormente, por favor crie uma nova.", font=("Roboto", 30, "bold"), bg_color="#7D9EFF", wraplength=480)
         self.label.pack(padx=20, pady=20)
-        self.botaoConfirm = ctk.CTkButton(self, text="OK", font=("Roboto", 10, "bold"), bg_color="#7D9EFF", fg_color=green,hover_color=green, command=ok)
-        self.botaoConfirm.place(x=172,y=300)
+        self.botaoConfirm = ctk.CTkButton(self, text="OK", font=("Roboto", 30, "bold"), bg_color="#7D9EFF", fg_color=green,hover_color=green, command=ok)
+        self.botaoConfirm.place(x=182,y=300)
 
         self.mainloop()
