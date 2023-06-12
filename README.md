@@ -46,14 +46,14 @@ Para executar o projeto com um banco de dados local, siga as etapas abaixo:
 3. Execute o seguinte comando para criar um DataBase:
     
     ```shell
-    mysql -u "username" -p -e "CREATE DATABASE dbTechQuiz2023"
+    mysql -u "username" -p -e "CREATE DATABASE dbTechQuiz"
     ```
     Substitua "username" pelo seu nome de usuário do MySQL.
     Se necessário, forneça a senha quando solicitado.
 5. Execute o seguinte comando para importar o arquivo SQL:
 
     ```shell
-    mysql -u "username" -p dbTechQuiz2023 < dbTechQuiz.sql
+    mysql -u "username" -p dbTechQuiz < dbTechQuiz.sql
     ```
     Substitua "username" pelo seu nome de usuário do MySQL.
     Se necessário, forneça a senha quando solicitado.
