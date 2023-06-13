@@ -207,7 +207,7 @@ CREATE TABLE `usuario` (
 
 LOCK TABLES `usuario` WRITE;
 /*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
-INSERT INTO `usuario` VALUES (1,'1','TechQuiz','TechQuiz2023','felipecarill@outlook.com','AdminSupremo','..',1,'2023-05-08 09:57:00',0);
+INSERT INTO `usuario` VALUES (1,'1','TechQuiz','TechQuiz2023','techquizmaua@gmail.com',NULL,NULL,1,'2023-05-08 00:00:00',0);
 /*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
