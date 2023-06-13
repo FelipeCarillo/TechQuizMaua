@@ -1,12 +1,5 @@
 import re
 
-validacao_email = r'^\w+[@]\w+[.]\w{2,3}(\.\w+)?$'
-
-estruturaRA = r'^[0-9]+[.][0-9]+[-][0-9]+$'
-estruturaMatricula = r'^[0-9]+$'
-
-estruturaUsername = r'^[a-zA-Z0-9]+$'
-
 def check_user_operation(username):
     
     hasEspecial= any(
@@ -21,6 +14,7 @@ def check_user_operation(username):
 
 def check_email_operation(email):
 
+    validacao_email = r'^\w+[@]\w+[.]\w{2,3}(\.\w+)?$'
     validacao_email = re.search(validacao_email,email)
 
     if not validacao_email or len(email)>100:
@@ -45,6 +39,8 @@ def check_password_operation(passwd):
 
 def check_RA_operation(RA):
 
+    estruturaRA = r'^[0-9]+[.][0-9]+[-][0-9]+$'
+
     val_estruturaRA = re.search(estruturaRA,RA)
     tamanhoRA = len(RA)
     
@@ -56,6 +52,8 @@ def check_RA_operation(RA):
 
 def check_Matricula_operation(Matricula):
 
+    estruturaMatricula = r'^[0-9]+$'
+
     val_estruturaMatricula = re.search(estruturaMatricula,Matricula)
     tamanhoMatricula = len(Matricula)
     
@@ -66,6 +64,9 @@ def check_Matricula_operation(Matricula):
     
 
 def indentificador(dado):
+
+    estruturaRA = r'^[0-9]+[.][0-9]+[-][0-9]+$'
+    estruturaMatricula = r'^[0-9]+$'
 
     val_estruturaRA = re.search(estruturaRA,dado)
     val_estruturaMatricula = re.search(estruturaMatricula,dado)

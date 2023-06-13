@@ -277,7 +277,6 @@ class SignUp(ctk.CTkFrame):
                     inputConfirmPasswd.configure(
                         placeholder_text="Senha não é a mesma.")
                 isDadosCorretos.append(continues)
-                
                 if False not in isDadosCorretos:
                     con.cadastrarDados(registro, nome, senha, email, str(cargo))
                     GoLogin()
