@@ -3,4 +3,5 @@ customtkinter
 requests
 mysql-connector-python==8.0.26
 pandas
+openpyxl
 Pillow
