@@ -63,8 +63,11 @@ Para executar o projeto com um banco de dados local, siga as etapas abaixo:
     ```shell
     .. /TechQuizMaua
     ```
-5. Acesse o arquivo AcessoDB.txt: 
-
+5. Acesse o arquivo: 
+     
+    ```shell
+    AcessoBD.txt
+    ```
     ```shell
     username -- password
     ```
@@ -77,7 +80,7 @@ Para executar o projeto com um banco de dados local, siga as etapas abaixo:
    ## Opicional
       Para a execução da parte administrativa do Jogo Local é necessário a utilização de uma API_KEY da [OPENAI](https://platform.openai.com/account/api-keys), para a implementação da chave acesse o arquvio txt do diretorio:
       ```shell
-       TechQuizMaua/APIKEY.txt
+      APIKEY.txt
       ```
       E dentro dele substitua o "API_KEY_AQUI" pela sua respectiva chave.
  
