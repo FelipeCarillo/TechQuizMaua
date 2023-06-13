@@ -131,6 +131,7 @@ class Menu(ctk.CTkFrame):
                         inputCurso.configure(state=ctk.DISABLED)
                         inputAno.configure(state=ctk.DISABLED)
                     buttonEditar.configure(image=confInfosPng, command=botao_Alterar)
+                    buttonEditar.configure(state=ctk.NORMAL)
             except:
                 buttonEditar.configure(state=ctk.NORMAL)
                 

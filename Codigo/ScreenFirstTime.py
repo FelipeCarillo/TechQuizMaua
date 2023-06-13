@@ -37,6 +37,10 @@ class ScreenFrstTime(ctk.CTk):
                         Usuario.setCurso(curso)
                         Usuario.setAno(ano)
                         self.destroy()
+                    else:
+                        buttonSave.configure(state='normal')
+                else:
+                    buttonSave.configure(state='normal')
             except:
                 buttonSave.configure(state='normal')
 

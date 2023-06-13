@@ -100,6 +100,7 @@ class AdminMainScreen(ctk.CTk):
         def processData():
             global Funcao, Comando
             
+            outputBox.configure(font=("Roboto", 25, "bold"))
             buttonProcessar.configure(state='disabled')
             outputBox.delete('0.0','end')
             
@@ -132,7 +133,7 @@ class AdminMainScreen(ctk.CTk):
             except:
                 outputBox.insert('end',text=f'\n\n\n\n{"ERRO":_^107}')
                 buttonExecute.configure(state='normal')
-                
+            
             
 
 
