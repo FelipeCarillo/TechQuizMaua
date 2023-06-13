@@ -118,7 +118,7 @@ class Menu(ctk.CTkFrame):
                     checkName=True
                     continues=True
 
-                if len(Curso) <= 100 and Ano.isnumeric() and int(Ano)<6 and checkName != False and continues !=False:
+                if len(Curso) <= 100 and Ano.isnumeric() and int(Ano)<3 and checkName != False and continues != False:
                     if Nome != Account.getNome():
                         Account.setNome(Nome)
                         setOneData('usuario','nomeUser',Nome,'idUser',idUser)
@@ -131,6 +131,8 @@ class Menu(ctk.CTkFrame):
                         inputCurso.configure(state=ctk.DISABLED)
                         inputAno.configure(state=ctk.DISABLED)
                     buttonEditar.configure(image=confInfosPng, command=botao_Alterar)
+                    buttonEditar.configure(state=ctk.NORMAL)
+                else:
                     buttonEditar.configure(state=ctk.NORMAL)
             except:
                 buttonEditar.configure(state=ctk.NORMAL)
